@@ -7,4 +7,4 @@ This is an empty repo to make use of the [Github discussion](https://github.com/
 - 🗳️ [Polls (Voting)](https://github.com/celo-org/identity/discussions/categories/polls-voting)
 - 🙌 [Show and tell (Updates)](https://github.com/celo-org/identity/discussions/categories/show-and-tell-updates)
 
-It might also serve as an _unofficial_ reference point, before things get reflected in the _official_ docs.
+It might also serve as an _unofficial_ reference point in the [Github wiki](https://github.com/celo-org/identity/wiki) section, before things get reflected in the _official_ docs.
