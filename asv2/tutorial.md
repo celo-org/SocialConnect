@@ -15,7 +15,7 @@ This tutorial is a draft - the official documentation for interfacing with ASv2 
 |blinded identifier  | Derived by blinding the off-chain identifier using the BLS library, passed to ODIS to be signed                                            |   
 |on-chain identifier  | Identifier used in the ASv2 on-chain registry - derived by unblinding the signature from ODIS and hashing it with the off-chain identifier|   
 
-## Registering an Attestation as an Issuer
+### Registering an Attestation as an Issuer
 The following parameters are required 
 1. Identifier
 2. account 
@@ -47,7 +47,7 @@ note: the respective ABI's can be generated from the corresponding contact under
         ).send()
 ```
 
-## Looking up an Attestation
+### Looking up an Attestation
 When looking up an attestation, make sure to use the same identifier when registering. 
 The issuer address should correspond to the account that submitted the transaction. 
 ```typescript
