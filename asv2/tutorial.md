@@ -16,6 +16,13 @@ This tutorial is a draft - the official documentation for interfacing with ASv2 
 |blinded identifier  | Derived by blinding the off-chain identifier using the BLS library, passed to ODIS to be signed                                            |   
 |on-chain identifier  | Identifier used in the ASv2 on-chain registry - derived by unblinding the signature from ODIS and hashing it with the off-chain identifier|   
 
+## Contract Addresses
+### Alfajores
+| Contract                  | Proxy Address                              | Implementation Address | 
+|---------------------------|--------------------------------------------|-------------------------|
+| Federated Attestations    | 0x70F9314aF173c246669cFb0EEe79F9Cfd9C34ee3 | 0x926E88a280902Bfff5047693B9CeAfdb9F4d5095|
+| Escrow                    | 0xb07E10c5837c282209c6B9B3DE0eDBeF16319a37 |0xa34117B48313dE0093d599720998415bAb5FD61d |
+| Odis Payments             | 0x645170cdB6B5c1bc80847bb728dBa56C50a20a49 | 0x72eAC1F0518213Ad405560eFd3fB647FbDAdb703|
 
 ## Registering an Attestation as an Issuer
 The following parameters are required 
