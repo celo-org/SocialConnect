@@ -1,7 +1,6 @@
 # ASv2 tutorial
 The following sections walk you through some user flows we found to be most popular.
-This tutorial is a draft - the official documentation for interfacing with ASv2 will be released soon (stay tuned 😃)! 
-
+This tutorial is a draft - the official documentation for interfacing with ASv2 will be released soon (stay tuned 😃)!
 
 ## Glossary
 | Term | Description                                                                                                                                               |
@@ -15,14 +14,6 @@ This tutorial is a draft - the official documentation for interfacing with ASv2 
 |off-chain identifier  | Plaintext identifier owned by user (eg. phone number, twitter handle, email)                                                             |   
 |blinded identifier  | Derived by blinding the off-chain identifier using the BLS library, passed to ODIS to be signed                                            |   
 |on-chain identifier  | Identifier used in the ASv2 on-chain registry - derived by unblinding the signature from ODIS and hashing it with the off-chain identifier|   
-
-## Contract Addresses
-### Alfajores
-| Contract                  | Proxy Address                              | Implementation Address | 
-|---------------------------|--------------------------------------------|-------------------------|
-| Federated Attestations    | 0x70F9314aF173c246669cFb0EEe79F9Cfd9C34ee3 | 0x926E88a280902Bfff5047693B9CeAfdb9F4d5095|
-| Escrow                    | 0xb07E10c5837c282209c6B9B3DE0eDBeF16319a37 |0xa34117B48313dE0093d599720998415bAb5FD61d |
-| Odis Payments             | 0x645170cdB6B5c1bc80847bb728dBa56C50a20a49 | 0x72eAC1F0518213Ad405560eFd3fB647FbDAdb703|
 
 ## Registering an Attestation as an Issuer
 The following parameters are required 
@@ -61,6 +52,34 @@ When looking up an attestation, make sure to use the same identifier when regist
 The issuer address should correspond to the account that submitted the transaction. 
 ```typescript
     const attestations = await federatedAttestationsInstance.methods
-      .lookupAttestations(identifier, [issuerAddress])
+      .lookupAttestations(identifierInBytes32Format, [issuerAddress])
       .call();
 ```
+
+
+## Appendix
+
+### Contract Addresses
+Mainnet:
+
+- [FederatedAttestations](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/FederatedAttestations.sol):
+    - [`0x0aD5b1d0C25ecF6266Dd951403723B2687d6aff2`](https://explorer.celo.org/address/0x0aD5b1d0C25ecF6266Dd951403723B2687d6aff2/transactions) (proxy)
+    - [`0x76A4daaC43912A443f098D413DED2Cb7A153EA85`](https://explorer.celo.org/address/0x76A4daaC43912A443f098D413DED2Cb7A153EA85/transactions) (implementation)
+- [OdisPayments](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/OdisPayments.sol):
+    - [`0xAE6B29f31B96e61DdDc792f45fDa4e4F0356D0CB`](https://explorer.celo.org/address/0xAE6B29f31B96e61DdDc792f45fDa4e4F0356D0CB/transactions) (proxy)
+    - [`0x9Ea5E9b9B48a72325D59B3EBA147F42b1b14BF78`](https://explorer.celo.org/address/0x9Ea5E9b9B48a72325D59B3EBA147F42b1b14BF78/transactions) (implementation)
+- [Escrow](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/Escrow.sol):
+    - [`0xf4Fa51472Ca8d72AF678975D9F8795A504E7ada5`](https://explorer.celo.org/address/0xf4Fa51472Ca8d72AF678975D9F8795A504E7ada5/transactions) (proxy)
+    - [`0xcC4E6caBe88EBb7FCCB40d862bf1C3a89f88e835`](https://explorer.celo.org/address/0xcC4E6caBe88EBb7FCCB40d862bf1C3a89f88e835/transactions) (implementation)
+
+Alfajores:
+
+- [FederatedAttestations](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/FederatedAttestations.sol):
+    - [`0x70F9314aF173c246669cFb0EEe79F9Cfd9C34ee3`](https://alfajores-blockscout.celo-testnet.org/address/0x70F9314aF173c246669cFb0EEe79F9Cfd9C34ee3/transactions) (proxy)
+    - [`0x926E88a280902Bfff5047693B9CeAfdb9F4d5095`](https://alfajores-blockscout.celo-testnet.org/address/0x926E88a280902Bfff5047693B9CeAfdb9F4d5095/transactions) (implementation)
+- [OdisPayments](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/OdisPayments.sol):
+    - [`0x645170cdB6B5c1bc80847bb728dBa56C50a20a49`](https://alfajores-blockscout.celo-testnet.org/address/0x645170cdB6B5c1bc80847bb728dBa56C50a20a49/transactions) (proxy)
+    - [`0x72eAC1F0518213Ad405560eFd3fB647FbDAdb703`](https://alfajores-blockscout.celo-testnet.org/address/0x72eAC1F0518213Ad405560eFd3fB647FbDAdb703/transactions) (implementation)
+- [Escrow](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/Escrow.sol):
+    - [`0xb07E10c5837c282209c6B9B3DE0eDBeF16319a37`](https://alfajores-blockscout.celo-testnet.org/address/0xb07E10c5837c282209c6B9B3DE0eDBeF16319a37/transactions) (proxy)
+    - [`0xa34117B48313dE0093d599720998415bAb5FD61d`](https://alfajores-blockscout.celo-testnet.org/address/0xa34117B48313dE0093d599720998415bAb5FD61d/transactions) (implementation)
