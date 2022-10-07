@@ -35,15 +35,15 @@ The following is the code snippet, using web3js, to register an `OwnershipAttest
 note: the respective ABI's can be generated from the corresponding contact under ./contracts
 
 ```typescript
-    const plaintextdentifier = "+18006540202"
+    const plaintextIdentifier = "+18006540202"
 
     // todo: add step to generate blinded identifier
-    const blinded_identifier = ""
+    const blindedIdentifier = ""
 
     // todo: add step to generate ODIS identifier 
     const OdisIdentifier = web3.utils.soliditySha3({
         t: "bytes32",
-        v: plaintextdentifier,
+        v: plaintextIdentifier,
     });
 
     const issuerAddress = web3.eth.accounts.create().address;
