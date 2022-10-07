@@ -35,7 +35,7 @@ The following is the code snippet, using web3js, to register an attestation
 note: the respective ABI's can be generated from the corresponding contact under ./contracts
 ```typescript
     const identifier = "+18006540202"
-    const identifierInBytes32Format = kit.web3.utils.soliditySha3({
+    const identifierInBytes32Format = web3.utils.soliditySha3({
         t: "bytes32",
         v: identifier,
     });
