@@ -1,23 +1,29 @@
 # ASv2 tutorial
+
 The following sections walk you through some user flows we found to be most popular.
 This tutorial is a draft - the official documentation for interfacing with ASv2 will be released soon (stay tuned 😃)!
 
 ## Glossary
+
 | Term | Description                                                                                                                                               |
 |------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| user | User that owns the off-chain identifier and account, usually communicating via a mobile device                                                           |
-|issuer| Server verifying identifiers and creating ASv2 attestations, usually belonging to a wallet or dApp                                                       |
-|quota  | The number of ODIS queries an account can make, obtained by providing funds to the ODIS smart contract                                                  |   
-|ODIS  | ODIS service, including combiner and signers, that signs blinded identifiers                                                                             |   
-|OdisPayments.sol  | Smart contract used to pay for ODIS quota (queries).                                                                                         |   
-|FederatedAttestations.sol  | On-chain registry for ASv2 which records attestations of ownership between identifiers and addresses, indexed by issuer.            |   
-|off-chain identifier  | Plaintext identifier owned by user (eg. phone number, twitter handle, email)                                                             |   
-|blinded identifier  | Derived by blinding the off-chain identifier using the BLS library, passed to ODIS to be signed                                            |   
-|on-chain identifier  | Identifier used in the ASv2 on-chain registry - derived by unblinding the signature from ODIS and hashing it with the off-chain identifier|   
+| **End-user** | End-user that owns a plaintext identifier (e.g. phone number) and blockchain account, typically communicating via a mobile device  |
+| **Issuer** | Server that registers an `OwnershipAttestation` in FederatedAttestations.sol, typically having verified the end-user's ownership over the **plaintext identifier** (e.g. phone number) |
+| **FederatedAttestations.sol** | Smart contract which stores `OwnershipAttestations` in various mappins (like `identifierToAttestations` and `addressToIdentifiers`) |
+| **`OwnershipAttestation`** | Set of 4 attributes recorded in FederatedAttestations.sol, namely `account` (of the end-user), `signer` (account of the issuer), `issuedOn` (date), and `publishedOn` (date) |
+| **`identifierToAttestations`** | Mapping from ODIS identifier -> Issuer -> `OwnershipAttestations` (e.g. encrypted "+1 234 567 890" -> "ImpactMarket" -> { `account`: 0xENDUSER123..., `signer`:..., `issuedOn`:..., `publishedOn`:... } ) |
+| **`addressToIdentifiers`** | Mapping from blockchain account -> Issuer -> ODIS identifier (e.g. 0xENDUSER123 -> "ImpactMarket" -> encrypted "+1 234 567 890" ) |
+| **ODIS** | Privacy API that provides a secret input (or "cryptographic pepper") required to generate ODIS identifiers
+| **OdisPayments.sol** | Smart contract to purchase quota required to make privacy API requests       |
+| **Quota** | The total number of privacy API requests an account can make                                                  |
+| **Plaintext identifier** | Plaintext identifier owned by user (eg. phone number "+1 234 567 890", twitter handle "@CeloOrg", email "alice@celo.org") |
+| **Blinded identifier** | Plaintext identifier after encrypting it for security purposes to avoid sending plaintext identifiers to the privacy API (Why? So ODIS doesn't become a honeypot of plaintext identifiers for attackers) |
+| **ODIS identifier** | Plaintext identifier after hashing it with the secret input (or "crytographic pepper") requested from ODIS |
 
 ## Example
 
 ### Registering an Attestation as an Issuer
+
 The following parameters are required 
 1. Identifier
 2. account 
