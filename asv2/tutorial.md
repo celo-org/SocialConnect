@@ -34,7 +34,7 @@ The following is the code snippet, using web3js, to register an `OwnershipAttest
 
 note: the respective ABI's can be generated from the corresponding contact under ./contracts
 
-```typescript
+```typescript[]()
     const plaintextIdentifier = "+18006540202"
 
     // todo: add step to generate blinded identifier
