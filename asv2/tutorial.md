@@ -40,8 +40,15 @@ note: the respective ABI's can be generated from the corresponding contact under
     // todo: add step to generate blinded identifier
     const blindedIdentifier = ""
 
+    // todo: check if you have enough ODIS quota
+    const remainingOdisQuota = ""
+
+    // todo: add ODIS API call
+    const odisPepper = ""
+
     // todo: add step to generate ODIS identifier 
-    const OdisIdentifier = web3.utils.soliditySha3({
+    // {prefix}{e164_phone_number}{separator}{pepper}
+    const odisIdentifier = web3.utils.soliditySha3({
         t: "bytes32",
         v: plaintextIdentifier,
     });
@@ -74,6 +81,12 @@ The issuer address should correspond to the account that submitted the transacti
 ```
 
 ## Appendix
+
+### Why ODIS?
+
+`{prefix}{e164_phone_number}{separator}{pepper}`
+
+`tel://+123456789__123abc`
 
 ### Contract Addresses
 
