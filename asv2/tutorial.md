@@ -95,14 +95,16 @@ To address this issue, you register an "ODIS identifier", which is a more secure
 
 Why is an "ODIS identifier" more secure?
 
-- Because it uses a secret input that only ODIS can produce. 
+- Because it uses a secret input that only ODIS can produce.
 - So any attacker would have to ask ODIS for this secret input to generate the hash.
 - Asking ODIS costs a small fee, so asking many times to harvest phone numbers is costly.
 
-Specifically, hashes follow this pattern:
+### How do I generate interoperable and secure ODIS identifiers?
 
-- `{prefix}{e164_phone_number}{separator}{pepper}`
-- `tel://+123456789__123abc`
+| Type | Pattern  | Example |
+|------|--------|--------|
+| **Phone numbers** | `{prefix}{e164_phone_number}{separator}{ODIS_pepper}` | `tel://+123456789__123abc` |
+| **Twitter handles** | `{prefix}{Twitter handle}{separator}{ODIS_pepper}` (illustrative) | `twitter://@CeloOrg__123abc` (illustrative) |
 
 ### Contract Addresses
 
