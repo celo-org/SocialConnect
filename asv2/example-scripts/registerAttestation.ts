@@ -11,7 +11,6 @@ import {
 import Web3 from "web3";
 import { OdisUtils } from '@celo/identity'
 import { AuthenticationMethod, AuthSigner } from "@celo/identity/lib/odis/query";
-import { getPhoneNumberIdentifier } from "@celo/identity/lib/odis/phone-number-identifier";
 
 const USER_ACCOUNT = "0xf14790BAdd2638cECB5e885fc7fAD1b6660AAc34";
 const USER_PHONE_NUMBER = "+18009099999";
@@ -51,12 +50,12 @@ class ASv2 {
         this.web3.eth.defaultAccount = this.issuer.address
     }
 
-    // TODO: replace with API call to ODIS
+    // TODO: replace with getQuotaStatus in ODIS sdk
     getQuota(): number {return 3}
 
     async registerAttestation() {
         // setup
-        await this.accountsContract.methods.setDataEncryptionKey(DEK_PUBLIC_KEY).send()
+        await this.accountsContract.methods.setAccountDataEncryptionKey(DEK_PUBLIC_KEY).send({from: this.issuer.address, gas: 500000})
     
         // make sure issuer account has sufficient ODIS quota
         if (this.getQuota() <= 0) {
@@ -70,7 +69,7 @@ class ASv2 {
             authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
             rawKey: DEK_PRIVATE_KEY
         }
-        const identifier = await getPhoneNumberIdentifier(
+        const identifier = await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
             USER_PHONE_NUMBER,
             this.issuer.address,
             authSigner,
@@ -84,7 +83,7 @@ class ASv2 {
                 USER_ACCOUNT,
                 NOW_TIMESTAMP
             )
-            .send();
+            .send({gas: 500000});
     
         // query onchain mappings
         const attestations = await this.federatedAttestationsContract.methods
