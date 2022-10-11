@@ -99,6 +99,5 @@ class ASv2 {
     }
 }
 
-
 const asv2 = new ASv2()
 asv2.registerAttestation()
