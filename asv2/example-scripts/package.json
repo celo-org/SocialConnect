@@ -6,5 +6,8 @@
   "dependencies": {
     "@celo/identity": "^2.2.0",
     "web3": "^1.8.0"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1"
   }
 }

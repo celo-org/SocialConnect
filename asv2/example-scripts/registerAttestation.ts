@@ -1,4 +1,6 @@
 import {
+    ACCOUNTS_CONTRACT,
+    ACCOUNTS_PROXY_ADDRESS,
     ALFAJORES_CUSD_ADDRESS,
     FA_CONTRACT,
     FA_PROXY_ADDRESS,
@@ -7,121 +9,96 @@ import {
     STABLE_TOKEN_CONTRACT,
 } from "./constants";
 import Web3 from "web3";
-import * as threshold from "blind-threshold-bls";
-// todo replace with API call to ODIS
-function getQuota(): number {
-    return 3;
-}
+import { OdisUtils } from '@celo/identity'
+import { AuthenticationMethod, AuthSigner } from "@celo/identity/lib/odis/query";
+import { getPhoneNumberIdentifier } from "@celo/identity/lib/odis/phone-number-identifier";
 
-function getOdisPepper(blindedIdentifier: string): string {
-    return "123";
-}
+const USER_ACCOUNT = "0xf14790BAdd2638cECB5e885fc7fAD1b6660AAc34";
+const USER_PHONE_NUMBER = "+18009099999";
 
-function getBlindedPhoneNumber(
-    phoneNumber: string,
-    blindingFactor: Buffer
-): string {
-    const blindedPhoneNumber = threshold.blind(
-        Buffer.from(phoneNumber),
-        blindingFactor
-    ).message;
-    return uint8ArrayToBase64(blindedPhoneNumber);
-}
+const ISSUER_PRIVATE_KEY = "0x726e53db4f0a79dfd63f58b19874896fce3748fcb80874665e0c147369c04a37";
+const DEK_PUBLIC_KEY = "0x026063780c81991c032fb4fa7485c6607b7542e048ef85d08516fe5c4482360e4b";
+const DEK_PRIVATE_KEY = "0xc2bbdabb440141efed205497a41d5fb6114e0435fd541e368dc628a8e086bfee";
 
-function uint8ArrayToBase64(bytes: Uint8Array) {
-    let binary = "";
-    for (let i = 0; i < bytes.byteLength; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    return Buffer.from(binary).toString("base64");
-}
+const ALFAJORES_RPC = "https://alfajores-forno.celo-testnet.org";
 
-async function registerAttestation() {
-    const TEST_ACCOUNT_ADDRESS = "0xf14790BAdd2638cECB5e885fc7fAD1b6660AAc34";
-    const PRIVATE_KEY =
-        "0x726e53db4f0a79dfd63f58b19874896fce3748fcb80874665e0c147369c04a37";
+const NOW_TIMESTAMP = Math.floor(new Date().getTime() / 1000);
 
-    const ALFAJORES_RPC = "https://alfajores-forno.celo-testnet.org";
-
-    const web3 = new Web3(ALFAJORES_RPC);
-    const issuerAccount = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY);
-    const plaintextIdentifier = "+18009099999";
-    const NOW_TIMESTAMP = Math.floor(new Date().getTime() / 1000);
-    const BLINDING_FACTOR = Buffer.from(
-        "0IsBvRfkBrkKCIW6HV0/T1zrzjQSe8wRyU3PKojCnww=",
-        "base64"
-    );
-
-
-    web3.eth.accounts.wallet.add(issuerAccount);
-
+class ASv2 {
+    web3 = new Web3(ALFAJORES_RPC);
+    issuer = this.web3.eth.accounts.privateKeyToAccount(ISSUER_PRIVATE_KEY);
+    
     /** Contracts **/
-    const federatedAttestationsInstance = new web3.eth.Contract(
+    accountsContract = new this.web3.eth.Contract(
+        ACCOUNTS_CONTRACT.abi,
+        ACCOUNTS_PROXY_ADDRESS
+    );
+    federatedAttestationsContract = new this.web3.eth.Contract(
         FA_CONTRACT.abi,
         FA_PROXY_ADDRESS
     );
-
-    const odisPaymentsInstance = new web3.eth.Contract(
+    odisPaymentsContract = new this.web3.eth.Contract(
         ODIS_PAYMENTS_CONTRACT.abi,
         ODIS_PAYMENTS_PROXY_ADDRESS
     );
-
-    const stableTokenContractInstance = new web3.eth.Contract(
+    stableTokenContract = new this.web3.eth.Contract(
         STABLE_TOKEN_CONTRACT.abi,
         ALFAJORES_CUSD_ADDRESS
     );
 
-
-    const remainingOdisQuota = getQuota();
-
-    if (remainingOdisQuota == 0) {
-        const TEN_CUSD = web3.utils.toWei("10", "ether");
-        await stableTokenContractInstance.methods
-            .approve(web3.defaultAccount, TEN_CUSD)
-            .send({ from: issuerAccount.address });
-        await odisPaymentsInstance.methods
-            .payInCUSD(web3.defaultAccount, TEN_CUSD)
-            .send({ from: issuerAccount.address });
+    constructor(){
+        this.web3.eth.accounts.wallet.add(this.issuer);
+        this.web3.eth.defaultAccount = this.issuer.address
     }
 
-    const blindedIdentifier = getBlindedPhoneNumber(
-        plaintextIdentifier,
-        BLINDING_FACTOR
-    );
+    // TODO: replace with API call to ODIS
+    getQuota(): number {return 3}
 
-    const odisPepper = getOdisPepper(blindedIdentifier);
-
-    const combinedIdentifier = `tel//${plaintextIdentifier}__${odisPepper}`;
-
-    /**
-     *
-     * Do we hash the returned value from ODIS or is there a returned value 'response.combined' already hashed
-     *
-     * **/
-
-    const combinedIdentifierBytes32 = web3.utils.soliditySha3({
-        t: "bytes32",
-        v: combinedIdentifier,
-    }) as string;
-
-    await federatedAttestationsInstance.methods
-        .registerAttestationAsIssuer(
-            combinedIdentifierBytes32,
-            TEST_ACCOUNT_ADDRESS,
-            NOW_TIMESTAMP
-        )
-        .send({ from: issuerAccount.address, gas: 500000 });
-
-    const attestation = await federatedAttestationsInstance.methods
-        .lookupAttestations(combinedIdentifierBytes32, [issuerAccount.address])
-        .call({ from: issuerAccount.address });
-
-    const identifiers = await federatedAttestationsInstance.methods
-        .lookupIdentifiers(TEST_ACCOUNT_ADDRESS, [issuerAccount.address])
-        .call({ from: issuerAccount.address });
-
-    console.log({ attestation });
-    console.log({ identifiers });
+    async registerAttestation() {
+        // setup
+        await this.accountsContract.methods.setDataEncryptionKey(DEK_PUBLIC_KEY).send()
+    
+        // make sure issuer account has sufficient ODIS quota
+        if (this.getQuota() <= 0) {
+            const TEN_CUSD = this.web3.utils.toWei("10", "ether");
+            await this.stableTokenContract.methods.approve(this.issuer.address, TEN_CUSD).send();
+            await this.odisPaymentsContract.methods.payInCUSD(this.issuer.address, TEN_CUSD).send();
+        }
+    
+        // get identifier from phone number using ODIS
+        const authSigner: AuthSigner = {
+            authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
+            rawKey: DEK_PRIVATE_KEY
+        }
+        const identifier = await getPhoneNumberIdentifier(
+            USER_PHONE_NUMBER,
+            this.issuer.address,
+            authSigner,
+            OdisUtils.Query.getServiceContext('alfajores')
+          )
+    
+        // upload identifier <-> address mapping to onchain registry
+        await this.federatedAttestationsContract.methods
+            .registerAttestationAsIssuer(
+                identifier,
+                USER_ACCOUNT,
+                NOW_TIMESTAMP
+            )
+            .send();
+    
+        // query onchain mappings
+        const attestations = await this.federatedAttestationsContract.methods
+            .lookupAttestations(identifier, [this.issuer.address])
+            .call();
+        const identifiers = await this.federatedAttestationsContract.methods
+            .lookupIdentifiers(USER_ACCOUNT, [this.issuer.address])
+            .call();
+    
+        console.log({ attestations });
+        console.log({ identifiers });
+    }
 }
 
-registerAttestation().then();
+
+const asv2 = new ASv2()
+asv2.registerAttestation()
