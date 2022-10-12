@@ -52,13 +52,11 @@ class ASv2 {
     constructor(){
         this.web3.eth.accounts.wallet.add(this.issuer);
         this.web3.eth.defaultAccount = this.issuer.address
+        this.accountsContract.methods.setAccountDataEncryptionKey(DEK_PUBLIC_KEY).send({from: this.issuer.address, gas: 50000})
     }
 
     async registerAttestation(phoneNumber: string, account: string) {
-        // setup
-        await this.accountsContract.methods.setAccountDataEncryptionKey(DEK_PUBLIC_KEY).send({from: this.issuer.address, gas: 500000})
-    
-        // once the new version of ODIS has been deployed, issuers will need to
+        // TODO: once the new version of ODIS has been deployed, issuers will need to
         // ensure their account has sufficient ODIS quota
         // if (getQuotaStatus(this.issuer.address) <= 0) {
         //     const TEN_CUSD = this.web3.utils.toWei("10", "ether");
@@ -81,7 +79,7 @@ class ASv2 {
                 account,
                 NOW_TIMESTAMP
             )
-            .send({from: this.issuer.address, gas: 500000});
+            .send({from: this.issuer.address, gas: 50000});
     }
 
     async lookupAddresses(phoneNumber: string){
