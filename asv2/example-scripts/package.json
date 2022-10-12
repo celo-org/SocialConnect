@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@celo/identity": "^2.2.0",
+    "@celo/identity": "1.5.1",
     "web3": "^1.8.0"
   },
   "devDependencies": {

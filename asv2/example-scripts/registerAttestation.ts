@@ -26,6 +26,10 @@ const NOW_TIMESTAMP = Math.floor(new Date().getTime() / 1000);
 class ASv2 {
     web3 = new Web3(ALFAJORES_RPC);
     issuer = this.web3.eth.accounts.privateKeyToAccount(ISSUER_PRIVATE_KEY);
+    authSigner: AuthSigner = {
+        authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
+        rawKey: DEK_PRIVATE_KEY
+    }
     
     /** Contracts **/
     accountsContract = new this.web3.eth.Contract(
@@ -50,53 +54,62 @@ class ASv2 {
         this.web3.eth.defaultAccount = this.issuer.address
     }
 
-    // TODO: replace with getQuotaStatus in ODIS sdk
-    getQuota(): number {return 3}
-
-    async registerAttestation() {
+    async registerAttestation(phoneNumber: string, account: string) {
         // setup
         await this.accountsContract.methods.setAccountDataEncryptionKey(DEK_PUBLIC_KEY).send({from: this.issuer.address, gas: 500000})
     
-        // make sure issuer account has sufficient ODIS quota
-        if (this.getQuota() <= 0) {
-            const TEN_CUSD = this.web3.utils.toWei("10", "ether");
-            await this.stableTokenContract.methods.approve(this.issuer.address, TEN_CUSD).send();
-            await this.odisPaymentsContract.methods.payInCUSD(this.issuer.address, TEN_CUSD).send();
-        }
+        // once the new version of ODIS has been deployed, issuers will need to
+        // ensure their account has sufficient ODIS quota
+        // if (getQuotaStatus(this.issuer.address) <= 0) {
+        //     const TEN_CUSD = this.web3.utils.toWei("10", "ether");
+        //     await this.stableTokenContract.methods.approve(this.issuer.address, TEN_CUSD).send({from: this.issuer.address, gas: 500000});
+        //     await this.odisPaymentsContract.methods.payInCUSD(this.issuer.address, TEN_CUSD).send({from: this.issuer.address,gas: 500000});
+        // }
     
         // get identifier from phone number using ODIS
-        const authSigner: AuthSigner = {
-            authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
-            rawKey: DEK_PRIVATE_KEY
-        }
-        const identifier = await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
-            USER_PHONE_NUMBER,
+        const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+            phoneNumber,
             this.issuer.address,
-            authSigner,
+            this.authSigner,
             OdisUtils.Query.getServiceContext('alfajores')
-          )
+          )).phoneHash
     
         // upload identifier <-> address mapping to onchain registry
         await this.federatedAttestationsContract.methods
             .registerAttestationAsIssuer(
                 identifier,
-                USER_ACCOUNT,
+                account,
                 NOW_TIMESTAMP
             )
-            .send({gas: 500000});
+            .send({from: this.issuer.address, gas: 500000});
+    }
+
+    async lookupAddresses(phoneNumber: string){
+        // get identifier from phone number using ODIS
+        const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+            phoneNumber,
+            this.issuer.address,
+            this.authSigner,
+            OdisUtils.Query.getServiceContext('alfajores')
+          )).phoneHash
+    
     
         // query onchain mappings
         const attestations = await this.federatedAttestationsContract.methods
             .lookupAttestations(identifier, [this.issuer.address])
             .call();
-        const identifiers = await this.federatedAttestationsContract.methods
-            .lookupIdentifiers(USER_ACCOUNT, [this.issuer.address])
-            .call();
-    
-        console.log({ attestations });
-        console.log({ identifiers });
+
+        return attestations.accounts
     }
 }
 
-const asv2 = new ASv2()
-asv2.registerAttestation()
+(async () => {
+    const asv2 = new ASv2()
+    try{
+        await asv2.registerAttestation(USER_PHONE_NUMBER, USER_ACCOUNT)
+    } catch(err){
+        // mostly likely reason registering would fail is if this issuer has already
+        // registered a mapping between this number and account
+    }
+    console.log(await asv2.lookupAddresses(USER_PHONE_NUMBER))
+})()

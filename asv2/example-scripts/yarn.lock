@@ -2,50 +2,32 @@
 # yarn lockfile v1
 
 
-"@celo/base@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@celo/base/-/base-1.5.2.tgz#168ab5e4e30b374079d8d139fafc52ca6bfd4100"
-  integrity sha512-KGf6Dl9E6D01vAfkgkjL2sG+zqAjspAogILIpWstljWdG5ifyA75jihrnDEHaMCoQS0KxHvTdP1XYS/GS6BEyQ==
+"@celo/base@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@celo/base/-/base-1.5.1.tgz#53e16cd36c51f9eaeec0321f6752de6385f2a131"
+  integrity sha512-76MAosahwCDjkBsqfgnKT2CbyjV6TdzIztHJvAuJ+VrKeaIFe/IMoPwIxPy95xDJmHhD0zqPWMixGeyVGAwYQw==
 
-"@celo/base@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@celo/base/-/base-2.2.0.tgz#cb769b0644408327cbe631400a8455d195a657ab"
-  integrity sha512-+jo52+er1TV9Qe6nCmzQ2dLt6M8J9STEJDaU+uiPyMVhMBcnYBpWzu9FJJPERmttejOC7hFuudrJI83vJulc4Q==
-
-"@celo/connect@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@celo/connect/-/connect-1.5.2.tgz#09f0b03bda6f8a6d523fd010492f204cbe82aabd"
-  integrity sha512-IHsvYp1HizIPfPPeIHyvsmJytIf7HNtNWo9CqCbsqfNfmw53q6dFJu2p5X0qz/fUnR5840cUga8cEyuYZTfp+w==
+"@celo/connect@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@celo/connect/-/connect-1.5.1.tgz#c06631134150c5d0cbf9676a7a45f620e49a5e89"
+  integrity sha512-UjZIu1GRvnsUrGfTUDqxyrt8qyDpj4cuxQ/WVETss8l+x98zV5/7edKOA0QRWEKFhh3F1mCi0N08hEpp+q7QaA==
   dependencies:
-    "@celo/utils" "1.5.2"
+    "@celo/utils" "1.5.1"
     "@types/debug" "^4.1.5"
     "@types/utf8" "^2.1.6"
     bignumber.js "^9.0.0"
     debug "^4.1.1"
     utf8 "3.0.0"
 
-"@celo/connect@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@celo/connect/-/connect-2.2.0.tgz#e931ba2622f1967a3e2190f46cac59ab6f6373a3"
-  integrity sha512-IAT1f3+ZYMod0H6M8HorZj8bNhfgxjL7GlofdNZRceTo1Cy8iyNr+26K+x5sHeXI8QgTUKdaxLWgmCQCEU7ARw==
+"@celo/contractkit@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@celo/contractkit/-/contractkit-1.5.1.tgz#723c3516bf08d0598f32dc45a17a99a576c90fa3"
+  integrity sha512-hUgH0yTbI1JUn9ytCWW/0QLfAruF3YL5xfcSmzXItklQ2GKGsTSfGlY7XTUY97xq/WYO2InXw+Vuhop6CcFOiw==
   dependencies:
-    "@celo/base" "2.2.0"
-    "@celo/utils" "2.2.0"
-    "@types/debug" "^4.1.5"
-    "@types/utf8" "^2.1.6"
-    bignumber.js "^9.0.0"
-    debug "^4.1.1"
-    utf8 "3.0.0"
-
-"@celo/contractkit@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@celo/contractkit/-/contractkit-1.5.2.tgz#be15d570f3044a190dabb6bbe53d5081c78ea605"
-  integrity sha512-b0r5TlfYDEscxze1Ai2jyJayiVElA9jvEehMD6aOSNtVhfP8oirjFIIffRe0Wzw1MSDGkw+q1c4m0Yw5sEOlvA==
-  dependencies:
-    "@celo/base" "1.5.2"
-    "@celo/connect" "1.5.2"
-    "@celo/utils" "1.5.2"
-    "@celo/wallet-local" "1.5.2"
+    "@celo/base" "1.5.1"
+    "@celo/connect" "1.5.1"
+    "@celo/utils" "1.5.1"
+    "@celo/wallet-local" "1.5.1"
     "@types/debug" "^4.1.5"
     bignumber.js "^9.0.0"
     cross-fetch "^3.0.6"
@@ -55,34 +37,14 @@
     semver "^7.3.5"
     web3 "1.3.6"
 
-"@celo/contractkit@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@celo/contractkit/-/contractkit-2.2.0.tgz#5cfcfdb4e5ec22f8ca071405c0d552b632137912"
-  integrity sha512-nIgCGDnOtCG5QtPJFzaDOOk12O6A8Bjk+tey46okeasvcT1uw2mQpLoelQ/PloTSbLQty3/IATNSPrQWqXShFA==
+"@celo/identity@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@celo/identity/-/identity-1.5.1.tgz#4c1bf29c1db312cc98895b3ddc8b66572b13d9f2"
+  integrity sha512-wwOkhgxoGqo+BNeIWXKU0KT68L5fHYexAjo8736djf2GPRre81aUqbALL9UEX/CksqiQRFUjjUo+CdSGCLbEjw==
   dependencies:
-    "@celo/base" "2.2.0"
-    "@celo/connect" "2.2.0"
-    "@celo/utils" "2.2.0"
-    "@celo/wallet-local" "2.2.0"
-    "@types/bn.js" "^5.1.0"
-    "@types/debug" "^4.1.5"
-    bignumber.js "^9.0.0"
-    cross-fetch "^3.0.6"
-    debug "^4.1.1"
-    fp-ts "2.1.1"
-    io-ts "2.0.1"
-    semver "^7.3.5"
-    web3 "1.3.6"
-
-"@celo/identity@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@celo/identity/-/identity-2.2.0.tgz#a218faa2d53d5e4941c4da24a0ec2c65dd8eadc8"
-  integrity sha512-8VrbtC51+7Hw2oiuRzVhNU/HvK8dapUuzl1yN9lWlETgfHsiiJMk8ucw4oqJc137siBRxUdHIxuHgsDXzUzsdQ==
-  dependencies:
-    "@celo/base" "2.2.0"
-    "@celo/contractkit" "2.2.0"
-    "@celo/phone-number-privacy-common" "1.0.39"
-    "@celo/utils" "2.2.0"
+    "@celo/base" "1.5.1"
+    "@celo/contractkit" "1.5.1"
+    "@celo/utils" "1.5.1"
     "@types/debug" "^4.1.5"
     bignumber.js "^9.0.0"
     blind-threshold-bls "https://github.com/celo-org/blind-threshold-bls-wasm#e1e2f8a"
@@ -92,30 +54,12 @@
     fp-ts "2.1.1"
     io-ts "2.0.1"
 
-"@celo/phone-number-privacy-common@1.0.39":
-  version "1.0.39"
-  resolved "https://registry.yarnpkg.com/@celo/phone-number-privacy-common/-/phone-number-privacy-common-1.0.39.tgz#3c9568f70378d24d11afcc4306024c5cf4f8efe9"
-  integrity sha512-0sbeuoYCN2ZQYO1CryR0Hf9HhOQKuIDZraWFMpUlwrUKk5qKmSMlV16xobG4VL5qUpXHgIRjKPfmcaf0rkrn8A==
+"@celo/utils@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@celo/utils/-/utils-1.5.1.tgz#cd5b0309750a25683d9b07c14e643aee2c6a3670"
+  integrity sha512-3ZqZ/YSvzcESd72+8oNOvIM5HieJt3zusRCBPIl97qnqlnCIIq22gxcvpKL1afac0q79t24jkbdl5wsAkD/ROA==
   dependencies:
-    "@celo/base" "1.5.2"
-    "@celo/contractkit" "1.5.2"
-    "@celo/utils" "1.5.2"
-    bignumber.js "^9.0.0"
-    blind-threshold-bls "https://github.com/celo-org/blind-threshold-bls-wasm#e1e2f8a"
-    btoa "1.2.1"
-    bunyan "1.8.12"
-    bunyan-debug-stream "2.0.0"
-    bunyan-gke-stackdriver "0.1.2"
-    dotenv "^8.2.0"
-    elliptic "^6.5.4"
-    is-base64 "^1.1.0"
-
-"@celo/utils@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@celo/utils/-/utils-1.5.2.tgz#ddb7f3b50c801225ab41d2355fbe010976329099"
-  integrity sha512-JyKjuVMbdkyFOb1TpQw6zqamPQWYg7I9hOnva3MeIcQ3ZrJIaNHx0/I+JXFjuu3YYBc1mG8nXp2uPJJTGrwzCQ==
-  dependencies:
-    "@celo/base" "1.5.2"
+    "@celo/base" "1.5.1"
     "@types/country-data" "^0.0.0"
     "@types/elliptic" "^6.4.9"
     "@types/ethereumjs-util" "^5.2.0"
@@ -143,31 +87,14 @@
     web3-eth-abi "1.3.6"
     web3-utils "1.3.6"
 
-"@celo/utils@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@celo/utils/-/utils-2.2.0.tgz#a852435391b1abc492aa9436837e49beb906cf70"
-  integrity sha512-oCDZt44Ch30/4m+G+7gcuiKmo/WgptMpmxxSLH+h3Wmc6LUWS/F/9SFcdlTbJF0sH3LOXchczO+HUlATJ+vQNQ==
+"@celo/wallet-base@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@celo/wallet-base/-/wallet-base-1.5.1.tgz#6f4bf2c487a9e813c267e0c9e12d93886daa0884"
+  integrity sha512-78playqXi/JEwoyLPyPGjaUnPy/PNNjfqSHRD9IF4uTNxTpaUJJXNWKQSoRF2tFwuLdQxC96hrf63Qzepo5Edg==
   dependencies:
-    "@celo/base" "2.2.0"
-    "@types/bn.js" "^5.1.0"
-    "@types/elliptic" "^6.4.9"
-    "@types/ethereumjs-util" "^5.2.0"
-    "@types/node" "^10.12.18"
-    bignumber.js "^9.0.0"
-    elliptic "^6.5.4"
-    ethereumjs-util "^5.2.0"
-    io-ts "2.0.1"
-    web3-eth-abi "1.3.6"
-    web3-utils "1.3.6"
-
-"@celo/wallet-base@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@celo/wallet-base/-/wallet-base-1.5.2.tgz#ae8df425bf3c702277bb1b63a761a2ec8429e7aa"
-  integrity sha512-NYJu7OtSRFpGcvSMl2Wc8zN32S6oTkAzKqhH7rXisQ0I2q4yNwCzoquzPVYB0G2UVUFKuuxgsA5V+Zda/LQCyw==
-  dependencies:
-    "@celo/base" "1.5.2"
-    "@celo/connect" "1.5.2"
-    "@celo/utils" "1.5.2"
+    "@celo/base" "1.5.1"
+    "@celo/connect" "1.5.1"
+    "@celo/utils" "1.5.1"
     "@types/debug" "^4.1.5"
     "@types/ethereumjs-util" "^5.2.0"
     bignumber.js "^9.0.0"
@@ -175,41 +102,14 @@
     eth-lib "^0.2.8"
     ethereumjs-util "^5.2.0"
 
-"@celo/wallet-base@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@celo/wallet-base/-/wallet-base-2.2.0.tgz#423a6af2a49d6c93aa786a99799a3ecc022a3160"
-  integrity sha512-zL05/tJzPWWvGGaQKEkcEYCLJRJwl7PLskJNWCiloGLfmPd7L1g96ulU1ZGffeO+kVIcUvwtQ9AS7ky4CbHybQ==
+"@celo/wallet-local@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@celo/wallet-local/-/wallet-local-1.5.1.tgz#5f58a1f3bdce06392154459216647798e8e7d08a"
+  integrity sha512-StQU8R6SKo+T87LVxMxGG/8WRlruU5dze02Hs8vgEHt3LeYMsrX2k4+FkndANoJF9lhl+XvQrGD4gTaDC4b2ag==
   dependencies:
-    "@celo/base" "2.2.0"
-    "@celo/connect" "2.2.0"
-    "@celo/utils" "2.2.0"
-    "@types/debug" "^4.1.5"
-    "@types/ethereumjs-util" "^5.2.0"
-    bignumber.js "^9.0.0"
-    debug "^4.1.1"
-    eth-lib "^0.2.8"
-    ethereumjs-util "^5.2.0"
-
-"@celo/wallet-local@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@celo/wallet-local/-/wallet-local-1.5.2.tgz#66ea5fb763e19724309e3d56f312f1a342e12b91"
-  integrity sha512-Aas4SwqQc8ap0OFAOZc+jBR4cXr20V9AReHNEI8Y93R3g1+RlSEJ1Zmsu4vN+Rriz58YqgMnr+pihorw8QydFQ==
-  dependencies:
-    "@celo/connect" "1.5.2"
-    "@celo/utils" "1.5.2"
-    "@celo/wallet-base" "1.5.2"
-    "@types/ethereumjs-util" "^5.2.0"
-    eth-lib "^0.2.8"
-    ethereumjs-util "^5.2.0"
-
-"@celo/wallet-local@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@celo/wallet-local/-/wallet-local-2.2.0.tgz#a4ad9a010265edf81cf41d6a3f3b35047181ddf2"
-  integrity sha512-l+RJkieGlnUT+q39/aGrRnFlhbwQsiPGsLoDebW7OuYncExRGf0Pid48ke+yrl7/0nBxNXDSRuNMW9qI0AlHSw==
-  dependencies:
-    "@celo/connect" "2.2.0"
-    "@celo/utils" "2.2.0"
-    "@celo/wallet-base" "2.2.0"
+    "@celo/connect" "1.5.1"
+    "@celo/utils" "1.5.1"
+    "@celo/wallet-base" "1.5.1"
     "@types/ethereumjs-util" "^5.2.0"
     eth-lib "^0.2.8"
     ethereumjs-util "^5.2.0"
@@ -813,9 +713,9 @@ bip32@2.0.5:
     typeforce "^1.11.5"
     wif "^2.0.6"
 
-"bip39@https://github.com/bitcoinjs/bip39#d8ea080a18b40f301d4e2219a2991cd2417e83c2":
+"bip39@git+https://github.com/bitcoinjs/bip39.git#d8ea080a18b40f301d4e2219a2991cd2417e83c2":
   version "3.0.3"
-  resolved "https://github.com/bitcoinjs/bip39#d8ea080a18b40f301d4e2219a2991cd2417e83c2"
+  resolved "git+https://github.com/bitcoinjs/bip39.git#d8ea080a18b40f301d4e2219a2991cd2417e83c2"
   dependencies:
     "@types/node" "11.11.6"
     create-hash "^1.1.0"
@@ -827,13 +727,13 @@ blakejs@^1.1.0:
   resolved "https://registry.npmjs.org/blakejs/-/blakejs-1.2.1.tgz"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
-"blind-threshold-bls@https://github.com/celo-org/blind-threshold-bls-wasm#e1e2f8a":
+"blind-threshold-bls@git+https://github.com/celo-org/blind-threshold-bls-wasm.git#e1e2f8a":
   version "0.1.0"
-  resolved "https://github.com/celo-org/blind-threshold-bls-wasm#e1e2f8a1ab5154c2f0b1c55cb0d61fbb1d907208"
+  resolved "git+https://github.com/celo-org/blind-threshold-bls-wasm.git#e1e2f8a1ab5154c2f0b1c55cb0d61fbb1d907208"
 
-"bls12377js@https://github.com/celo-org/bls12377js#cb38a4cfb643c778619d79b20ca3e5283a2122a6":
+"bls12377js@git+https://github.com/celo-org/bls12377js.git#cb38a4cfb643c778619d79b20ca3e5283a2122a6":
   version "0.1.0"
-  resolved "https://github.com/celo-org/bls12377js#cb38a4cfb643c778619d79b20ca3e5283a2122a6"
+  resolved "git+https://github.com/celo-org/bls12377js.git#cb38a4cfb643c778619d79b20ca3e5283a2122a6"
   dependencies:
     "@stablelib/blake2xs" "0.10.4"
     "@types/node" "^12.11.7"
@@ -974,11 +874,6 @@ bs58check@<3.0.0, bs58check@^2.1.1, bs58check@^2.1.2:
     create-hash "^1.1.0"
     safe-buffer "^5.1.2"
 
-btoa@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/btoa/-/btoa-1.2.1.tgz#01a9909f8b2c93f6bf680ba26131eb30f7fa3d73"
-  integrity sha512-SB4/MIGlsiVkMcHmT+pSmIPoNDoHg+7cMzmt3Uxt628MTz2487DKSqK/fuhFBrkuqrYv5UCEnACpF4dTFNKc/g==
-
 buffer-from@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
@@ -1021,29 +916,6 @@ bufferutil@^4.0.1:
   integrity sha512-jduaYOYtnio4aIAyc6UbvPCVcgq7nYpVnucyxr6eCYg/Woad9Hf/oxxBRDnGGjPfjUm6j5O/uBWhIu4iLebFaw==
   dependencies:
     node-gyp-build "^4.3.0"
-
-bunyan-debug-stream@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/bunyan-debug-stream/-/bunyan-debug-stream-2.0.0.tgz#b9593e38753f594e3f9db3eb2fdebdc2af147a9f"
-  integrity sha512-Ovl43CJ7nUwalLzdXc6E1nGIy6ift9Z/QpYXUtsjpDAg35ZFKXifKNZyfpMGuN3N7ijLLqbnxPsMMHsXDdXa9A==
-  dependencies:
-    colors "^1.0.3"
-    exception-formatter "^1.0.4"
-
-bunyan-gke-stackdriver@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/bunyan-gke-stackdriver/-/bunyan-gke-stackdriver-0.1.2.tgz#a47e3724bbb324b1ec0b7dc4350c4d7073aae66d"
-  integrity sha512-eY5OLgAXvOvOq2YpxI0HlV5HjAcLm36Ln3PxxsztO+2GrFSgU3oXoic2LCif/heBKoyOZdMyXKWF5dvswSOS6w==
-
-bunyan@1.8.12:
-  version "1.8.12"
-  resolved "https://registry.yarnpkg.com/bunyan/-/bunyan-1.8.12.tgz#f150f0f6748abdd72aeae84f04403be2ef113797"
-  integrity sha512-dmDUbGHeGcvCDLRFOscZkwx1ZO/aFz3bJOCi5nCgzdhFGPxwK+y5AcDBnqagNGlJZ7lje/l6JUEz9mQcutttdg==
-  optionalDependencies:
-    dtrace-provider "~0.8"
-    moment "^2.10.6"
-    mv "~2"
-    safe-json-stringify "~1"
 
 bytes@3.1.2:
   version "3.1.2"
@@ -1187,11 +1059,6 @@ color-name@1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
   integrity sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw==
-
-colors@^1.0.3:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
-  integrity sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
 
 combined-stream@^1.0.6, combined-stream@~1.0.6:
   version "1.0.8"
@@ -1472,18 +1339,6 @@ dom-walk@^0.1.0:
   resolved "https://registry.npmjs.org/dom-walk/-/dom-walk-0.1.2.tgz"
   integrity sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
 
-dotenv@^8.2.0:
-  version "8.6.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.6.0.tgz#061af664d19f7f4d8fc6e4ff9b584ce237adcb8b"
-  integrity sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==
-
-dtrace-provider@~0.8:
-  version "0.8.8"
-  resolved "https://registry.yarnpkg.com/dtrace-provider/-/dtrace-provider-0.8.8.tgz#2996d5490c37e1347be263b423ed7b297fb0d97e"
-  integrity sha512-b7Z7cNtHPhH9EJhNNbbeqTcXB8LGFFZhq1PGgEvpeHlzd36bhbdTWoE/Ba/YguqpBSlAPKnARWhVlhunCMwfxg==
-  dependencies:
-    nan "^2.14.0"
-
 duplexer3@^0.1.4:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.5.tgz#0b5e4d7bad5de8901ea4440624c8e1d20099217e"
@@ -1763,13 +1618,6 @@ evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
     md5.js "^1.3.4"
     safe-buffer "^5.1.1"
 
-exception-formatter@^1.0.4:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/exception-formatter/-/exception-formatter-1.0.7.tgz#3291616b86fceabefa97aee6a4708032c6e3b96d"
-  integrity sha512-zV45vEsjytJrwfGq6X9qd1Ll56cW4NC2mhCO6lqwMk4ZpA1fZ6C3UiaQM/X7if+7wZFmCgss3ahp9B/uVFuLRw==
-  dependencies:
-    colors "^1.0.3"
-
 express@^4.14.0:
   version "4.18.2"
   resolved "https://registry.npmjs.org/express/-/express-4.18.2.tgz"
@@ -2015,17 +1863,6 @@ glob@7.1.3:
     inflight "^1.0.4"
     inherits "2"
     minimatch "^3.0.4"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
-glob@^6.0.1:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-6.0.4.tgz#0f08860f6a155127b2fadd4f9ce24b1aab6e4d22"
-  integrity sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A==
-  dependencies:
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "2 || 3"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
@@ -2289,11 +2126,6 @@ is-arguments@^1.0.4:
   dependencies:
     call-bind "^1.0.2"
     has-tostringtag "^1.0.0"
-
-is-base64@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/is-base64/-/is-base64-1.1.0.tgz#8ce1d719895030a457c59a7dcaf39b66d99d56b4"
-  integrity sha512-Nlhg7Z2dVC4/PTvIFkgVVNvPHSO2eR/Yd0XzhGiXCXEvWnptXlXa/clQ8aePPiMuxEGcWfzWbGw2Fe3d+Y3v1g==
 
 is-bigint@^1.0.1:
   version "1.0.4"
@@ -2650,17 +2482,17 @@ minimalistic-crypto-utils@^1.0.1:
   resolved "https://registry.npmjs.org/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz"
   integrity sha512-JIYlbt6g8i5jKfJ3xz7rF0LXmv2TkDxBLUkiBeZ7bAx4GnnNMr8xFpGnOxn6GhTEHx3SjRrZEoU+j04prX1ktg==
 
-"minimatch@2 || 3", minimatch@^3.0.4:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
-  integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
-  dependencies:
-    brace-expansion "^1.1.7"
-
 minimatch@3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
+  dependencies:
+    brace-expansion "^1.1.7"
+
+minimatch@^3.0.4:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
+  integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
   dependencies:
     brace-expansion "^1.1.7"
 
@@ -2703,7 +2535,7 @@ mkdirp@0.5.4:
   dependencies:
     minimist "^1.2.5"
 
-mkdirp@^0.5.5, mkdirp@~0.5.1:
+mkdirp@^0.5.5:
   version "0.5.6"
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.6.tgz"
   integrity sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==
@@ -2743,11 +2575,6 @@ mock-fs@^4.1.0:
   version "4.14.0"
   resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-4.14.0.tgz"
   integrity sha512-qYvlv/exQ4+svI3UOvPUpLDF0OMX5euvUH0Ny4N5QyRyhNdgAgUrVH3iUINSzEPLvx0kbo/Bp28GJKIqvE7URw==
-
-moment@^2.10.6:
-  version "2.29.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
-  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 ms@2.0.0:
   version "2.0.0"
@@ -2809,16 +2636,7 @@ multihashes@^0.4.15, multihashes@~0.4.15:
     multibase "^0.7.0"
     varint "^5.0.0"
 
-mv@~2:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/mv/-/mv-2.1.1.tgz#ae6ce0d6f6d5e0a4f7d893798d03c1ea9559b6a2"
-  integrity sha512-at/ZndSy3xEGJ8i0ygALh8ru9qy7gWW1cmkaqBN29JmMlIvM//MEO9y1sk/avxuwnPcfhkejkLsuPxH81BrkSg==
-  dependencies:
-    mkdirp "~0.5.1"
-    ncp "~2.0.0"
-    rimraf "~2.4.0"
-
-nan@^2.13.2, nan@^2.14.0:
+nan@^2.13.2:
   version "2.17.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.17.0.tgz#c0150a2368a182f033e9aa5195ec76ea41a199cb"
   integrity sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==
@@ -2827,11 +2645,6 @@ nano-json-stream-parser@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/nano-json-stream-parser/-/nano-json-stream-parser-0.1.2.tgz"
   integrity sha512-9MqxMH/BSJC7dnLsEMPyfN5Dvoo49IsPFYMcHw3Bcfc2kN0lpHRBSzlMSVx4HGyJ7s9B31CyBTVehWJoQ8Ctew==
-
-ncp@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ncp/-/ncp-2.0.0.tgz#195a21d6c46e361d2fb1281ba38b91e9df7bdbb3"
-  integrity sha512-zIdGUrPRFTUELUvr3Gmc7KZ2Sw/h1PiVM0Af/oHB6zgnV1ikqSfRk+TOufi79aHYCW3NiOXmr1BP5nWbzojLaA==
 
 negotiator@0.6.3:
   version "0.6.3"
@@ -3245,13 +3058,6 @@ responselike@^2.0.0:
   dependencies:
     lowercase-keys "^2.0.0"
 
-rimraf@~2.4.0:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.4.5.tgz#ee710ce5d93a8fdb856fb5ea8ff0e2d75934b2da"
-  integrity sha512-J5xnxTyqaiw06JjMftq7L9ouA448dw/E7dKghkP9WpKNuwmARNNg+Gk8/u5ryb9N/Yo2+z3MCwuqFK/+qPOPfQ==
-  dependencies:
-    glob "^6.0.1"
-
 ripemd160@^2.0.0, ripemd160@^2.0.1:
   version "2.0.2"
   resolved "https://registry.npmjs.org/ripemd160/-/ripemd160-2.0.2.tgz"
@@ -3276,11 +3082,6 @@ safe-buffer@~5.1.0:
   version "5.1.2"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
-
-safe-json-stringify@~1:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/safe-json-stringify/-/safe-json-stringify-1.2.0.tgz#356e44bc98f1f93ce45df14bcd7c01cda86e0afd"
-  integrity sha512-gH8eh2nZudPQO6TytOvbxnuhYBOvDBBLW52tz5q6X58lJcd/tkmqFR+5Z9adS8aJtURSXWThWy/xJtJwixErvg==
 
 safe-regex-test@^1.0.0:
   version "1.0.0"
