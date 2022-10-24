@@ -111,12 +111,16 @@ We recommend that issuers create separate signer addresses to sign attestations 
 
 ### Using signer keys
 
+The signer key needs to be authorized by the issuer, under the `AttestationSigner` role.
+
 ```typescript
 import { encodePacked, keccak256 } from 'web3-utils'
 
 const signerRole = keccak256(encodePacked('celo.org/core/attestation'))
 await accountsContract.methods.authorizeSigner(signer, signerRole, { from: issuer })
 ```
+
+The signer is then used to sign an EIP712 typed data object representing the attestation.
 
 ```typescript
 import { ensureLeading0x } from '@celo/base'
