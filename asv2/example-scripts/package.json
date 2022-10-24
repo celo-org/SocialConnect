@@ -4,8 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@celo/base": "^2.3.0",
     "@celo/identity": "1.5.1",
-    "web3": "^1.8.0"
+    "react-native-blind-threshold-bls": "^1.0.1",
+    "web3": "^1.8.0",
+    "web3-utils": "^1.8.0"
   },
   "devDependencies": {
     "prettier": "2.7.1"
