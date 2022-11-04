@@ -1,10 +1,20 @@
 
 <!-- TOC ignore:true -->
-# Federated Attestations
+# SocialConnect
 
->❗️This is a work in progress - we are continually pushing updates and would love to hear feedback and questions!
+> **Note**
+> This page is a work in progress 🙌
+> We are continually pushing updates and would love to hear feedback and questions!
 
-This updated version of the Attestations protocol leverages issuers to steward the creation and maintenance of attestations. Issuers have the freedom to choose the process they use to verify the user's ownership of their phone number, and each attestation stored on-chain is associated with the issuer who registered it. Looking up an attestation then involves choosing the issuer(s) that we trust.
+## What is SocialConnect?
+
+SocialConnect is an open source protocol for mapping social **identifiers** (phone numbers, email addresses, twitter handles, ...) to **wallet addresses** (0xf93...8fb8), which are hard to remember and prone to typos.
+
+## Why use SocialConnect?
+
+SocialConnect gives you the tools to **register** and **look up** wallet addresses using social identifiers your users already know and maintain in their contact list and social media accounts.
+
+## Contents
 
 <!-- TOC -->
 
@@ -343,6 +353,10 @@ The issuer address should correspond to the account that submitted the transacti
       .lookupAttestations(identifier, [issuer])
       .call();
 ```
+
+## Protocol details 
+
+This updated version of the Attestations protocol leverages issuers to steward the creation and maintenance of attestations. Issuers have the freedom to choose the process they use to verify the user's ownership of their phone number, and each attestation stored on-chain is associated with the issuer who registered it. Looking up an attestation then involves choosing the issuer(s) that we trust.
 
 ## Appendix
 
