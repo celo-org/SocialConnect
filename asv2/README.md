@@ -1,14 +1,17 @@
 
 <!-- TOC ignore:true -->
-# SocialConnect
+# SocialConnect ("ASv2")
 
 > **Note**
 > This page is a work in progress 🙌
-> We are continually pushing updates and would love to hear feedback and questions!
+> We continually push updates. We would love to hear feedback and questions!
 
 ## What is SocialConnect?
 
 SocialConnect is an open source protocol for mapping social **identifiers** (phone numbers, email addresses, twitter handles, ...) to **wallet addresses** (0xf93...8fb8), which are hard to remember and prone to typos.
+
+> **Note**
+> Currently we only support **phone numbers**. 
 
 ## Why use SocialConnect?
 
@@ -19,21 +22,12 @@ SocialConnect gives you the tools to **register** and **look up** wallet address
 <!-- TOC -->
 
   - [Quickstart](#quickstart)
-  - [Getting identifiers from ODIS](#getting-identifiers-from-odis)
-      - [Authentication](#authentication)
-      - [Rate Limits](#rate-limits)
-      - [Runtime Environments](#runtime-environments)
-          - [Node](#node)
-          - [React Native](#react-native)
-          - [Web](#web)
-  - [Registering Attestations](#registering-attestations)
-      - [Using signer keys](#using-signer-keys)
-      - [Registering directly with the issuer](#registering-directly-with-the-issuer)
-  - [Looking up an Attestation](#looking-up-an-attestation)
-  - [Appendix](#appendix)
-      - [Can I generate identifiers myself?](#can-i-generate-identifiers-myself)
-      - [Contract Addresses](#contract-addresses)
-
+  - [Protocol Overview](#protocol-overview)
+  - [Registering Identifiers](#registering-identifiers)
+  - [Looking up Identifiers](#looking-up-identifiers)
+  - [Obfuscating Identifiers with ODIS](#obfuscating-identifiers-with-odis)
+  - [Advanced](#advanced)
+  - [FAQ](#faq)
 <!-- /TOC -->
 
 ## Quickstart
@@ -47,8 +41,8 @@ The steps to register and lookup attestations are:
 3. Register on-chain attestation of obfuscated identifier <-> account mapping
 4. Use the obfuscated identifier and issuer to lookup attested accounts
 
-<details>
-<summary><b>web3.js code example</b></summary>
+<!-- <details>
+<summary><b>web3.js code example</b></summary> -->
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
@@ -87,7 +81,7 @@ console.log(attestations.accounts)
 
 ```
 
-</details>
+<!-- </details> -->
 
 <details>
 <summary><b>contractkit code example</b></summary>
@@ -130,7 +124,40 @@ console.log(attestations.accounts)
 
 For runnable scripts using these code examples, see the `example-scripts` directory.
 
-## Getting identifiers from ODIS
+## Protocol overview
+
+This updated version of the Attestations protocol leverages issuers to steward the creation and maintenance of attestations. Issuers have the freedom to choose the process they use to verify the user's ownership of their phone number, and each attestation stored on-chain is associated with the issuer who registered it. Looking up an attestation then involves choosing the issuer(s) that we trust.
+
+## Registering Identifiers
+
+We recommend that issuers create separate signer addresses to sign attestations when registering them. This is to avoid using the issuer key for multiple functions. If a signer key is compromised or lost, the issuer can simply rotate its signer keys and update its attestations accordingly. However, for convenience, issuers can directly register an attestation as well.
+
+### Registering identifiers as the issuer
+
+If the issuer itself is acting as its signer, then the attestation does not need to be signed, and can be directly registered.
+
+```typescript
+const identifier = phoneHash
+await federatedAttestationsContract.methods
+  .registerAttestationAsIssuer(
+      identifier,
+      account,
+      issuedOnTimestamp
+  ).send()
+```
+
+## Looking up Identifiers
+
+When looking up an attestion, make sure to use the same ODIS identifier that was used to register it.
+The issuer address should correspond to the account that submitted the transaction.
+
+```typescript
+    const attestations = await federatedAttestationsInstance.methods
+      .lookupAttestations(identifier, [issuer])
+      .call();
+```
+
+## Obfuscating identifiers with ODIS
 
 
 The `@celo/identity` sdk package provides the [`getPhoneNumberIdentifier` function](https://celo-sdk-docs.readthedocs.io/en/latest/identity/modules/_odis_phone_number_identifier_/#getphonenumberidentifier) to query ODIS for identifiers
@@ -230,11 +257,9 @@ const {phoneHash} = await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifi
 )
 ```
 
-## Registering Attestations
+## Advanced
 
-We recommend that issuers create separate signer addresses to sign attestations when registering them. This is to avoid using the issuer key for multiple functions. If a signer key is compromised or lost, the issuer can simply rotate its signer keys and update its attestations accordingly. However, for convenience, issuers can directly register an attestation as well.
-
-### Using signer keys
+### Registering identifiers with signer keys
 
 The signer key needs to be authorized by the issuer, under the `AttestationSigner` role.
 
@@ -329,36 +354,7 @@ await federatedAttestationsContract.methods
   ).send()
 ```
 
-### Registering directly with the issuer
-
-If the issuer itself is acting as its signer, then the attestation does not need to be signed, and can be directly registered.
-
-```typescript
-const identifier = phoneHash
-await federatedAttestationsContract.methods
-  .registerAttestationAsIssuer(
-      identifier,
-      account,
-      issuedOnTimestamp
-  ).send()
-```
-
-## Looking up an Attestation
-
-When looking up an attestion, make sure to use the same ODIS identifier that was used to register it.
-The issuer address should correspond to the account that submitted the transaction.
-
-```typescript
-    const attestations = await federatedAttestationsInstance.methods
-      .lookupAttestations(identifier, [issuer])
-      .call();
-```
-
-## Protocol details 
-
-This updated version of the Attestations protocol leverages issuers to steward the creation and maintenance of attestations. Issuers have the freedom to choose the process they use to verify the user's ownership of their phone number, and each attestation stored on-chain is associated with the issuer who registered it. Looking up an attestation then involves choosing the issuer(s) that we trust.
-
-## Appendix
+## FAQ
 
 ### Can I generate identifiers myself?
 
@@ -435,7 +431,7 @@ const odisPepper = createHash('sha256').update(sigBuf).digest('base64').slice(0,
 const obfuscatedIdentifier = sha3(prefix + plaintextIdentifier + PEPPER_SEPARATOR + odisPepper) as string
 ```
 
-### Contract Addresses
+### Where can I find the smart contract implementations and addresses?
 
 Mainnet:
 
