@@ -10,8 +10,8 @@
 
 SocialConnect is an open source protocol for mapping social **identifiers** (phone numbers, email addresses, twitter handles, ...) to **wallet addresses** (0xf93...8fb8), which are hard to remember and prone to typos.
 
-> **Note**
-> Currently we only support **phone numbers**. 
+> **Warning**
+> We currently only support **phone numbers** (we're working on the SDK and documentation to support arbitrary identifiers)
 
 ## Why use SocialConnect?
 
@@ -167,7 +167,6 @@ console.log(attestations.accounts)
 <summary><b>Ethersjs example</b></summary>
 
 ⚠️ WIP (currently working on it)
-
 </details>
 
 For runnable scripts using these code examples, see the `example-scripts` directory.
