@@ -8,21 +8,21 @@ This updated version of the Attestations protocol leverages issuers to steward t
 
 <!-- TOC -->
 
-    - [Quickstart](#quickstart)
-    - [Getting identifiers from ODIS](#getting-identifiers-from-odis)
-        - [Authentication](#authentication)
-        - [Rate Limits](#rate-limits)
-        - [Runtime Environments](#runtime-environments)
-            - [Node](#node)
-            - [React Native](#react-native)
-            - [Web](#web)
-    - [Registering Attestations](#registering-attestations)
-        - [Using signer keys](#using-signer-keys)
-        - [Registering directly with the issuer](#registering-directly-with-the-issuer)
-    - [Looking up an Attestation](#looking-up-an-attestation)
-    - [Appendix](#appendix)
-        - [Can I generate identifiers myself?](#can-i-generate-identifiers-myself)
-        - [Contract Addresses](#contract-addresses)
+  - [Quickstart](#quickstart)
+  - [Getting identifiers from ODIS](#getting-identifiers-from-odis)
+      - [Authentication](#authentication)
+      - [Rate Limits](#rate-limits)
+      - [Runtime Environments](#runtime-environments)
+          - [Node](#node)
+          - [React Native](#react-native)
+          - [Web](#web)
+  - [Registering Attestations](#registering-attestations)
+      - [Using signer keys](#using-signer-keys)
+      - [Registering directly with the issuer](#registering-directly-with-the-issuer)
+  - [Looking up an Attestation](#looking-up-an-attestation)
+  - [Appendix](#appendix)
+      - [Can I generate identifiers myself?](#can-i-generate-identifiers-myself)
+      - [Contract Addresses](#contract-addresses)
 
 <!-- /TOC -->
 
@@ -118,7 +118,7 @@ console.log(attestations.accounts)
 
 </details>
 
-For runnable scripts using these code examples, see `example-scripts`.
+For runnable scripts using these code examples, see the `example-scripts` directory.
 
 ## Getting identifiers from ODIS
 
