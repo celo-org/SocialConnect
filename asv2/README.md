@@ -1,12 +1,117 @@
+
+<!-- TOC ignore:true -->
 # Federated Attestations
 
 >❗️This is a work in progress - we are continually pushing updates and would love to hear feedback and questions!
 
-This updated version of the Attestations protocol leverages issuers to steward the creation and maintenance of attestations. Issuers have the freedom to choose the process they use to verify the user's ownership of their phone number, and each attestation stored on-chain is associated with the issuer who registered it. Looking up an identifier then involves choosing the issuer(s) that we trust.
+This updated version of the Attestations protocol leverages issuers to steward the creation and maintenance of attestations. Issuers have the freedom to choose the process they use to verify the user's ownership of their phone number, and each attestation stored on-chain is associated with the issuer who registered it. Looking up an attestation then involves choosing the issuer(s) that we trust.
+
+<!-- TOC -->
+
+  - [Quickstart](#quickstart)
+  - [Getting identifiers from ODIS](#getting-identifiers-from-odis)
+      - [Authentication](#authentication)
+      - [Rate Limits](#rate-limits)
+      - [Runtime Environments](#runtime-environments)
+          - [Node](#node)
+          - [React Native](#react-native)
+          - [Web](#web)
+  - [Registering Attestations](#registering-attestations)
+      - [Using signer keys](#using-signer-keys)
+      - [Registering directly with the issuer](#registering-directly-with-the-issuer)
+  - [Looking up an Attestation](#looking-up-an-attestation)
+  - [Appendix](#appendix)
+      - [Can I generate identifiers myself?](#can-i-generate-identifiers-myself)
+      - [Contract Addresses](#contract-addresses)
+
+<!-- /TOC -->
+
+## Quickstart
+
+In order to have interoperability between issuers and to [preserve user privacy](https://docs.celo.org/protocol/identity/odis-use-case-phone-number-privacy), phone numbers are turned into **obfuscated identifiers** before they are mapped on-chain to addresses. [ODIS](https://docs.celo.org/protocol/identity/odis) is a service that helps to perform this computation in a decentralized and privacy-preserving way.
+
+The steps to register and lookup attestations are:
+
+1. Install `@celo/identity` into your project
+2. Query ODIS to obtain obfuscated identifier of your phone number
+3. Register on-chain attestation of obfuscated identifier <-> account mapping
+4. Use the obfuscated identifier and issuer to lookup attested accounts
+
+<details>
+<summary><b>web3.js code example</b></summary>
+
+You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
+
+```typescript
+import { OdisUtils } from '@celo/identity'
+
+// initialize variables accordingly
+let issuer, phoneNumber, account, attestationIssuedTime, DEK_PRIVATE_KEY, federatedAttestationsContract
+
+// get identifier from phone number
+const authSigner = {
+    authenticationMethod: OdisUtils.Query.AuthenticationMethod.ENCRYPTION_KEY,
+    rawKey: DEK_PRIVATE_KEY
+}
+const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+  phoneNumber,
+  issuer.address,
+  authSigner,
+  OdisUtils.Query.getServiceContext('alfajores')
+)).phoneHash
+
+// upload identifier <-> address mapping to onchain registry
+await federatedAttestationsContract.methods
+  .registerAttestationAsIssuer(
+      identifier,
+      account,
+      attestationIssuedTime
+  )
+  .send({from: this.issuer.address, gas: 50000});
+
+// lookup accounts mapped to the given phone number
+const attestations = await federatedAttestationsContract.methods
+  .lookupAttestations(identifier, [this.issuer.address])
+  .call();
+console.log(attestations.accounts)
+
+```
+
+</details>
+
+<details>
+<summary><b>contractkit code example</b></summary>
+
+```typescript
+authSigner: AuthSigner = {
+        authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
+        rawKey: DEK_PRIVATE_KEY
+    }
+
+const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+  phoneNumber,
+  this.issuer.address,
+  this.authSigner,
+  OdisUtils.Query.getServiceContext('alfajores')
+)).phoneHash
+
+// upload identifier <-> address mapping to onchain registry
+await federatedAttestationsContract.methods
+  .registerAttestationAsIssuer(
+      identifier,
+      account,
+      NOW_TIMESTAMP
+  )
+  .send({from: this.issuer.address, gas: 50000});
+
+```
+
+</details>
+
+For runnable scripts using these code examples, see `example-scripts`.
 
 ## Getting identifiers from ODIS
 
-In order to have interoperability between issuers and to [preserve user privacy](https://docs.celo.org/protocol/identity/odis-use-case-phone-number-privacy), phone numbers are turned into **identifiers** before they are mapped to addresses. [ODIS](https://docs.celo.org/protocol/identity/odis) is a service that helps to perform this computation in a decentralized and privacy-preserving way.
 
 The `@celo/identity` sdk package provides the [`getPhoneNumberIdentifier` function](https://celo-sdk-docs.readthedocs.io/en/latest/identity/modules/_odis_phone_number_identifier_/#getphonenumberidentifier) to query ODIS for identifiers
 
@@ -14,7 +119,7 @@ The `@celo/identity` sdk package provides the [`getPhoneNumberIdentifier` functi
 
 ### Authentication
 
-There are two authentication methods for your ODIS request: `WalletKeySigner` for a wallet key or `EncryptionKeySigner` for the [data encryption key (DEK)](https://docs.celo.org/developer/contractkit/data-encryption-key).The DEK method is preferred, since it doesn't require the user to access the same key that manages their funds.
+There are two authentication methods for your ODIS request: `WalletKeySigner` for a wallet key or `EncryptionKeySigner` for the [data encryption key (DEK)](https://docs.celo.org/developer/contractkit/data-encryption-key). The DEK method is preferred, since it doesn't require the user to access the same key that manages their funds.
 
 You may use the DEK by passing in the raw private key
 
@@ -107,7 +212,7 @@ const {phoneHash} = await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifi
 
 ## Registering Attestations
 
-We recommend that issuers create separate signer addresses to sign attestations when registering them. This is to avoid using using the issuer key for multiple functions. If a signer key is compromised or lost, the issuer can simply rotate its signer keys and update its attestations accordingly. However, for convenience, issuers can directly register an attestation as well.
+We recommend that issuers create separate signer addresses to sign attestations when registering them. This is to avoid using the issuer key for multiple functions. If a signer key is compromised or lost, the issuer can simply rotate its signer keys and update its attestations accordingly. However, for convenience, issuers can directly register an attestation as well.
 
 ### Using signer keys
 
@@ -231,16 +336,82 @@ The issuer address should correspond to the account that submitted the transacti
 
 ## Appendix
 
-## How do I generate interoperable and secure ODIS identifiers?
+### Can I generate identifiers myself?
 
-| Type | Pattern  | Example |
-|------|--------|--------|
-| **Phone numbers** | `{prefix}{e164_phone_number}{separator}{ODIS_pepper}` | `tel://+123456789__123abc` |
-| **Twitter handles** | `{prefix}{Twitter handle}{separator}{ODIS_pepper}` (illustrative) | `twitter://@CeloOrg__123abc` (illustrative) |
+Yes! If you want to bypass the SDK, you can compute onChain identifiers with ODIS yourself.
 
+1. Blind identifier
 
+Using the right blinding client for your runtime environment, blind your identifier before passing it to ODIS. This ensures that none of the signers see your personal information.
 
-## Contract Addresses
+```typescript
+const plaintextIdentifier = "your phone number, email, twitter handle, etc."
+
+const base64Identifier = Buffer.from(plaintextIdentifier).toString('base64')
+const blindedIdentifier = blsBlindingClient.blindMessage(base64Identifier, seed)
+```
+
+2. Get signature from ODIS
+
+```typescript
+const body: SignMessageRequest = {
+  account,
+  blindedQueryPhoneNumber: base64BlindedMessage,
+  version: clientVersion,
+  authenticationMethod: signer.authenticationMethod,
+  sessionID,
+}
+
+const response = await queryOdis(
+  body,
+  context,
+  CombinerEndpoint.PNP_SIGN,
+  SignMessageResponseSchema,
+  {
+    [KEY_VERSION_HEADER]: keyVersion?.toString(),
+    Authorization: await getOdisPnpRequestAuth(body, signer),
+  }
+)
+
+try {
+  res = await fetch(context.odisUrl + endpoint, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    body: JSON.stringify(body),
+  })
+} catch (error) {
+  throw new Error(`${ErrorMessages.ODIS_FETCH_ERROR}: ${error}`)
+}
+
+if (!response.success) {
+  throw new Error(response.error)
+}
+
+const blindedSignature = response.signature
+```
+
+3. Construct obfuscated identifier from ODIS signature
+
+```typescript
+import { createHash } from 'crypto'
+import { soliditySha3 } from '@celo/utils/lib/solidity'
+const sha3 = (v: string) => soliditySha3({ type: 'string', value: v })
+
+const unblindedSig = await blsBlindingClient.unblindAndVerifyMessage(blindedSignature)
+const sigBuf = Buffer.from(unblindedSig, 'base64')
+
+// converting sig to pepper
+const PEPPER_CHAR_LENGTH = 13
+const PEPPER_SEPARATOR = '__'
+const odisPepper = createHash('sha256').update(sigBuf).digest('base64').slice(0, PEPPER_CHAR_LENGTH)
+const obfuscatedIdentifier = sha3(prefix + plaintextIdentifier + PEPPER_SEPARATOR + odisPepper) as string
+```
+
+### Contract Addresses
 
 Mainnet:
 

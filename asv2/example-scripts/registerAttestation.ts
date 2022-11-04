@@ -10,10 +10,7 @@ import {
 } from "./constants";
 import Web3 from "web3";
 import { OdisUtils } from '@celo/identity'
-import { AuthenticationMethod, AuthSigner } from "@celo/identity/lib/odis/query";
-
-const USER_ACCOUNT = "0xf14790BAdd2638cECB5e885fc7fAD1b6660AAc34";
-const USER_PHONE_NUMBER = "+18009099999";
+import { AuthSigner } from "@celo/identity/lib/odis/query";
 
 const ISSUER_PRIVATE_KEY = "0x726e53db4f0a79dfd63f58b19874896fce3748fcb80874665e0c147369c04a37";
 const DEK_PUBLIC_KEY = "0x026063780c81991c032fb4fa7485c6607b7542e048ef85d08516fe5c4482360e4b";
@@ -21,13 +18,11 @@ const DEK_PRIVATE_KEY = "0xc2bbdabb440141efed205497a41d5fb6114e0435fd541e368dc62
 
 const ALFAJORES_RPC = "https://alfajores-forno.celo-testnet.org";
 
-const NOW_TIMESTAMP = Math.floor(new Date().getTime() / 1000);
-
 class ASv2 {
     web3 = new Web3(ALFAJORES_RPC);
     issuer = this.web3.eth.accounts.privateKeyToAccount(ISSUER_PRIVATE_KEY);
     authSigner: AuthSigner = {
-        authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
+        authenticationMethod: OdisUtils.Query.AuthenticationMethod.ENCRYPTION_KEY,
         rawKey: DEK_PRIVATE_KEY
     }
     
@@ -55,7 +50,7 @@ class ASv2 {
         this.accountsContract.methods.setAccountDataEncryptionKey(DEK_PUBLIC_KEY).send({from: this.issuer.address, gas: 50000})
     }
 
-    async registerAttestation(phoneNumber: string, account: string) {
+    async registerAttestation(phoneNumber: string, account: string, attestationIssuedTime: number) {
         // TODO: once the new version of ODIS has been deployed, issuers will need to
         // ensure their account has sufficient ODIS quota
         // if (getQuotaStatus(this.issuer.address) <= 0) {
@@ -77,7 +72,7 @@ class ASv2 {
             .registerAttestationAsIssuer(
                 identifier,
                 account,
-                NOW_TIMESTAMP
+                attestationIssuedTime
             )
             .send({from: this.issuer.address, gas: 50000});
     }
@@ -103,11 +98,14 @@ class ASv2 {
 
 (async () => {
     const asv2 = new ASv2()
+    const userAccount = "0xf14790BAdd2638cECB5e885fc7fAD1b6660AAc34";
+    const userPhoneNumber = "+18009099999";
+    const timeAttestationWasVerified = Math.floor(new Date().getTime() / 1000);
     try{
-        await asv2.registerAttestation(USER_PHONE_NUMBER, USER_ACCOUNT)
+        await asv2.registerAttestation(userPhoneNumber, userAccount, timeAttestationWasVerified)
     } catch(err){
         // mostly likely reason registering would fail is if this issuer has already
         // registered a mapping between this number and account
     }
-    console.log(await asv2.lookupAddresses(USER_PHONE_NUMBER))
+    console.log(await asv2.lookupAddresses(userPhoneNumber))
 })()
