@@ -37,12 +37,55 @@ In order to have interoperability between issuers and to [preserve user privacy]
 The steps to register and lookup attestations are:
 
 1. Install `@celo/identity` into your project
-2. Query ODIS to obtain obfuscated identifier of your phone number
-3. Register on-chain attestation of obfuscated identifier <-> account mapping
-4. Use the obfuscated identifier and issuer to lookup attested accounts
 
-<!-- <details>
-<summary><b>web3.js code example</b></summary> -->
+  ```ts
+  import { OdisUtils } from '@celo/identity'
+  ```
+
+2. Obfuscate the identifier you want to register using the ODIS API
+
+```ts
+// Authenticate with ODIS API
+const authSigner = {
+    authenticationMethod: OdisUtils.Query.AuthenticationMethod.ENCRYPTION_KEY,
+    rawKey: DEK_PRIVATE_KEY
+}
+// Request obfuscated identifier
+const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+  phoneNumber,
+  issuer.address,
+  authSigner,
+  OdisUtils.Query.getServiceContext('alfajores')
+)).phoneHash
+```
+
+3. Register your obfuscated identifier on-chain
+
+```ts
+// Upload identifier <-> address mapping to onchain registry
+await federatedAttestationsContract.methods
+  .registerAttestationAsIssuer(
+      identifier,
+      account,
+      attestationIssuedTime
+  )
+  .send({from: this.issuer.address, gas: 50000});
+```
+
+4. Lookup the address associated with the obfuscated identifier and issuer
+
+```ts
+// lookup accounts mapped to the given phone number
+const attestations = await federatedAttestationsContract.methods
+  .lookupAttestations(identifier, [this.issuer.address])
+  .call();
+console.log(attestations.accounts)
+```
+
+Here are simple examples using [web3js](https://www.npmjs.com/package/web3), [@celo/contractkit](https://www.npmjs.com/package/ts-node#command-line) and [ethersjs](https://www.npmjs.com/package/ethers) (WIP ⚠️):
+
+<details>
+<summary><b>Web3.js example</b></summary>
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
@@ -78,13 +121,12 @@ const attestations = await federatedAttestationsContract.methods
   .lookupAttestations(identifier, [this.issuer.address])
   .call();
 console.log(attestations.accounts)
-
 ```
 
-<!-- </details> -->
+</details>
 
 <details>
-<summary><b>contractkit code example</b></summary>
+<summary><b>Contractkit example</b></summary>
 
 Install the `@celo/contractkit` package, using version `>=2.3.0`
 
@@ -119,6 +161,12 @@ const attestations = await federatedAttestationsContract.lookupAttestations(
 );
 console.log(attestations.accounts)
 ```
+</details>
+
+<details>
+<summary><b>Ethersjs example</b></summary>
+
+⚠️ WIP (currently working on it)
 
 </details>
 
