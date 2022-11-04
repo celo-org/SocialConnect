@@ -8,21 +8,21 @@ This updated version of the Attestations protocol leverages issuers to steward t
 
 <!-- TOC -->
 
-  - [Quickstart](#quickstart)
-  - [Getting identifiers from ODIS](#getting-identifiers-from-odis)
-      - [Authentication](#authentication)
-      - [Rate Limits](#rate-limits)
-      - [Runtime Environments](#runtime-environments)
-          - [Node](#node)
-          - [React Native](#react-native)
-          - [Web](#web)
-  - [Registering Attestations](#registering-attestations)
-      - [Using signer keys](#using-signer-keys)
-      - [Registering directly with the issuer](#registering-directly-with-the-issuer)
-  - [Looking up an Attestation](#looking-up-an-attestation)
-  - [Appendix](#appendix)
-      - [Can I generate identifiers myself?](#can-i-generate-identifiers-myself)
-      - [Contract Addresses](#contract-addresses)
+    - [Quickstart](#quickstart)
+    - [Getting identifiers from ODIS](#getting-identifiers-from-odis)
+        - [Authentication](#authentication)
+        - [Rate Limits](#rate-limits)
+        - [Runtime Environments](#runtime-environments)
+            - [Node](#node)
+            - [React Native](#react-native)
+            - [Web](#web)
+    - [Registering Attestations](#registering-attestations)
+        - [Using signer keys](#using-signer-keys)
+        - [Registering directly with the issuer](#registering-directly-with-the-issuer)
+    - [Looking up an Attestation](#looking-up-an-attestation)
+    - [Appendix](#appendix)
+        - [Can I generate identifiers myself?](#can-i-generate-identifiers-myself)
+        - [Contract Addresses](#contract-addresses)
 
 <!-- /TOC -->
 
@@ -82,28 +82,38 @@ console.log(attestations.accounts)
 <details>
 <summary><b>contractkit code example</b></summary>
 
-```typescript
-authSigner: AuthSigner = {
-        authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
-        rawKey: DEK_PRIVATE_KEY
-    }
+Install the `@celo/contractkit` package, using version `>=2.3.0`
 
+```typescript
+import { OdisUtils } from '@celo/identity'
+
+// initialize variables
+let kit, issuer, phoneNumber, account, attestationIssuedTime
+const federatedAttestationsContract = await kit.contracts.getFederatedAttestations();
+
+// get identifier from phone number
+const authSigner = {
+  authenticationMethod: OdisUtils.Query.AuthenticationMethod.WALLET_KEY,
+  contractKit: kit,
+};
 const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
   phoneNumber,
-  this.issuer.address,
-  this.authSigner,
+  issuer.address,
+  authSigner,
   OdisUtils.Query.getServiceContext('alfajores')
 )).phoneHash
 
 // upload identifier <-> address mapping to onchain registry
-await federatedAttestationsContract.methods
-  .registerAttestationAsIssuer(
-      identifier,
-      account,
-      NOW_TIMESTAMP
-  )
-  .send({from: this.issuer.address, gas: 50000});
+await federatedAttestationsContract
+  .registerAttestationAsIssuer(identifier, account, attestationIssuedTime)
+  .send();
 
+// lookup accounts mapped to the given phone number
+const attestations = await federatedAttestationsContract.lookupAttestations(
+  identifier,
+  [issuer.address]
+);
+console.log(attestations.accounts)
 ```
 
 </details>
