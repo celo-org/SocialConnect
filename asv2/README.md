@@ -43,6 +43,7 @@ Phone number identifiers are currently derived by hashing: `{prefix}{e164_phone_
 
 **Obfuscate Alice's phone number**
 
+<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201716282-39e1b1b9-7a88-4e2c-8607-417ddcec2443.png">
 
 
 ## Quickstart
