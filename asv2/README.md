@@ -35,11 +35,11 @@ Phone number identifiers are currently derived by hashing: `{prefix}{e164_phone_
 
 **Register Alice’s phone number on-chain**
 
-<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201676597-ff2a4e6e-69de-4ef8-aab8-736a34b698af.png">
+<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201714875-c73d8417-0e0c-47b4-9b41-8529689f0607.png">
 
 **Look up Alice’s phone number on-chain**
 
-<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201696265-aa6bfff3-560e-44c2-bf10-8944a94a5a0f.png">
+<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201715097-124a8461-2a45-4a1f-ab2a-1781300befb0.png">
 
 **Obfuscate Alice's phone number**
 
