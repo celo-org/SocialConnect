@@ -1,14 +1,48 @@
-# SocialConnect ("ASv2")
-
 > **Note**
 > This page is a work in progress 🙌
 > We continually push updates and would love to hear feedback and questions!
 
-SocialConnect is an open source protocol for creating attestations mapping **off-chain identifiers** (phone numbers, email addresses, twitter handles, etc.) to **account addresses**.
+# SocialConnect ("ASv2")
 
-> We temporarily only support phone numbers (we're working on the SDK and documentation to support all identifier types)
+SocialConnect is an open source protocol to map **identifiers** (e.g. phone numbers, email addresses, twitter handles, etc.) to **account addresses** (e.g. 0xf93...8fb8), which are hard to remember and prone to typos. This lets developers design familiar  user experiences with phone numbers and other social identifiers such as:
 
-The protocol leverages issuers to steward the creation and maintenance of attestations. Issuers have the freedom to choose the process they use to verify the user's ownership of their phone number, and each attestation stored on-chain is associated with the issuer who registered it. Looking up an attestation then involves choosing the issuer(s) that we trust.
+- "_Venmo for crypto_"-style discovery and mobile payments,
+- Social graph-based reputation and sybil resistance scores, and
+- much more.
+
+SocialConnect lets developers leverage their users' carefully curated contact lists and social identifiers to find each other on-chain and construct dense social graphs.
+
+> **Warning**
+> We currently only support **phone numbers**, but are working on a release of the SDK to support any string identifier (incl. email addresses, twitter handles, etc).
+
+## Why use SocialConnect?
+
+Contrary to ENS, Unstoppable Domains, and other _web3_ discovery protocols, SocialConnect leverages (_web2_) identifiers that users had and curated before entering web3.
+
+<!-- TODO: Name squatting -->
+
+SocialConnect gives developers the tools to **register** and **look up** account addresses related to social identifiers their users already know and curate in their contact list and social media accounts.
+
+## Protocol Overview
+
+SocialConnect has three main high-level components:
+
+1. an SDK: `@celo/identity`
+2. a privacy API: ODIS (short for "Oblivious Decentralised Identity Service"), and
+3. two smart contracts: `FederatedAttestations` and `OdisPayments`
+
+Phone number identifiers are currently derived by hashing: `{prefix}{e164_phone_number}{separator}{pepper}`; as a concrete example for a phone number `+123456789` and pepper `123abc` you hash `sha3('tel://+123456789__123abc')`.
+
+**Register Alice’s phone number on-chain**
+
+<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201676597-ff2a4e6e-69de-4ef8-aab8-736a34b698af.png">
+
+**Look up Alice’s phone number on-chain**
+
+<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201696265-aa6bfff3-560e-44c2-bf10-8944a94a5a0f.png">
+
+**Obfuscate Alice's phone number**
+
 
 
 ## Quickstart
@@ -111,3 +145,4 @@ console.log(attestations.accounts)
 
 ⚠️ WIP (currently working on it)
 </details>
+
