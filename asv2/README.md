@@ -27,11 +27,13 @@ SocialConnect gives developers the tools to **register** and **look up** account
 
 ## Protocol Overview
 
-SocialConnect has three main high-level components:
+SocialConnect has three main components:
 
-1. an SDK: `@celo/identity`
-2. a privacy API: ODIS (short for "Oblivious Decentralised Identity Service"), and
-3. two smart contracts: `FederatedAttestations` and `OdisPayments`
+1. an **SDK**: `@celo/identity`
+2. a privacy **API**: ODIS (short for "Oblivious Decentralised Identity Service"), and
+3. two **smart contracts**: `FederatedAttestations` and `OdisPayments`
+
+<!-- todo: continue describing how they work together -->
 
 **Register Alice’s phone number on-chain**
 
