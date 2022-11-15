@@ -1,5 +1,5 @@
 > **Note**
-> This page is a work in progress 🙌
+> This page is a draft and work in progress 🙌
 
 # Social Connect Demo
 
@@ -40,5 +40,5 @@ For in depth projects or research built on identity use cases, please see the [B
 
 ## Contact
 
-[Discord](https://discord.com/invite/6yWMkgM)
-[Celo University Guild](https://celocommunity.xyz/celo-university-guild-test)
+- [Discord](https://discord.com/invite/6yWMkgM)
+- [Celo University Guild](https://celocommunity.xyz/celo-university-guild-test)

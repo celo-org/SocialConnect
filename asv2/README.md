@@ -1,12 +1,14 @@
 > **Note**
-> This page is a work in progress 🙌
+> This page is a draft and work in progress 🙌
 > We continually push updates and would love to hear feedback and questions!
 
 # SocialConnect ("ASv2")
 
-SocialConnect is an open source protocol to map **identifiers** (e.g. phone numbers, email addresses, twitter handles, etc.) to **account addresses** (e.g. 0xf93...8fb8), which are hard to remember and prone to typos. This lets developers design familiar  user experiences with phone numbers and other social identifiers such as:
+SocialConnect is an open source protocol to map **identifiers** (e.g. phone numbers, email addresses, twitter handles, etc.) to **account addresses** (e.g. `0xf93...8fb8`), which are hard to remember and prone to typos. 
 
-- "_Venmo for crypto_"-style discovery and mobile payments,
+This lets developers design familiar  user experiences with phone numbers and other social identifiers such as:
+
+- "_Venmo for crypto_"-style mobile payments and web3 discovery,
 - Social graph-based reputation and sybil resistance scores, and
 - much more.
 
@@ -17,7 +19,7 @@ SocialConnect lets developers leverage their users' carefully curated contact li
 
 ## Why use SocialConnect?
 
-Contrary to ENS, Unstoppable Domains, and other _web3_ discovery protocols, SocialConnect leverages (_web2_) identifiers that users had and curated before entering web3.
+Contrary to ENS, Unstoppable Domains, and other _web3_ discovery protocols, SocialConnect leverages (_web2_) identifiers that users already have and carefully curate in their day-to-day lives.
 
 <!-- TODO: Name squatting -->
 
