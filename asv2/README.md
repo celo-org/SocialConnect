@@ -74,8 +74,7 @@ In short, Alice's phone number is converted into an obfuscated phone number befo
 | **Keybase accounts** | `sha3({prefix}{keybase_handle}{separator}{ODIS_pepper})` | `sha3(keybase://@celoorg__759mno)` = ccee4144e17dcac2f...f17ba805032974 |
 | **More** | ... | ... |
 
-
-
+You can [visualise sha3 hashes online here](https://emn178.github.io/online-tools/sha3_256.html) if you prefer learning by doing.
 
 ## Quickstart
 
