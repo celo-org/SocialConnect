@@ -48,11 +48,24 @@ SocialConnect has three main components:
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201715097-124a8461-2a45-4a1f-ab2a-1781300befb0.png">
 
 **Obfuscate Alice's phone number**
+<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201716282-39e1b1b9-7a88-4e2c-8607-417ddcec2443.png">
 
-Phone number identifiers are currently derived by hashing data using the following pattern: 
+Social identifiers are obfuscated before they are mapped on-chain by using the following hashing pattern:
+
+> **Warning**
+> We currently only support **phone numbers**. The obfuscation pattern for any other identifier is not finalised and only illustrative at this stage ⚠️
+
+| Identifiers | Obfuscation patterns  | Obfuscation examples |
+|------|--------|--------|
+| **Phone numbers** | `sha3({prefix}{e164_phone_number}{separator}{ODIS_pepper})` | `sha3(tel://+123456789__123abc)` = c1fbb1429e94f4a491ee9601fb8cb9150ac3ed06e990d9449c8fba9509df3f1a |
+| **Twitter accounts** | `sha3({prefix}{twitter_handle}{separator}{ODIS_pepper})`  | `sha3(twitter://@CeloOrg__456def)` = 96fdf5e45259f77605043e8586833a5ce5d4ea59e64b3eeccdd5f5622dba1709 |
+| **Email addresses** | `sha3({prefix}{email_address}{separator}{ODIS_pepper})` | `sha3(email://hello@celo.org__789ghi)` = 4b2b6074417fe4d64e0afd5dc8397e1f651a9ef360719a222c2a02cc6b16aa8c |
+| **Reddit accounts** | `sha3({prefix}{reddit_handle}{separator}{ODIS_pepper})` | `sha3(reddit://@celoorg__321jkl)` = bb29224bc50afb46d20512e5c64d315dd62f3d4053f18b20c9dbdfdcb9831abb |
+| **Keybase accounts** | `sha3({prefix}{keybase_handle}{separator}{ODIS_pepper})` | `sha3(keybase://@celoorg__759mno)` = ccee4144e17d9dcac2ff6e6387759423f7d776d929a9519f17ba805032974b33|
+| **More** | ... | ... |
+
 - `{prefix}{e164_phone_number}{separator}{pepper}`. As a concrete example for Alice's phone number `+123456789` and pepper `123abc` you hash `sha3('tel://+123456789__123abc')`.
 
-<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201716282-39e1b1b9-7a88-4e2c-8607-417ddcec2443.png">
 
 
 ## Quickstart
