@@ -31,17 +31,22 @@ SocialConnect has three main high-level components:
 2. a privacy API: ODIS (short for "Oblivious Decentralised Identity Service"), and
 3. two smart contracts: `FederatedAttestations` and `OdisPayments`
 
-Phone number identifiers are currently derived by hashing: `{prefix}{e164_phone_number}{separator}{pepper}`; as a concrete example for a phone number `+123456789` and pepper `123abc` you hash `sha3('tel://+123456789__123abc')`.
-
 **Register Alice’s phone number on-chain**
+
+<!-- Blurb -->
 
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201714875-c73d8417-0e0c-47b4-9b41-8529689f0607.png">
 
 **Look up Alice’s phone number on-chain**
 
+<!-- Blurb -->
+
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201715097-124a8461-2a45-4a1f-ab2a-1781300befb0.png">
 
 **Obfuscate Alice's phone number**
+
+Phone number identifiers are currently derived by hashing data using the following pattern: 
+- `{prefix}{e164_phone_number}{separator}{pepper}`. As a concrete example for Alice's phone number `+123456789` and pepper `123abc` you hash `sha3('tel://+123456789__123abc')`.
 
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201716282-39e1b1b9-7a88-4e2c-8607-417ddcec2443.png">
 
@@ -146,4 +151,3 @@ console.log(attestations.accounts)
 
 ⚠️ WIP (currently working on it)
 </details>
-
