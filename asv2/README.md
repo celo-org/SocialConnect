@@ -40,11 +40,6 @@ Follow these steps to **register** and **look up** attestations:
 
 Read more about why [obfuscating identifiers](#obfuscate-alices-phone-number) matters below.
 
-
-Code snippets
-
-Here are simple examples using , [@celo/contractkit](https://www.npmjs.com/package/ts-node#command-line) and [ethersjs](https://www.npmjs.com/package/ethers) (WIP ⚠️).
-
 ### 1. Code snippets (short examples)
 
 <details>
@@ -202,7 +197,7 @@ console.log(attestations.accounts)
 
 ### 2. NodeJS implementation (long examples)
 
-Take a look at the implementations in the **example-scripts** folder:
+Take a look at the implementations in the [example-scripts](example-scripts/) folder:
 
 - [example-scripts/registerAttestation-ethers.ts](example-scripts/registerAttestation-ethers.ts)
 - [example-scripts/registerAttestation-web3.ts](example-scripts/registerAttestation-web3.ts)
