@@ -4,35 +4,36 @@
 
 # SocialConnect ("ASv2")
 
-SocialConnect is an open source protocol to map **identifiers** (e.g. phone numbers, email addresses, twitter handles, etc.) to **account addresses** (e.g. `0xf93...8fb8`), which are hard to remember and prone to typos. 
+SocialConnect is an open source protocol to map **identifiers** (e.g. phone numbers, email addresses, twitter handles, etc.) to **account addresses** (e.g. `0xf93...8fb8`), which are hard to remember and prone to typos.
 
-This lets developers design familiar  user experiences with phone numbers and other social identifiers such as:
+This lets developers design familiar user experiences with phone numbers and other social identifiers such as:
 
 - "_Venmo for crypto_"-style mobile payments and web3 discovery,
 - Social graph-based reputation and sybil resistance scores, and
 - much more.
 
-SocialConnect lets developers leverage their users' carefully curated contact lists and social identifiers to find each other on-chain and construct dense social graphs.
+SocialConnect lets developers leverage their users' carefully curated contact lists and social identifiers to find each other on-chain.
 
 > **Warning**
 > We currently only support **phone numbers**, but are working on a release of the SDK to support any string identifier (incl. email addresses, twitter handles, etc).
 
+<!-- 
 ## Why use SocialConnect?
 
 Contrary to ENS, Unstoppable Domains, and other _web3_ discovery protocols, SocialConnect leverages (_web2_) identifiers that users already have and carefully curate in their day-to-day lives.
 
-<!-- TODO: Name squatting -->
+TODO: Name squatting
 
-SocialConnect gives developers the tools to **register** and **look up** account addresses related to social identifiers their users already know and curate in their contact list and social media accounts.
-
+SocialConnect gives developers the tools to **register** and **look up** account addresses related to social identifiers their users already know and curate in their contact list and social media accounts. 
+-->
 
 ## Quickstart
 
-Follow these steps to **register** and **look up** attestations:
+Follow these steps to **register** and **look up** identifiers:
 
 1. Install the `@celo/identity` package into your project
 
-2. **Obfuscate** and identifier using the ODIS API (e.g. `+1 415-987-6543` becomes `jasdogu89dfhg...`)
+2. **Obfuscate** an identifier using the ODIS API (e.g. `+1 415-987-6543` becomes `jasdogu89dfhg...`)
 
 3. **Register** an obfuscated identifier and associated address in the FederatedAttestations smart contract (e.g. `jasdogu89dfhg...` and `0xf93...8fb8`)
 
