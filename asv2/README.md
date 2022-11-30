@@ -203,6 +203,10 @@ Take a look at the implementations in the [example-scripts](example-scripts/) fo
 - [example-scripts/registerAttestation-web3.ts](example-scripts/registerAttestation-web3.ts)
 - [example-scripts/registerAttestation-contractKit.ts](example-scripts/registerAttestation-contractKit.ts)
 
+### 3. Detailed documentation
+
+Take a look at the [developer docs](docs.md) for more detail on  specific implementation questions you might have.
+
 ## Protocol Overview
 
 SocialConnect has three components:
