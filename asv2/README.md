@@ -43,93 +43,17 @@ Read more about why [obfuscating identifiers](#obfuscate-alices-phone-number) ma
 
 Code snippets
 
-Here are simple examples using [web3js](https://www.npmjs.com/package/web3), [@celo/contractkit](https://www.npmjs.com/package/ts-node#command-line) and [ethersjs](https://www.npmjs.com/package/ethers) (WIP ⚠️).
+Here are simple examples using , [@celo/contractkit](https://www.npmjs.com/package/ts-node#command-line) and [ethersjs](https://www.npmjs.com/package/ethers) (WIP ⚠️).
 
-### 1. Code snippets (short example)
-
-Web3js setup:
+### 1. Code snippets (short examples)
 
 <details>
-<summary><b>Code snippets</b></summary>
+
+<summary><b>Using ethersjs</b></summary>
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
-```typescript
-import { OdisUtils } from '@celo/identity'
-
-// initialize variables accordingly
-let issuer, phoneNumber, account, attestationIssuedTime, DEK_PRIVATE_KEY, federatedAttestationsContract
-
-// get identifier from phone number
-const authSigner = {
-    authenticationMethod: OdisUtils.Query.AuthenticationMethod.ENCRYPTION_KEY,
-    rawKey: DEK_PRIVATE_KEY
-}
-const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
-  phoneNumber,
-  issuer.address,
-  authSigner,
-  OdisUtils.Query.getServiceContext('alfajores')
-)).phoneHash
-
-// upload identifier <-> address mapping to onchain registry
-await federatedAttestationsContract.methods
-  .registerAttestationAsIssuer(
-      identifier,
-      account,
-      attestationIssuedTime
-  )
-  .send({from: this.issuer.address, gas: 50000});
-
-// lookup accounts mapped to the given phone number
-const attestations = await federatedAttestationsContract.methods
-  .lookupAttestations(identifier, [this.issuer.address])
-  .call();
-console.log(attestations.accounts)
-```
-
-</details>
-
-<details>
-<summary><b>Contractkit code snippets</b></summary>
-
-Install the `@celo/contractkit` package, using version `>=2.3.0`
-
-```typescript
-import { OdisUtils } from '@celo/identity'
-
-// initialize variables
-let kit, issuer, phoneNumber, account, attestationIssuedTime
-const federatedAttestationsContract = await kit.contracts.getFederatedAttestations();
-
-// get identifier from phone number
-const authSigner = {
-  authenticationMethod: OdisUtils.Query.AuthenticationMethod.WALLET_KEY,
-  contractKit: kit,
-};
-const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
-  phoneNumber,
-  issuer.address,
-  authSigner,
-  OdisUtils.Query.getServiceContext('alfajores')
-)).phoneHash
-
-// upload identifier <-> address mapping to onchain registry
-await federatedAttestationsContract
-  .registerAttestationAsIssuer(identifier, account, attestationIssuedTime)
-  .send();
-
-// lookup accounts mapped to the given phone number
-const attestations = await federatedAttestationsContract.lookupAttestations(
-  identifier,
-  [issuer.address]
-);
-console.log(attestations.accounts)
-```
-</details>
-
-<details>
-<summary><b>Ethersjs code snippets</b></summary>
+See example NodeJS implementation for more details: [example-scripts/registerAttestation-ethers.ts](example-scripts/registerAttestation-ethers.ts)
 
 ```typescript
 import { OdisUtils } from '@celo/identity'
@@ -187,16 +111,102 @@ const attestations =
         wallet.address,
     ]);
 ```
-</details>
 
-### 2. NodeJS implementation (long example)
+</details>
 
 <details>
-<summary><b>NodeJS</b></summary>
 
-For runnable scripts using these code examples, see the `example-scripts` directory.
+<summary><b>Using web3js</b></summary>
+
+You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
+
+See example NodeJS implementation for more details: [example-scripts/registerAttestation-web3.ts](example-scripts/registerAttestation-web3.ts)
+
+```typescript
+import { OdisUtils } from '@celo/identity'
+
+// initialize variables accordingly
+let issuer, phoneNumber, account, attestationIssuedTime, DEK_PRIVATE_KEY, federatedAttestationsContract
+
+// get identifier from phone number
+const authSigner = {
+    authenticationMethod: OdisUtils.Query.AuthenticationMethod.ENCRYPTION_KEY,
+    rawKey: DEK_PRIVATE_KEY
+}
+const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+  phoneNumber,
+  issuer.address,
+  authSigner,
+  OdisUtils.Query.getServiceContext('alfajores')
+)).phoneHash
+
+// upload identifier <-> address mapping to onchain registry
+await federatedAttestationsContract.methods
+  .registerAttestationAsIssuer(
+      identifier,
+      account,
+      attestationIssuedTime
+  )
+  .send({from: this.issuer.address, gas: 50000});
+
+// lookup accounts mapped to the given phone number
+const attestations = await federatedAttestationsContract.methods
+  .lookupAttestations(identifier, [this.issuer.address])
+  .call();
+console.log(attestations.accounts)
+```
 
 </details>
+
+<details>
+
+<summary><b>Using @celo/contractkit</b></summary>
+
+Install the `@celo/contractkit` package, using version `>=2.3.0`
+
+See example NodeJS implementation for more details:  [example-scripts/registerAttestation-contractKit.ts](example-scripts/registerAttestation-contractKit.ts)
+
+```typescript
+import { OdisUtils } from '@celo/identity'
+
+// initialize variables
+let kit, issuer, phoneNumber, account, attestationIssuedTime
+const federatedAttestationsContract = await kit.contracts.getFederatedAttestations();
+
+// get identifier from phone number
+const authSigner = {
+  authenticationMethod: OdisUtils.Query.AuthenticationMethod.WALLET_KEY,
+  contractKit: kit,
+};
+const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+  phoneNumber,
+  issuer.address,
+  authSigner,
+  OdisUtils.Query.getServiceContext('alfajores')
+)).phoneHash
+
+// upload identifier <-> address mapping to onchain registry
+await federatedAttestationsContract
+  .registerAttestationAsIssuer(identifier, account, attestationIssuedTime)
+  .send();
+
+// lookup accounts mapped to the given phone number
+const attestations = await federatedAttestationsContract.lookupAttestations(
+  identifier,
+  [issuer.address]
+);
+console.log(attestations.accounts)
+```
+
+</details>
+
+### 2. NodeJS implementation (long examples)
+
+Take a look at the implementations in the **example-scripts** folder:
+
+- [example-scripts/registerAttestation-ethers.ts](example-scripts/registerAttestation-ethers.ts)
+- [example-scripts/registerAttestation-web3.ts](example-scripts/registerAttestation-web3.ts)
+- [example-scripts/registerAttestation-contractKit.ts](example-scripts/registerAttestation-contractKit.ts)
 
 ## Protocol Overview
 
@@ -209,8 +219,6 @@ SocialConnect has three components:
 <!-- todo: continue describing how they work together -->
 
 ### Obfuscate Alice's phone number
-
-<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201716282-39e1b1b9-7a88-4e2c-8607-417ddcec2443.png">
 
 Identifiers are obfuscated by hashing them with a secret. This matters because we want to avoid that anyone can discover the mapping between a plaintext identifier and an address. However, if every developer simply obfuscated identifiers their own way, we wouldn't be able to read each others identifier to address mappings. This where [ODIS](https://docs.celo.org/protocol/identity/odis) comes into play.
 
@@ -246,6 +254,10 @@ Here is a concrete example:
 | **More** | ... | ... |
 
 You can [visualise sha3 hashes online here](https://emn178.github.io/online-tools/sha3_256.html) if you prefer learning by doing.
+
+Here is a visual overview:
+
+<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201716282-39e1b1b9-7a88-4e2c-8607-417ddcec2443.png">
 
 ### Register Alice’s phone number on-chain
 
