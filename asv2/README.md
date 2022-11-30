@@ -139,7 +139,62 @@ console.log(attestations.accounts)
 <details>
 <summary><b>Ethersjs code snippets</b></summary>
 
-⚠️ WIP (currently working on it)
+```typescript
+import { OdisUtils } from '@celo/identity'
+import {
+    AuthenticationMethod,
+    AuthSigner,
+} from "@celo/identity/lib/odis/query";
+import { ethers, Wallet } from "ethers";
+
+let phoneNumber, account, attestationIssuedTime, DEK_PRIVATE_KEY
+
+const provider = new ethers.providers.JsonRpcProvider(ALFAJORES_RPC);
+const wallet = new Wallet(ISSUER_PRIVATE_KEY, provider);
+
+const authSigner: AuthSigner = {
+    authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
+    rawKey: DEK_PRIVATE_KEY,
+};
+
+const accountsContract = new ethers.Contract(
+    ACCOUNTS_PROXY_ADDRESS,
+    ACCOUNTS_CONTRACT.abi,
+    wallet
+);
+const federatedAttestationsContract = new ethers.Contract(
+    FA_PROXY_ADDRESS,
+    FA_CONTRACT.abi,
+    wallet
+);
+const odisPaymentsContract = new ethers.Contract(
+    ODIS_PAYMENTS_PROXY_ADDRESS,
+    ODIS_PAYMENTS_CONTRACT.abi,
+    wallet
+);
+
+accountsContract.setAccountDataEncryptionKey(DEK_PUBLIC_KEY);
+
+const identifier = (
+    await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+        phoneNumber,
+        wallet.address,
+        authSigner,
+        OdisUtils.Query.getServiceContext("alfajores")
+    )
+).phoneHash;
+
+await federatedAttestationsContract.registerAttestationAsIssuer(
+    identifier,
+    account,
+    attestationIssuedTime
+);
+
+const attestations =
+    await federatedAttestationsContract.lookupAttestations(identifier, [
+        wallet.address,
+    ]);
+```
 </details>
 
 ## Protocol Overview

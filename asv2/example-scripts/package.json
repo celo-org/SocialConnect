@@ -5,10 +5,10 @@
   "license": "MIT",
   "dependencies": {
     "@celo/base": "^2.3.0",
-    "@celo/identity": "1.5.1",
     "react-native-blind-threshold-bls": "^1.0.1",
     "web3": "^1.8.0",
-    "web3-utils": "^1.8.0"
+    "web3-utils": "^1.8.0",
+    "@celo/identity": "2.4.0-beta.5"
   },
   "devDependencies": {
     "prettier": "2.7.1"
