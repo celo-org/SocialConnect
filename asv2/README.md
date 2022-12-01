@@ -32,20 +32,17 @@ SocialConnect gives developers the tools to **register** and **look up** account
 Follow these steps to **register** and **look up** identifiers:
 
 1. Install the `@celo/identity` package into your project
-
 2. **Obfuscate** an identifier using the ODIS API (e.g. `+1 415-987-6543` becomes `jasdogu89dfhg...`)
-
 3. **Register** an obfuscated identifier and associated address in the FederatedAttestations smart contract (e.g. `jasdogu89dfhg...` and `0xf93...8fb8`)
-
 4. **Look up** an obfuscated identifier in the FederatedAttestations smart contract to find its associated address (`jasdogu89dfhg...` maps to `0xf93...8fb8`)
 
-Read more about why [obfuscating identifiers](#obfuscate-alices-phone-number) matters below.
+Read more about the underlying [protocol](#protocol-overview) or why [obfuscating identifiers matters](#obfuscate-alices-phone-number) below.
 
-### 1. Code snippets (short examples)
+### 1. Short code snippets
 
 <details>
 
-<summary><b>Using ethersjs</b></summary>
+<summary><b>With ethersjs</b></summary>
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
@@ -112,7 +109,7 @@ const attestations =
 
 <details>
 
-<summary><b>Using web3js</b></summary>
+<summary><b>With web3js</b></summary>
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
@@ -156,7 +153,7 @@ console.log(attestations.accounts)
 
 <details>
 
-<summary><b>Using @celo/contractkit</b></summary>
+<summary><b>With @celo/contractkit</b></summary>
 
 Install the `@celo/contractkit` package, using version `>=2.3.0`
 
@@ -196,17 +193,20 @@ console.log(attestations.accounts)
 
 </details>
 
-### 2. NodeJS implementation (long examples)
+### 2. Longer examples
 
-Take a look at the implementations in the [example-scripts](example-scripts/) folder:
+If you are interested in a working example using [NodeJS](https://nodejs.org/en/), take a look at the implementations in the [example-scripts](example-scripts/) folder:
 
 - [example-scripts/registerAttestation-ethers.ts](example-scripts/registerAttestation-ethers.ts)
 - [example-scripts/registerAttestation-web3.ts](example-scripts/registerAttestation-web3.ts)
 - [example-scripts/registerAttestation-contractKit.ts](example-scripts/registerAttestation-contractKit.ts)
 
-### 3. Detailed documentation
+If you'd like to see a minimal demo application using [NextJS](https://nextjs.org/), take a look at the implementation in the [emisianto](https://github.com/isabellewei/emisianto) repository, which is currently hosted at [emisianto.vercel.app](https://emisianto.vercel.app/).
 
-Take a look at the [developer docs](docs.md) for more detail on  specific implementation questions you might have.
+
+### 4. Detailed documentation
+
+Take a look at the [developer docs](docs.md) for more details on  specific implementation questions you might have.
 
 ## Protocol Overview
 
@@ -270,5 +270,3 @@ Here is a visual overview:
 <!-- Blurb -->
 
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201715097-124a8461-2a45-4a1f-ab2a-1781300befb0.png">
-
-
