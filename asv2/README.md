@@ -2,17 +2,17 @@
 > This page is a draft and work in progress 🙌
 > We continually push updates and would love to hear feedback and questions!
 
-# SocialConnect ("ASv2")
+# Federated Attestations Protocol ("ASv2")
 
-SocialConnect is an open source protocol to map **identifiers** (e.g. phone numbers, email addresses, twitter handles, etc.) to **account addresses** (e.g. `0xf93...8fb8`), which are hard to remember and prone to typos.
+ASv2 is an open source protocol to map **identifiers** (e.g. phone numbers, email addresses, twitter handles, etc.) to **account addresses** (e.g. `0xf93...8fb8`), which are hard to remember and prone to typos.
 
-This lets developers design familiar user experiences with phone numbers and other social identifiers such as:
+This lets developers design familiar user experiences with phone numbers and other identifiers such as:
 
 - "_Venmo for crypto_"-style mobile payments and web3 discovery,
 - Social graph-based reputation and sybil resistance scores, and
 - much more.
 
-SocialConnect lets developers leverage their users' carefully curated contact lists and social identifiers to find each other on-chain.
+ASv2 lets developers leverage their users' carefully curated contact lists and identifiers to find each other on-chain.
 
 > **Warning**
 > We currently only support **phone numbers**, but are working on a release of the SDK to support any string identifier (incl. email addresses, twitter handles, etc).
@@ -32,17 +32,24 @@ SocialConnect gives developers the tools to **register** and **look up** account
 Follow these steps to **register** and **look up** identifiers:
 
 1. Install the `@celo/identity` package into your project
+
+    ```bash
+    npm install @celo/identity
+    ```
+
 2. **Obfuscate** an identifier using the ODIS API (e.g. `+1 415-987-6543` becomes `jasdogu89dfhg...`)
+
 3. **Register** an obfuscated identifier and associated address in the FederatedAttestations smart contract (e.g. `jasdogu89dfhg...` and `0xf93...8fb8`)
+
 4. **Look up** an obfuscated identifier in the FederatedAttestations smart contract to find its associated address (`jasdogu89dfhg...` maps to `0xf93...8fb8`)
 
-Read more about the underlying [protocol](#protocol-overview) or why [obfuscating identifiers matters](#obfuscate-alices-phone-number) below.
+Read more about why [obfuscating identifiers](#obfuscate-alices-phone-number) matters below.
 
-### 1. Short code snippets
+### 1. Code snippets (short examples)
 
 <details>
 
-<summary><b>With ethersjs</b></summary>
+<summary><b>Using ethersjs</b></summary>
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
@@ -109,7 +116,7 @@ const attestations =
 
 <details>
 
-<summary><b>With web3js</b></summary>
+<summary><b>Using web3js</b></summary>
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
@@ -153,7 +160,7 @@ console.log(attestations.accounts)
 
 <details>
 
-<summary><b>With @celo/contractkit</b></summary>
+<summary><b>Using @celo/contractkit</b></summary>
 
 Install the `@celo/contractkit` package, using version `>=2.3.0`
 
@@ -193,28 +200,38 @@ console.log(attestations.accounts)
 
 </details>
 
-### 2. Longer examples
+### 2. NodeJS implementation (long examples)
 
-If you are interested in a working example using [NodeJS](https://nodejs.org/en/), take a look at the implementations in the [example-scripts](example-scripts/) folder:
+Take a look at the implementations in the [example-scripts](example-scripts/) folder:
 
 - [example-scripts/registerAttestation-ethers.ts](example-scripts/registerAttestation-ethers.ts)
 - [example-scripts/registerAttestation-web3.ts](example-scripts/registerAttestation-web3.ts)
 - [example-scripts/registerAttestation-contractKit.ts](example-scripts/registerAttestation-contractKit.ts)
 
-If you'd like to see a minimal demo application using [NextJS](https://nextjs.org/), take a look at the implementation in the [emisianto](https://github.com/isabellewei/emisianto) repository, which is currently hosted at [emisianto.vercel.app](https://emisianto.vercel.app/).
-
-
-### 4. Detailed documentation
+### 3. Detailed documentation
 
 Take a look at the [developer docs](docs.md) for more details on  specific implementation questions you might have.
 
 ## Protocol Overview
 
-SocialConnect has three components:
+### Components
 
-1. an **SDK**: `@celo/identity`
-2. a privacy **API**: ODIS (short for "Oblivious Decentralised Identity Service"), and
-3. two **smart contracts**: `FederatedAttestations` and `OdisPayments`
+ASv2 has 3 main components:
+
+1. an **SDK** for developers `@celo/identity`
+2. a **privacy API** ODIS (short for "Oblivious Decentralised Identity Service"), and
+3. two **smart contracts** (`FederatedAttestations` and `OdisPayments`)
+
+| Component | Maintained by | Owned by | Description |
+|-----------|--------|----|--------|
+| App | Developer (**You**) | Developer (**You**) | Any application (web/mobile/server) that wishes to register or lookup users. The app imports the JS package to use ASv2. |
+| JS package | cLabs | Celo community (fully open source public good) | A JS package that helps developers (**you**) register and look up users. Includes helper functions to use the privacy API to obfuscate identifiers. |
+| ODIS Combiner (server) | cLabs | Celo community (fully open source public good) | An API that produces secrets for developers (**you**) to obfuscate identifiers before registering or looking them up on-chain. ODIS is short for "Oblivious Decentralised Identity Service". |
+| ODIS Signer (client) | cLabs | 8 independent community members (fully open source public good) |  Clients run by 8 independent community members that contribute **secret shares** used by the ODIS Combiner to produce secrets for developers (you). |
+| FederatedAttestations contract | cLabs | Celo community (governed by CELO token holders) | The smart contract  |
+| OdisPayments contract | cLabs | Celo community (governed by CELO token holders) |  |
+<!-- |  |  |  |  -->
+
 
 <!-- todo: continue describing how they work together -->
 
@@ -270,3 +287,5 @@ Here is a visual overview:
 <!-- Blurb -->
 
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201715097-124a8461-2a45-4a1f-ab2a-1781300befb0.png">
+
+
