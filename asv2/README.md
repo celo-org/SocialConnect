@@ -33,10 +33,6 @@ Follow these steps to **register** and **look up** identifiers:
 
 1. Install the `@celo/identity` package into your project
 
-    ```bash
-    npm install @celo/identity
-    ```
-
 2. **Obfuscate** an identifier using the ODIS API (e.g. `+1 415-987-6543` becomes `jasdogu89dfhg...`)
 
 3. **Register** an obfuscated identifier and associated address in the FederatedAttestations smart contract (e.g. `jasdogu89dfhg...` and `0xf93...8fb8`)
