@@ -1,51 +1,37 @@
+
+# Federated Attestations ("ASv2") Beta
+
 > **Note**
-> This page is a draft and work in progress 🙌
-> We continually push updates and would love to hear feedback and questions!
+> This page is a draft 🙌 We continually push updates and would love to hear feedback and questions!
 
-# Federated Attestations Protocol ("ASv2")
+## 👋 Getting started
 
-ASv2 is an open source protocol to map **identifiers** (e.g. phone numbers, email addresses, twitter handles, etc.) to **account addresses** (e.g. `0xf93...8fb8`), which are hard to remember and prone to typos.
+ASv2 is an open source protocol that makes sending crypto payments as easy as sending text messages.
 
-This lets developers design familiar user experiences with phone numbers and other identifiers such as:
+ASv2 allows developers map **identifiers** (such as phone numbers, email address, etc...) to **public addresses** (e.g. `0xf93...8fb8`), which are hard to remember and prone to typos. This enables a convenient payment experience without having to first request a recipient's public address.
 
-- "_Venmo for crypto_"-style mobile payments and web3 discovery,
-- Social graph-based reputation and sybil resistance scores, and
-- much more.
-
-ASv2 lets developers leverage their users' carefully curated contact lists and identifiers to find each other on-chain.
-
-> **Warning**
-> We currently only support **phone numbers**, but are working on a release of the SDK to support any string identifier (incl. email addresses, twitter handles, etc).
-
-<!-- 
-## Why use SocialConnect?
-
-Contrary to ENS, Unstoppable Domains, and other _web3_ discovery protocols, SocialConnect leverages (_web2_) identifiers that users already have and carefully curate in their day-to-day lives.
-
-TODO: Name squatting
-
-SocialConnect gives developers the tools to **register** and **look up** account addresses related to social identifiers their users already know and curate in their contact list and social media accounts. 
--->
-
-## Quickstart
+## 🧑‍💻 Quickstart
 
 Follow these steps to **register** and **look up** identifiers:
 
-1. Install the `@celo/identity` package into your project
+1. **Install** the [`@celo/identity`](https://www.npmjs.com/package/@celo/identity) package into your project.
 
-2. **Obfuscate** an identifier using the ODIS API (e.g. `+1 415-987-6543` becomes `jasdogu89dfhg...`)
+2. **Convert** an end-user's plaintext identifier (`+1 415-987-6543`) into an obfuscated identifier (`jasdogu89dfhg...`) using the privacy API.
 
-3. **Register** an obfuscated identifier and associated address in the FederatedAttestations smart contract (e.g. `jasdogu89dfhg...` and `0xf93...8fb8`)
+3. **Register** an end-user's obfuscated identifier (`jasdogu89dfhg...`) and public address (`0xf93...8fb8`) on-chain in the FederatedAttestations contract
 
-4. **Look up** an obfuscated identifier in the FederatedAttestations smart contract to find its associated address (`jasdogu89dfhg...` maps to `0xf93...8fb8`)
+4. **Look up** an end-user's public address (`0xf93...8fb8`) on-chain by searching for their obfuscated identifier (`jasdogu89dfhg...`) in the FederatedAttestations contract.
 
-Read more about why [obfuscating identifiers](#obfuscate-alices-phone-number) matters below.
+> **Warning**
+> We currently only support **phone numbers**, but are adding support for arbitrary identifiers (incl. email addresses, twitter handles, etc).
 
-### 1. Code snippets (short examples)
+## 🚀 Demos
+
+### Short code snippets
 
 <details>
 
-<summary><b>Using ethersjs</b></summary>
+<summary><b>Register and look up with ethersjs</b></summary>
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
@@ -112,7 +98,7 @@ const attestations =
 
 <details>
 
-<summary><b>Using web3js</b></summary>
+<summary><b>Register and look up with web3js</b></summary>
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
@@ -156,7 +142,7 @@ console.log(attestations.accounts)
 
 <details>
 
-<summary><b>Using @celo/contractkit</b></summary>
+<summary><b>Register and look up with @celo/contractkit</b></summary>
 
 Install the `@celo/contractkit` package, using version `>=2.3.0`
 
@@ -196,92 +182,18 @@ console.log(attestations.accounts)
 
 </details>
 
-### 2. NodeJS implementation (long examples)
+### Longer examples
 
-Take a look at the implementations in the [example-scripts](example-scripts/) folder:
+If you are interested in a working [NodeJS](https://nodejs.org/en/) example take a look at the scripts in the [example-scripts](example-scripts/) folder.
 
-- [example-scripts/registerAttestation-ethers.ts](example-scripts/registerAttestation-ethers.ts)
-- [example-scripts/registerAttestation-web3.ts](example-scripts/registerAttestation-web3.ts)
-- [example-scripts/registerAttestation-contractKit.ts](example-scripts/registerAttestation-contractKit.ts)
+If you'd like to see a minimal demo app using [NextJS](https://nextjs.org/), take a look at the implementation in the [emisianto](https://github.com/isabellewei/emisianto) repository, which is currently hosted at [emisianto.vercel.app](https://emisianto.vercel.app/).
 
-### 3. Detailed documentation
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/46296830/205343775-60e429ea-f5e5-42b2-9474-8ca7dfe842cc.png">
 
-Take a look at the [developer docs](docs.md) for more details on  specific implementation questions you might have.
+## 📄 Documentation
 
-## Protocol Overview
+Check out the [developer docs](docs.md) for more details on specific implementation questions you might have.
 
-### Components
+## 📣 Feedback
 
-ASv2 has 3 main components:
-
-1. an **SDK** for developers `@celo/identity`
-2. a **privacy API** ODIS (short for "Oblivious Decentralised Identity Service"), and
-3. two **smart contracts** (`FederatedAttestations` and `OdisPayments`)
-
-| Component | Maintained by | Owned by | Description |
-|-----------|--------|----|--------|
-| App | Developer (**You**) | Developer (**You**) | Any application (web/mobile/server) that wishes to register or lookup users. The app imports the JS package to use ASv2. |
-| JS package | cLabs | Celo community (fully open source public good) | A JS package that helps developers (**you**) register and look up users. Includes helper functions to use the privacy API to obfuscate identifiers. |
-| ODIS Combiner (server) | cLabs | Celo community (fully open source public good) | An API that produces secrets for developers (**you**) to obfuscate identifiers before registering or looking them up on-chain. ODIS is short for "Oblivious Decentralised Identity Service". |
-| ODIS Signer (client) | cLabs | 8 independent community members (fully open source public good) |  Clients run by 8 independent community members that contribute **secret shares** used by the ODIS Combiner to produce secrets for developers (you). |
-| FederatedAttestations contract | cLabs | Celo community (governed by CELO token holders) | The smart contract  |
-| OdisPayments contract | cLabs | Celo community (governed by CELO token holders) |  |
-<!-- |  |  |  |  -->
-
-
-<!-- todo: continue describing how they work together -->
-
-### Obfuscate Alice's phone number
-
-Identifiers are obfuscated by hashing them with a secret. This matters because we want to avoid that anyone can discover the mapping between a plaintext identifier and an address. However, if every developer simply obfuscated identifiers their own way, we wouldn't be able to read each others identifier to address mappings. This where [ODIS](https://docs.celo.org/protocol/identity/odis) comes into play.
-
-[ODIS](https://docs.celo.org/protocol/identity/odis) provides:
-
-1. [privacy for end-users](https://docs.celo.org/protocol/identity/odis-use-case-phone-number-privacy), and
-2. interoperability between developers.
-
-All that while being decentralized and privacy-preserving.
-
-Here is a concrete example:
-
-- **Alice's phone number**: `+1 234 567 8901`
-- The ODIS secret for Alice's phone number: `123abc` (illustrative only!)
-- The obfuscation pattern: `sha3({prefix}{e164_phone_number}{separator}{ODIS_pepper})`
-- The actual obfuscation: `sha3('tel://+123456789__123abc')` = `c1fbb1429e94f4a491ee9601fb8cb9150ac3ed06e990d9449c8fba9509df3f1a`
-- **Alice's obfuscated phone number**: `c1fbb1429e94f4a491ee9601fb8cb9150ac3ed06e990d9449c8fba9509df3f1a`
-
-
-| In short, Alice's phone number is converted into an obfuscated phone number before being mapped on-chain. |
-|---|
-
-> **Warning**
-> We currently only support **phone numbers**. The obfuscation pattern for any other identifier is not finalised and only illustrative at this stage ⚠️
-
-| Identifiers | Obfuscation patterns  | Obfuscation examples |
-|------|--------|--------|
-| **Phone numbers** | `sha3({prefix}{e164_phone_number}{separator}{ODIS_pepper})` | `sha3(tel://+123456789__123abc)` = c1fbb1429e94...a9509df3f1a |
-| **Twitter accounts** | `sha3({prefix}{twitter_handle}{separator}{ODIS_pepper})`  | `sha3(twitter://@CeloOrg__456def)` = 96fdf5e45259f7...760502dba1709 |
-| **Email addresses** | `sha3({prefix}{email_address}{separator}{ODIS_pepper})` | `sha3(email://hello@celo.org__789ghi)` = 4b2b6074417fe4d6...2cc6b16aa8c |
-| **Reddit accounts** | `sha3({prefix}{reddit_handle}{separator}{ODIS_pepper})` | `sha3(reddit://@celoorg__321jkl)` = bb29224bc50afb46d20...bdfdcb9831abb |
-| **Keybase accounts** | `sha3({prefix}{keybase_handle}{separator}{ODIS_pepper})` | `sha3(keybase://@celoorg__759mno)` = ccee4144e17dcac2f...f17ba805032974 |
-| **More** | ... | ... |
-
-You can [visualise sha3 hashes online here](https://emn178.github.io/online-tools/sha3_256.html) if you prefer learning by doing.
-
-Here is a visual overview:
-
-<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201716282-39e1b1b9-7a88-4e2c-8607-417ddcec2443.png">
-
-### Register Alice’s phone number on-chain
-
-<!-- Blurb -->
-
-<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201714875-c73d8417-0e0c-47b4-9b41-8529689f0607.png">
-
-### Look up Alice’s phone number on-chain
-
-<!-- Blurb -->
-
-<img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201715097-124a8461-2a45-4a1f-ab2a-1781300befb0.png">
-
-
+**ASv2 is in beta**! Help us improve by sharing feedback on your experience in the Github Discussion section. You can also open an issue or a PR directly on this repo.
