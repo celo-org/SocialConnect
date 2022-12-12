@@ -10,7 +10,7 @@ import {
 } from "./constants";
 import Web3 from "web3";
 import { OdisUtils } from '@celo/identity'
-import { AuthSigner } from "@celo/identity/lib/odis/query";
+import { AuthSigner, OdisContextName } from "@celo/identity/lib/odis/query";
 
 const ISSUER_PRIVATE_KEY = "0x726e53db4f0a79dfd63f58b19874896fce3748fcb80874665e0c147369c04a37";
 const DEK_PUBLIC_KEY = "0x026063780c81991c032fb4fa7485c6607b7542e048ef85d08516fe5c4482360e4b";
@@ -25,6 +25,7 @@ class ASv2 {
         authenticationMethod: OdisUtils.Query.AuthenticationMethod.ENCRYPTION_KEY,
         rawKey: DEK_PRIVATE_KEY
     }
+    serviceContext = OdisUtils.Query.getServiceContext(OdisContextName.ALFAJORES);
     
     /** Contracts **/
     accountsContract = new this.web3.eth.Contract(
@@ -51,21 +52,16 @@ class ASv2 {
     }
 
     async registerAttestation(phoneNumber: string, account: string, attestationIssuedTime: number) {
-        // TODO: once the new version of ODIS has been deployed, issuers will need to
-        // ensure their account has sufficient ODIS quota
-        // if (getQuotaStatus(this.issuer.address) <= 0) {
-        //     const TEN_CUSD = this.web3.utils.toWei("10", "ether");
-        //     await this.stableTokenContract.methods.approve(this.issuer.address, TEN_CUSD).send({from: this.issuer.address, gas: 500000});
-        //     await this.odisPaymentsContract.methods.payInCUSD(this.issuer.address, TEN_CUSD).send({from: this.issuer.address,gas: 500000});
-        // }
+        await this.checkAndTopUpODISQuota();
     
         // get identifier from phone number using ODIS
-        const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+        const identifier = (await OdisUtils.Identifier.getObfuscatedIdentifier(
             phoneNumber,
+            OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
             this.issuer.address,
             this.authSigner,
-            OdisUtils.Query.getServiceContext('alfajores')
-          )).phoneHash
+            this.serviceContext
+          )).obfuscatedIdentifier
     
         // upload identifier <-> address mapping to onchain registry
         await this.federatedAttestationsContract.methods
@@ -79,13 +75,13 @@ class ASv2 {
 
     async lookupAddresses(phoneNumber: string){
         // get identifier from phone number using ODIS
-        const identifier = (await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
-            phoneNumber,
-            this.issuer.address,
-            this.authSigner,
-            OdisUtils.Query.getServiceContext('alfajores')
-          )).phoneHash
-    
+        const identifier = (await OdisUtils.Identifier.getObfuscatedIdentifier(
+          phoneNumber,
+          OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
+          this.issuer.address,
+          this.authSigner,
+          this.serviceContext
+        )).obfuscatedIdentifier    
     
         // query onchain mappings
         const attestations = await this.federatedAttestationsContract.methods
@@ -93,6 +89,52 @@ class ASv2 {
             .call();
 
         return attestations.accounts
+    }
+
+    private async checkAndTopUpODISQuota() {
+        //check remaining quota
+        const { remainingQuota } = await OdisUtils.Quota.getPnpQuotaStatus(
+          this.issuer.address,
+          this.authSigner,
+          this.serviceContext
+        );
+    
+        console.log("remaining ODIS quota", remainingQuota);
+        if (remainingQuota < 1) {
+          // give odis payment contract permission to use cUSD
+          const currentAllowance = await this.stableTokenContract.methods.allowance(
+            this.issuer.address,
+            this.odisPaymentsContract.options.address
+          );
+          console.log("current allowance:", currentAllowance.toString());
+          let enoughAllowance: boolean = false;
+    
+          const ONE_CENT_CUSD_WEI = this.web3.utils.toWei("0.01", "ether");
+    
+          if (currentAllowance < ONE_CENT_CUSD_WEI) {
+            const approvalTxReceipt = await this.stableTokenContract.methods
+              .increaseAllowance(
+                this.odisPaymentsContract.options.address,
+                ONE_CENT_CUSD_WEI
+              )
+              .sendAndWaitForReceipt();
+            console.log("approval status", approvalTxReceipt.status);
+            enoughAllowance = approvalTxReceipt.status;
+          } else {
+            enoughAllowance = true;
+          }
+    
+          // increase quota
+          if (!enoughAllowance) {
+            const odisPayment = await this.odisPaymentsContract.methods
+              .payInCUSD(this.issuer.address, ONE_CENT_CUSD_WEI)
+              .sendAndWaitForReceipt();
+            console.log("odis payment tx status:", odisPayment.status);
+            console.log("odis payment tx hash:", odisPayment.transactionHash);
+          } else {
+            throw "cUSD approval failed";
+          }
+        }
     }
 }
 

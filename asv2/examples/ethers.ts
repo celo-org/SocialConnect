@@ -12,6 +12,7 @@ import { OdisUtils } from "@celo/identity";
 import {
   AuthenticationMethod,
   AuthSigner,
+  OdisContextName,
 } from "@celo/identity/lib/odis/query";
 import { ethers, Wallet } from "ethers";
 
@@ -31,8 +32,8 @@ const NOW_TIMESTAMP = Math.floor(new Date().getTime() / 1000);
 
 class ASv2 {
   provider = new ethers.providers.JsonRpcProvider(ALFAJORES_RPC);
-  wallet = new Wallet(ISSUER_PRIVATE_KEY, this.provider);
-  serviceContext = OdisUtils.Query.getServiceContext("alfajores");
+  issuer = new Wallet(ISSUER_PRIVATE_KEY, this.provider);
+  serviceContext = OdisUtils.Query.getServiceContext(OdisContextName.ALFAJORES);
 
   authSigner: AuthSigner = {
     authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
@@ -43,22 +44,22 @@ class ASv2 {
   accountsContract = new ethers.Contract(
     ACCOUNTS_PROXY_ADDRESS,
     ACCOUNTS_CONTRACT.abi,
-    this.wallet
+    this.issuer
   );
   federatedAttestationsContract = new ethers.Contract(
     FA_PROXY_ADDRESS,
     FA_CONTRACT.abi,
-    this.wallet
+    this.issuer
   );
   odisPaymentsContract = new ethers.Contract(
     ODIS_PAYMENTS_PROXY_ADDRESS,
     ODIS_PAYMENTS_CONTRACT.abi,
-    this.wallet
+    this.issuer
   );
   stableTokenContract = new ethers.Contract(
     ALFAJORES_CUSD_ADDRESS,
     STABLE_TOKEN_CONTRACT.abi,
-    this.wallet
+    this.issuer
   );
 
   constructor() {
@@ -69,18 +70,19 @@ class ASv2 {
     await this.checkAndTopUpODISQuota();
 
     // get identifier from phone number using ODIS
-    const identifier = (
-      await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+    const obfuscatedIdentifier = (
+      await OdisUtils.Identifier.getObfuscatedIdentifier(
         phoneNumber,
-        this.wallet.address,
+        OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
+        this.issuer.address,
         this.authSigner,
         this.serviceContext
       )
-    ).phoneHash;
+    ).obfuscatedIdentifier;
 
     // upload identifier <-> address mapping to onchain registry
     await this.federatedAttestationsContract.registerAttestationAsIssuer(
-      identifier,
+      obfuscatedIdentifier,
       account,
       NOW_TIMESTAMP
     );
@@ -88,19 +90,20 @@ class ASv2 {
 
   async lookupAddresses(phoneNumber: string) {
     // get identifier from phone number using ODIS
-    const identifier = (
-      await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
+    const obfuscatedIdentifier = (
+      await OdisUtils.Identifier.getObfuscatedIdentifier(
         phoneNumber,
-        this.wallet.address,
+        OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
+        this.issuer.address,
         this.authSigner,
         this.serviceContext
       )
-    ).phoneHash;
+    ).obfuscatedIdentifier;
 
     // query onchain mappings
     const attestations =
-      await this.federatedAttestationsContract.lookupAttestations(identifier, [
-        this.wallet.address,
+      await this.federatedAttestationsContract.lookupAttestations(obfuscatedIdentifier, [
+        this.issuer.address,
       ]);
 
     return attestations.accounts;
@@ -109,16 +112,16 @@ class ASv2 {
   private async checkAndTopUpODISQuota() {
     //check remaining quota
     const { remainingQuota } = await OdisUtils.Quota.getPnpQuotaStatus(
-      this.wallet.address,
+      this.issuer.address,
       this.authSigner,
-      OdisUtils.Query.ODIS_ALFAJORES_CONTEXT
+      this.serviceContext
     );
 
     console.log("remaining ODIS quota", remainingQuota);
     if (remainingQuota < 1) {
       // give odis payment contract permission to use cUSD
       const currentAllowance = await this.stableTokenContract.allowance(
-        this.wallet.address,
+        this.issuer.address,
         this.odisPaymentsContract.address
       );
       console.log("current allowance:", currentAllowance.toString());
@@ -126,7 +129,7 @@ class ASv2 {
 
       const ONE_CENT_CUSD_WEI = ethers.utils.parseEther("0.01");
 
-      if (currentAllowance < ONE_CENT_CUSD_WEI) {
+      if (ONE_CENT_CUSD_WEI.gt(currentAllowance)) {
         const approvalTxReceipt = await this.stableTokenContract
           .increaseAllowance(
             this.odisPaymentsContract.address,
@@ -142,7 +145,7 @@ class ASv2 {
       // increase quota
       if (!enoughAllowance) {
         const odisPayment = await this.odisPaymentsContract
-          .payInCUSD(this.wallet.address, ONE_CENT_CUSD_WEI)
+          .payInCUSD(this.issuer.address, ONE_CENT_CUSD_WEI)
           .sendAndWaitForReceipt();
         console.log("odis payment tx status:", odisPayment.status);
         console.log("odis payment tx hash:", odisPayment.transactionHash);
