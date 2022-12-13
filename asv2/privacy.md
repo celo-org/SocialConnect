@@ -275,6 +275,8 @@ const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentif
 )
 ```
 
+You can find an example implementation of a web-based project [here](https://github.com/isabellewei/emisianto).
+
 <!-- ## ODIS API
 
 Instead of using the SDK, you can also choose to directly query the ODIS API. -->
