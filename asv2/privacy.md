@@ -4,6 +4,23 @@ Identifiers are obfuscated to preserve the privacy of on-chain attestations. Thi
 
 The secret pepper used for obfuscation is obtained through the [Oblivious Decentralized Identifier Service (ODIS)](https://docs.celo.org/protocol/identity/odis). Standardizing the pepper is necessary for interoperability, so that clients can discover each others attestations. Peppers produced by ODIS are cryptographically strong, and so cannot be guessed in a brute force or rainbow table attack. ODIS also imposes a rate limit to prevent attackers from scanning a large number of identifiers. Aside from privacy-preserving identifier attestions, ODIS can also be used for other use cases, such as [password hardening](https://docs.celo.org/protocol/identity/odis-use-case-key-hardening).
 
+<details>
+<summary>Table of Contents</summary>
+
+  - [Obfuscated Identifier Derivation](#obfuscated-identifier-derivation)
+    - [Identifier Types and Prefixes](#identifier-types-and-prefixes)
+    - [Blinding](#blinding)
+  - [Using the SDK](#using-the-sdk)
+    - [Rate Limit](#rate-limit)
+    - [Authentication](#authentication)
+    - [Service Context](#service-context)
+    - [Runtime Environments](#runtime-environments)
+      - [Node](#node)
+      - [React Native](#react-native)
+      - [Web](#web)
+  
+</details>
+
 ## Obfuscated Identifier Derivation
 
 Below describes the steps to derive the *obfuscated identifier*, which is publicly used in on-chain attestations, starting with the *plaintext identifier*, which is privately known.
