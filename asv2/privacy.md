@@ -72,6 +72,7 @@ In most cases, the issuer will be performing the blinding, unblinding, and obfus
 <summary>Issuer-side blinding</summary>
 
 ```mermaid
+%%{init: { "sequence": { "useMaxWidth": true } } }%%
 sequenceDiagram
   actor user
   participant issuer
@@ -91,6 +92,7 @@ However, for extra privacy, the user can also blind the identifier before they s
 <summary>User-side blinding</summary>
 
 ```mermaid
+%%{init: { "sequence": { "useMaxWidth": true } } }%%
 sequenceDiagram
   actor user 
   participant issuer 
@@ -109,7 +111,7 @@ sequenceDiagram
 
 The [`@celo/identity`](https://www.npmjs.com/package/@celo/identity) package is an SDK that provides useful helper functions to handle querying ODIS and deriving the obfuscated identifier.
 
-> ❗️ Make sure you are using version `3.0.1` or later of `@celo/identity`
+> ❗️ Make sure you are using version `3.0.1` or later
 
 Import the `OdisUtils` module into your project for all relevant functions
 ```typescript
@@ -292,7 +294,7 @@ const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentif
 )
 ```
 
-You can find an example implementation of a web-based project [here](https://github.com/isabellewei/emisianto).
+You can find an example implementation of a web-based app [here](https://github.com/isabellewei/emisianto).
 
 <!-- ## ODIS API
 
