@@ -10,6 +10,11 @@ ASv2 is an open source protocol that makes sending crypto payments as easy as se
 
 ASv2 allows developers map **identifiers** (such as phone numbers, email address, etc...) to **public addresses** (e.g. `0xf93...8fb8`), which are hard to remember and prone to typos. This enables a convenient payment experience without having to first request a recipient's public address.
 
+Here is a short demo payment from [Kaala](https://kaala.app/) to [Libera](https://medium.com/impactmarket/ready-to-unlock-your-potential-meet-libera-your-new-crypto-wallet-d1053f917b95) using only a phone number:
+
+[<img width="800" alt="image" src="https://user-images.githubusercontent.com/46296830/207285114-6ef73be4-10f2-4afc-a066-811e1f3e1042.png">](https://www.loom.com/share/8afddd73ba324ec18aeb63fc96d568f9)
+
+
 ## 🧑‍💻 Quickstart
 
 Follow these steps to **register** and **look up** identifiers:
