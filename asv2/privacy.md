@@ -4,9 +4,6 @@ Identifiers are obfuscated to preserve the privacy of on-chain attestations. Thi
 
 The secret pepper used for obfuscation is obtained through the [Oblivious Decentralized Identifier Service (ODIS)](https://docs.celo.org/protocol/identity/odis). Standardizing the pepper is necessary for interoperability, so that clients can discover each others attestations. Peppers produced by ODIS are cryptographically strong, and so cannot be guessed in a brute force or rainbow table attack. ODIS also imposes a rate limit to prevent attackers from scanning a large number of identifiers. Aside from privacy-preserving identifier attestions, ODIS can also be used for other use cases, such as [password hardening](https://docs.celo.org/protocol/identity/odis-use-case-key-hardening).
 
-<details>
-<summary>Table of Contents</summary>
-
   - [Obfuscated Identifier Derivation](#obfuscated-identifier-derivation)
     - [Identifier Types and Prefixes](#identifier-types-and-prefixes)
     - [Blinding](#blinding)
@@ -18,8 +15,6 @@ The secret pepper used for obfuscation is obtained through the [Oblivious Decent
       - [Node](#node)
       - [React Native](#react-native)
       - [Web](#web)
-  
-</details>
 
 ## Obfuscated Identifier Derivation
 
@@ -280,6 +275,11 @@ Copy [`blind_threshold_bls_bg.wasm`](examples/blinding/blind_threshold_bls_bg.wa
 ```typescript
 import { WebBlsBlindingClient } from './blinding/webBlindingClient'
 
+const blindingClient = new WebBlsBlindingClient(
+  serviceContext.odisPubKey
+)
+await blindingClient.init()
+
 const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentifier(
   phoneNumber,
   OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
@@ -288,7 +288,7 @@ const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentif
   serviceContext,
   undefined,
   undefined,
-  new WebBlsBlindingClient(serviceContext.odisPubKey)
+  blindingClient
 )
 ```
 
