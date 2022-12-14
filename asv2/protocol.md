@@ -18,6 +18,9 @@ The goals of this attestation protocol are to increase adoption of identity mapp
 
 ## User Flows
 
+<details>
+<summary><b>Stakeholders</b></summary>
+
 | Stakeholder | Description |
 |-----------|--------|
 | user | User that owns the off-chain identifier and account
@@ -26,16 +29,21 @@ The goals of this attestation protocol are to increase adoption of identity mapp
 | `FederatedAttestations.sol` | On-chain registry of attestation mappings between identifiers and addresses |
 | `OdisPayments.sol` |  Smart contract used to pay for [ODIS quota](privacy.md#rate-limit) |
 
+</details>
 
 <!-- Here is a visual overview:
 
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201716282-39e1b1b9-7a88-4e2c-8607-417ddcec2443.png"> -->
 
-### Register Alice’s phone number
+### Register phone number
+
+The user provides their phone number to the application, who is acting as an issuer. The application verifies that the user has ownership of their phone number. Then the application queries ODIS for the obfuscated identifier of the phone number. Using the obfuscated identifier, the application, as an issuer, registers the on-chain mapping between the identifier and the user's account address.
 
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201714875-c73d8417-0e0c-47b4-9b41-8529689f0607.png">
 
-### Look up Alice’s phone number 
+### Look up phone number 
+
+The wallet queries ODIS for the obfuscated identifier of the phone number. Using the obfuscated identifier, the wallet looks up the on-chain registry to see which account is mapped to that identifier.
 
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201715097-124a8461-2a45-4a1f-ab2a-1781300befb0.png">
 
@@ -111,7 +119,7 @@ await federatedAttestationsContract
 
 #### Registering identifiers with signer
 
-Issuer signers must sign an [EIP712 typed data](https://eips.ethereum.org/EIPS/eip-712) object representing the attestation.
+Signers must sign an [EIP712 typed data](https://eips.ethereum.org/EIPS/eip-712) object representing the attestation.
 
 ```ts
 import { ensureLeading0x } from '@celo/base'
@@ -213,12 +221,26 @@ Given a list of issuers that you trust, you can look up the accounts they have m
 const attestations = await federatedAttestationsInstance
     .lookupAttestations(obfuscatedIdentifier, [trustedIssuer1Address, trustedIssuer2Address])
     .call();
+
+// Returns:
+// {
+//     countsPerIssuer: string[]
+//     accounts: Address[]
+//     signers: Address[]
+//     issuedOns: string[]
+//     publishedOns: string[]
+// }
 console.log(attestations.accounts)
 
 const attestations = await federatedAttestationsInstance
     .lookupIdentifiers(accountAddress, [trustedIssuer1Address, trustedIssuer2Address])
     .call();
-console.log(attestations.identifiers)
+    
+// Returns:
+// {
+//     countsPerIssuer: string[]
+//     identifiers: string[]
+// }
 ```
 
 ## Smart Contract Addresses
