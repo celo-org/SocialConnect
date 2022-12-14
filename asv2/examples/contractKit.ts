@@ -33,40 +33,39 @@ class ASv2 {
     await this.checkAndTopUpODISQuota();
 
     // get identifier from phone number using ODIS
-    const identifier = (
-      await OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier(
-        phoneNumber,
-        this.issuer.address,
-        this.authSigner,
-        this.serviceContext
-      )
-    ).phoneHash;
+    const {obfuscatedIdentifier} = await OdisUtils.Identifier.getObfuscatedIdentifier(
+      phoneNumber,
+      OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
+      this.issuer.address,
+      this.authSigner,
+      this.serviceContext
+    )
 
     const federatedAttestationsContract =
       await this.kit.contracts.getFederatedAttestations();
 
     // upload identifier <-> address mapping to onchain registry
     await federatedAttestationsContract
-      .registerAttestationAsIssuer(identifier, account, attestationIssuedTime)
+      .registerAttestationAsIssuer(obfuscatedIdentifier, account, attestationIssuedTime)
       .send();
   }
 
   async lookupAddresses(phoneNumber: string) {
     // get identifier from phone number using ODIS
-    const identifier = (await OdisUtils.Identifier.getObfuscatedIdentifier(
+    const {obfuscatedIdentifier} = await OdisUtils.Identifier.getObfuscatedIdentifier(
       phoneNumber,
       OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
       this.issuer.address,
       this.authSigner,
       this.serviceContext
-    )).obfuscatedIdentifier
+    )
 
     const federatedAttestationsContract =
       await this.kit.contracts.getFederatedAttestations();
 
     // query on-chain mappings
     const attestations = await federatedAttestationsContract.lookupAttestations(
-      identifier,
+      obfuscatedIdentifier,
       [this.issuer.address]
     );
 

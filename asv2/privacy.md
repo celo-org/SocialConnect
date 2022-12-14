@@ -1,8 +1,8 @@
-# Attestation Privacy
+# Attestations Privacy
 
 Identifiers are obfuscated to preserve the privacy of on-chain attestations. This is done by hashing over the identifier and a secret pepper. Directly using the hash of just the identifier is avoided, as attackers could still discover attestation mappings via a [rainbow table attack](https://wikipedia.org/wiki/Rainbow_table).
 
-The secret pepper used for obfuscation is obtained through the [Oblivious Decentralized Identifier Service (ODIS)](https://docs.celo.org/protocol/identity/odis). Standardizing the pepper is necessary for interoperability, so that clients can discover each others attestations. Peppers produced by ODIS are cryptographically strong, and so cannot be guessed in a brute force or rainbow table attack. ODIS also imposes a rate limit to prevent attackers from scanning a large number of identifiers. Aside from privacy-preserving identifier attestions, ODIS can also be used for other use cases, such as [password hardening](https://docs.celo.org/protocol/identity/odis-use-case-key-hardening).
+The secret pepper used for obfuscation is obtained through the [Oblivious Decentralized Identifier Service (ODIS)](https://docs.celo.org/protocol/identity/odis). Standardizing the pepper is necessary for interoperability, so that clients can discover each others attestations. Peppers produced by ODIS are cryptographically strong, and so cannot be guessed in a brute force or rainbow table attack. ODIS also imposes a rate limit to prevent attackers from scanning a large number of identifiers. Aside from privacy-preserving identifier attestions, ODIS can also be used for other use cases, such as [account recovery](https://docs.celo.org/protocol/identity/encrypted-cloud-backup).
 
   - [Obfuscated Identifier Derivation](#obfuscated-identifier-derivation)
     - [Identifier Types and Prefixes](#identifier-types-and-prefixes)
@@ -69,7 +69,7 @@ Identifiers are blinded with a secret blinding factor before they are sent to OD
 
 In most cases, the issuer will be performing the blinding, unblinding, and obfuscated identifier derivation, as they will also then be performing attestation registration, lookups and revocation.
 <details>
-<summary>Issuer-side blinding</summary>
+<summary><i>Issuer-side blinding</i></summary>
 
 ```mermaid
 %%{init: { "sequence": { "useMaxWidth": true } } }%%
@@ -89,7 +89,7 @@ sequenceDiagram
 However, for extra privacy, the user can also blind the identifier before they share it with the issuer, and also perform the unblinding and obfuscated identifier derivation themselves. The user can perform registration and revocation of attestations themselves, but would need to pass the obfuscated identifier back to the issuer for registration
 
 <details>
-<summary>User-side blinding</summary>
+<summary><i>User-side blinding</i></summary>
 
 ```mermaid
 %%{init: { "sequence": { "useMaxWidth": true } } }%%
@@ -131,9 +131,9 @@ The most important function is `getObfuscatedIdentifier`, which completes the en
 `signer` | AuthSigner | object describing the authentication method and providing authentication key, see [Authentication](#authentication)
 `context` | ServiceContext | object providing the ODIS context, see [Service Context](#service-context)
 `blindingFactor` (optional) | string | secret seed used for blinding/unblinding the identifier, by default a one-time random seed is used in the blinding client
-`clientVersion` (optional) | string |
+`clientVersion` (optional) | string | 
 `blsBlindingClient` (optional) | BlsBlindingClient | the default blinding client used only works server-side, see [Runtime Environments](#runtime-environments) for alternatives
-`sessionID` (optional) | string |
+`sessionID` (optional) | string | 
 `keyVersion` (optional) | number | 
 `endpoint` (optional) | | 
 
@@ -174,7 +174,7 @@ await OdisUtils.Identifier.getObfuscatedIdentifier(
 
 ### Rate Limit
 
-ODIS implements rate limiting on queries to prevent brute force attackers. Every account interacting with ODIS has a quota for queries.
+ODIS implements rate limiting on queries to prevent brute force attackers. Every account interacting with ODIS has a quota for the number of queries it can make.
 
 You can check how much quota is left on your account:
 
@@ -204,9 +204,14 @@ There are two authentication methods for your `AuthSigner` when interacting with
     };
     ```
 
-2. **`EncryptionKeySigner`**: uses the [data encryption key (DEK)](https://docs.celo.org/developer/contractkit/data-encryption-key) by passing in the raw private key. 
+2. **`EncryptionKeySigner`**: uses the [data encryption key (DEK)](https://docs.celo.org/developer/contractkit/data-encryption-key) by passing in the raw private key.
 
-    The DEK is a key pair specifically used for signing data. It must be [registered to your account](https://github.com/celo-org/celo-monorepo/blob/0aea63826f8c7e7d2f3fe0c32eb314471e2c2f33/packages/protocol/contracts/common/Accounts.sol#L244) before it is used. <!--insert code snippet of registering here? -->
+    The DEK is a key pair specifically used for signing data. It must be [registered to your account](https://github.com/celo-org/celo-monorepo/blob/0aea63826f8c7e7d2f3fe0c32eb314471e2c2f33/packages/protocol/contracts/common/Accounts.sol#L244) before it is used.
+
+    ```ts
+    accountsContract.setAccountDataEncryptionKey(DEK_PUBLIC_KEY).send({from: issuerAddress})
+    ```
+
     Any key pair can be used as a DEK, but [this](https://github.com/celo-org/celo-monorepo/blob/0aea63826f8c7e7d2f3fe0c32eb314471e2c2f33/packages/sdk/cryptographic-utils/src/dataEncryptionKey.ts#L36-L54) or [this](https://github.com/celo-org/celo-monorepo/blob/0aea63826f8c7e7d2f3fe0c32eb314471e2c2f33/packages/sdk/cryptographic-utils/src/account.ts#L440-L459) function in [`@celo/cryptographic-utils`](https://www.npmjs.com/package/@celo/cryptographic-utils) can be used to generate the DEK.
 
     The `EncryptionKeySigner` authentication method is preferred, since it doesn't require the user to access the wallet key that manages their funds. Also, when using the DEK for authentication, ODIS will also use the DEK as the blinding factor, so that ODIS identifies repeat queries and doesn’t charge additional quota. The tradeoff is that the extra computation when using the DEK can add a tiny bit of latency.
@@ -294,7 +299,7 @@ const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentif
 )
 ```
 
-You can find an example implementation of a web-based app [here](https://github.com/isabellewei/emisianto).
+You can find an example implementation of a web app [here](https://github.com/isabellewei/emisianto).
 
 <!-- ## ODIS API
 
