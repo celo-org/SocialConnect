@@ -186,9 +186,7 @@ const { remainingQuota } = await OdisUtils.Quota.getPnpQuotaStatus(
 );
 ```
 
-You can increase the quota on your account by making a payment to the [`OdisPayments` contract](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/OdisPayments.sol)
-
-TODO: what is the cost per quota?
+You can increase the quota on your account by making a payment to the [`OdisPayments` contract](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/OdisPayments.sol). The cost per quota is 0.001 cUSD.
 
 
 ### Authentication
