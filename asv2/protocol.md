@@ -222,7 +222,7 @@ const attestations = await federatedAttestationsInstance
     .lookupAttestations(obfuscatedIdentifier, [trustedIssuer1Address, trustedIssuer2Address])
     .call();
 
-// Returns:
+// Returns: accounts, signers, issuedOns, and publishedOns represent attestations, where all the elements of the same index constitute one attestation object. countsPerIssuer lists the number of attestations belonging to each issuer passed into the function (ex: countsPerIssuer = [2,3] means that elements 0-1 of the other arrays represent attestations issued by trustedIssuer1 and elements 2-4 of the other arrays represent attestations issued by trustedIssuer2)
 // {
 //     countsPerIssuer: string[]
 //     accounts: Address[]
