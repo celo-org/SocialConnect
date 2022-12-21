@@ -267,10 +267,10 @@ const { obfuscatedIdentifier } = await OdisUtils.PhoneNumberIdentifier.getObfusc
 
 #### Web
 
-You will need to override the version of `blind-threshold-bls` to use the [web-compatible version](https://github.com/celo-org/blind-threshold-bls-wasm/tree/web-compatible). To do so, add this to your `package.json`, making sure that you're referencing the right commit:
+You will need to use the [web-compatible version](https://github.com/celo-org/blind-threshold-bls-wasm/tree/web-compatible) version of `blind-threshold-bls`. To do so, add this to your `package.json`, making sure that you're referencing the right commit:
 
 ```json
-"resolutions": {
+"dependencies": {
     "blind-threshold-bls": "https://github.com/celo-org/blind-threshold-bls-wasm#3d1013af"
   }
 ```
