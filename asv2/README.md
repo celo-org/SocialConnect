@@ -63,7 +63,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
       authenticationMethod: OdisUtils.Query.AuthenticationMethod.WALLET_KEY,
       contractKit: kit,
     };
-    const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentifie(
+    const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentifier(
       plaintextIdentifier,
       OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
       issuerAddress,
@@ -104,7 +104,7 @@ You can also check out [emisianto](https://emisianto.vercel.app/), a sample web 
 
 ## 📄 Documentation
 
-For a deeper dive under the hoode and specific implementation details, check out the documentation on the [protocol](protocol.md) for details on how to interact with the on-chain registry,  and [privacy](privacy.md) for how identifiers are obfuscated.
+For a deeper dive under the hood and specific implementation details, check out the documentation on the [protocol](protocol.md) for details on how to interact with the on-chain registry,  and [privacy](privacy.md) for how identifiers are obfuscated.
 
 ## 📣 Feedback
 
