@@ -63,7 +63,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
       authenticationMethod: OdisUtils.Query.AuthenticationMethod.WALLET_KEY,
       contractKit: kit,
     };
-    const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentifie(
+    const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentifier(
       plaintextIdentifier,
       OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
       issuerAddress,
@@ -96,7 +96,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
 
 ## 🚀 Examples
 
-The best place to get started is the [examples](examples) folder, which contains sample scripts that implement registration and lookups, using [ContractKit](https://docs.celo.org/developer/contractkit), [Ethers](https://ethers.org/), and [web3.js](https://web3js.readthedocs.io/en/v1.8.1/)
+The best place to get started is the [examples](examples) folder, which contains sample scripts that implement registration and lookups, using [ContractKit](https://docs.celo.org/developer/contractkit), [Ethers](https://ethers.org/), and [web3.js](https://web3js.readthedocs.io/en/v1.8.1/).
 
 You can also check out [emisianto](https://emisianto.vercel.app/), a sample web app that is an implementation of a phone number issuer. The code is hosted [here](https://github.com/isabellewei/emisianto).
 
@@ -104,7 +104,7 @@ You can also check out [emisianto](https://emisianto.vercel.app/), a sample web 
 
 ## 📄 Documentation
 
-For a deeper dive under the hoode and specific implementation details, check out the documentation on the [protocol](protocol.md) for details on how to interact with the on-chain registry,  and [privacy](privacy.md) for how identifiers are obfuscated.
+For a deeper dive under the hood and specific implementation details, check out the documentation of the [protocol](protocol.md) for details on how to interact with the on-chain registry,  and [privacy](privacy.md) for how identifiers are obfuscated.
 
 ## 📣 Feedback
 

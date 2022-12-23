@@ -1,7 +1,7 @@
 # Attestations Protocol
 
 The goals of this attestation protocol are to increase adoption of identity mappings, and encourage network effects of shared cross-application identity attestations. To this end, we have made it possible for anyone to permissionlessly become an issuer of attestations.
-
+## Table of contents
   - [User Flows](#user-flows)
     - [Register Alice’s phone number](#register-alices-phone-number)
     - [Look up Alice’s phone number](#look-up-alices-phone-number)
