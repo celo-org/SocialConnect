@@ -3,7 +3,7 @@
 Identifiers are obfuscated to preserve the privacy of on-chain attestations. This is done by hashing over the identifier and a secret pepper. Directly using the hash of just the identifier is avoided, as attackers could still discover attestation mappings via a [rainbow table attack](https://wikipedia.org/wiki/Rainbow_table).
 
 The secret pepper used for obfuscation is obtained through the [Oblivious Decentralized Identifier Service (ODIS)](https://docs.celo.org/protocol/identity/odis). Standardizing the pepper is necessary for interoperability, so that clients can discover each others attestations. Peppers produced by ODIS are cryptographically strong, and so cannot be guessed in a brute force or rainbow table attack. ODIS also imposes a rate limit to prevent attackers from scanning a large number of identifiers. Aside from privacy-preserving identifier attestions, ODIS can also be used for other use cases, such as [account recovery](https://docs.celo.org/protocol/identity/encrypted-cloud-backup).
-
+## Table of contents
   - [Obfuscated Identifier Derivation](#obfuscated-identifier-derivation)
     - [Identifier Types and Prefixes](#identifier-types-and-prefixes)
     - [Blinding](#blinding)
