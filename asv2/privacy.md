@@ -36,10 +36,10 @@ You can see these steps implemented in the `@celo/identity` sdk [here](https://g
 Here is a concrete example:
 
 - **Alice's phone number**: `+12345678901`
-- The ODIS pepper for Alice's phone number: `123abc` (illustrative only!)
+- The ODIS pepper for Alice's phone number: `SqXDxoTdBpKH2` 
 - The obfuscation pattern: `sha3({prefix}://{plaintextIdentifier}__{pepper})`
-- The actual obfuscation: `sha3('tel://+123456789__123abc')` = `c1fbb1429e94f4a491ee9601fb8cb9150ac3ed06e990d9449c8fba9509df3f1a`
-- **Alice's obfuscated phone number**: `c1fbb1429e94f4a491ee9601fb8cb9150ac3ed06e990d9449c8fba9509df3f1a`
+- The actual obfuscation: `sha3('tel://+123456789__SqXDxoTdBpKH2')` = `0x8b578f2053a41113066b8410ca2d952a27b5f4531838ff54ca68e7c5cc7caf47`
+- **Alice's obfuscated phone number**: `0x8b578f2053a41113066b8410ca2d952a27b5f4531838ff54ca68e7c5cc7caf47`
 
 ### Identifier Types and Prefixes
 
