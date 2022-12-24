@@ -1,10 +1,14 @@
 # Attestations Protocol
 
 The goals of this attestation protocol are to increase adoption of identity mappings, and encourage network effects of shared cross-application identity attestations. To this end, we have made it possible for anyone to permissionlessly become an issuer of attestations.
+
+Issuers have the freedom to decide how to verify that the user actually owns their identifier. After verification, issuers register the mapping as an attestation to the [on-chain smart contract registry](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/FederatedAttestations.sol). Attestations are stored under the issuer that registered them. When looking up attestations, we then have to decide which issuers are trusted.
+
 ## Table of contents
+
   - [User Flows](#user-flows)
-    - [Register Alice’s phone number](#register-alices-phone-number)
-    - [Look up Alice’s phone number](#look-up-alices-phone-number)
+    - [Register phone number](#register-phone-number)
+    - [Look up phone number](#look-up-phone-number)
     - [Send money to user on a different wallet](#send-money-to-user-on-a-different-wallet)
   - [Interacting with the protocol](#interacting-with-the-protocol)
     - [Issuer Signers](#issuer-signers)
@@ -19,9 +23,9 @@ The goals of this attestation protocol are to increase adoption of identity mapp
 ## User Flows
 
 <details>
-<summary><b>Stakeholders</b></summary>
+<summary><b>Participants Glossary</b></summary>
 
-| Stakeholder | Description |
+| Participant | Description |
 |-----------|--------|
 | user | User that owns the off-chain identifier and account
 | issuer | Anyone who is verifying identifiers and creating on-chain attestations, this will most likely be a wallet  
@@ -43,11 +47,15 @@ The user provides their phone number to the application, who is acting as an iss
 
 ### Look up phone number 
 
-The wallet queries ODIS for the obfuscated identifier of the phone number. Using the obfuscated identifier, the wallet looks up the on-chain registry to see which account is mapped to that identifier.
+The wallet queries ODIS for the obfuscated identifier of the phone number. Using the obfuscated identifier, the wallet looks up the on-chain registry to see which account is mapped to that identifier, specifying itself as the trusted issuer.
 
 <img width="1200" alt="image" src="https://user-images.githubusercontent.com/46296830/201715097-124a8461-2a45-4a1f-ab2a-1781300befb0.png">
 
 ### Send money to user on a different wallet
+
+Wallet 1 registers user 1's phone number, as [described above](#register-phone-number).
+
+User 2, who has an account with wallet 2, would like to send money to their friend, user 1. Knowing user 1's phone number, they share it with wallet 2. After getting the obfuscated identifier, wallet 2 uses it to look up the account associated with user 1's phone number, as described above, while specifying that they trust wallet 1 as an issuer. Using the associated account found, wallet 2 completes the transaction of sending money from user 2 to user 1.
 
 ```mermaid
 %%{init: { "sequence": { "wrap": true } } }%%

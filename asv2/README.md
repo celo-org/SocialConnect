@@ -7,7 +7,7 @@ ASv2 is an open source protocol that maps off-chain personal **identifiers** (su
 * social discovery - find someone's account based on their twitter!
 * any other identity applications!
 
-Here is a short demo of a payment from a user using [Kaala](https://kaala.app/) wallet to a user using [Libera](https://medium.com/impactmarket/ready-to-unlock-your-potential-meet-libera-your-new-crypto-wallet-d1053f917b95) wallet, using only a phone number:
+Here is a short demo of a payment from a [Kaala](https://kaala.app/) wallet user to a [Libera](https://medium.com/impactmarket/ready-to-unlock-your-potential-meet-libera-your-new-crypto-wallet-d1053f917b95) wallet user, with only a phone number:
 
 [<img width="800" alt="image" src="https://user-images.githubusercontent.com/46296830/207285114-6ef73be4-10f2-4afc-a066-811e1f3e1042.png">](https://www.loom.com/share/8afddd73ba324ec18aeb63fc96d568f9)
 

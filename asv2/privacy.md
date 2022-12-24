@@ -4,6 +4,7 @@ Identifiers are obfuscated to preserve the privacy of on-chain attestations. Thi
 
 The secret pepper used for obfuscation is obtained through the [Oblivious Decentralized Identifier Service (ODIS)](https://docs.celo.org/protocol/identity/odis). Standardizing the pepper is necessary for interoperability, so that clients can discover each others attestations. Peppers produced by ODIS are cryptographically strong, and so cannot be guessed in a brute force or rainbow table attack. ODIS also imposes a rate limit to prevent attackers from scanning a large number of identifiers. Aside from privacy-preserving identifier attestions, ODIS can also be used for other use cases, such as [account recovery](https://docs.celo.org/protocol/identity/encrypted-cloud-backup).
 ## Table of contents
+
   - [Obfuscated Identifier Derivation](#obfuscated-identifier-derivation)
     - [Identifier Types and Prefixes](#identifier-types-and-prefixes)
     - [Blinding](#blinding)
@@ -180,7 +181,7 @@ You can check how much quota is left on your account:
 
 ```typescript
 const { remainingQuota } = await OdisUtils.Quota.getPnpQuotaStatus(
-  issuerAddress,
+  address,
   authSigner,
   serviceContext
 );
@@ -188,6 +189,19 @@ const { remainingQuota } = await OdisUtils.Quota.getPnpQuotaStatus(
 
 You can increase the quota on your account by making a payment to the [`OdisPayments` contract](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/OdisPayments.sol). The cost per quota is 0.001 cUSD.
 
+```ts
+if (remainingQuota < 1) {
+  const stableTokenContract = await kit.contracts.getStableToken();
+  const odisPaymentsContract = await kit.contracts.getOdisPayments();
+  const ONE_CENT_CUSD_WEI = 10000000000000000
+  await stableTokenContract
+    .increaseAllowance(odisPaymentsContract.address, ONE_CENT_CUSD_WEI)
+    .sendAndWaitForReceipt();
+  const odisPayment = await odisPaymentsContract
+    .payInCUSD(this.issuer.address, ONE_CENT_CUSD_WEI)
+    .sendAndWaitForReceipt();
+}
+```
 
 ### Authentication
 
