@@ -1,6 +1,5 @@
 import { OdisUtils } from "@celo/identity";
 import {
-  AuthenticationMethod,
   AuthSigner,
   OdisContextName,
   ServiceContext,

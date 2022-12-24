@@ -32,37 +32,70 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
 1. Add the [`@celo/identity`](https://www.npmjs.com/package/@celo/identity) package into your project.
 
     ```console
-    yarn add @celo/identity
+    npm install @celo/identity
     ```
 
-2. Derive the obfuscated identifier from your plaintext identifier. Refer to documentation on the [ODIS SDK](privacy.md#using-the-sdk) for detailed explanations on these parameters and steps.
+2. Set up your issuer, which is the account registering attestations. When a user requests for the issuer to register an attestation, the issuer should [verify](protocol.md#verification) somehow that the user owns their identifier (ex. SMS verification for phone number identifiers).
 
-    ```typescript
-    import { OdisUtils } from "@celo/identity";
+    ```ts
     import { newKit } from "@celo/contractkit";
 
-    // create alfajores contractKit instance with your private key
-    const kit = await newKit("https://alfajores-forno.celo-testnet.org");
-    kit.addAccount(PRIVATE_KEY)
+    // the issuer is the account that is registering the attestation
+    let ISSUER_PRIVATE_KEY
 
-    // approve and then send payment to OdisPayments to get quota for ODIS
-    const stableTokenContract = await kit.contracts.getStableToken();
-    const odisPaymentsContract = await kit.contracts.getOdisPayments();
-    await stableTokenContract
-      .increaseAllowance(odisPaymentsContract.address, ONE_CENT_CUSD_WEI)
-      .sendAndWaitForReceipt();
-    const ONE_CENT_CUSD_WEI = 10000000000000000
-    const odisPayment = await odisPaymentsContract
-      .payInCUSD(this.issuer.address, ONE_CENT_CUSD_WEI)
-      .sendAndWaitForReceipt();
+    // create alfajores contractKit instance with the issuer private key
+    const kit = await newKit("https://alfajores-forno.celo-testnet.org");
+    kit.addAccount(ISSUER_PRIVATE_KEY)
+    const issuerAddress = kit.web3.eth.accounts.privateKeyToAccount(ISSUER_PRIVATE_KEY).address
+    kit.defaultAccount = issuerAddress
+
+    // information provided by user, issuer should confirm they do own the identifier
+    const userPlaintextIdentifier = '+12345678910'
+    const userAccountAddress = '0x000000000000000000000000000000000000user'
     
-    // get obfuscated identifier from plaintext identifier by querying ODIS
-    const plaintextIdentifier = '+12345678910'
-    const serviceContext = OdisUtils.Query.getServiceContext(OdisContextName.ALFAJORES);
-    const authSigner = {
+    // time at which issuer verified the user owns their identifier
+    const attestationVerifiedTime = Date.now()
+    ```
+
+3. Check and top up [quota for querying ODIS](privacy.md#rate-limit) if necessary.
+
+    ```ts
+    import { OdisUtils } from "@celo/identity";
+    import { AuthSigner } from "@celo/identity/lib/odis/query";
+
+    // authSigner provides information needed to authenticate with ODIS
+    const authSigner: AuthSigner = {
       authenticationMethod: OdisUtils.Query.AuthenticationMethod.WALLET_KEY,
       contractKit: kit,
     };
+    // serviceContext provides the ODIS endpoint and public key
+    const serviceContext = OdisUtils.Query.getServiceContext(OdisContextName.ALFAJORES);
+
+    // check existing quota on issuer account
+    const { remainingQuota } = await OdisUtils.Quota.getPnpQuotaStatus(
+      issuerAddress,
+      authSigner,
+      serviceContext
+    );
+
+    // if needed, approve and then send payment to OdisPayments to get quota for ODIS
+    if (remainingQuota < 1) {
+      const stableTokenContract = await kit.contracts.getStableToken();
+      const odisPaymentsContract = await kit.contracts.getOdisPayments();
+      const ONE_CENT_CUSD_WEI = 10000000000000000
+      await stableTokenContract
+        .increaseAllowance(odisPaymentsContract.address, ONE_CENT_CUSD_WEI)
+        .sendAndWaitForReceipt();
+      const odisPayment = await odisPaymentsContract
+        .payInCUSD(issuerAddress, ONE_CENT_CUSD_WEI)
+        .sendAndWaitForReceipt();
+    }
+    ```
+
+4. Derive the obfuscated identifier from your plaintext identifier. Refer to documentation on the [ODIS SDK](privacy.md#using-the-sdk) for detailed explanations on these parameters and steps.
+
+    ```typescript
+    // get obfuscated identifier from plaintext identifier by querying ODIS
     const { obfuscatedIdentifier } = await OdisUtils.Identifier.getObfuscatedIdentifier(
       plaintextIdentifier,
       OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
@@ -72,7 +105,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
     )
     ```
 
-3. Register an attestation mapping between the obfuscated identifier and an account address in the `FederatedAttestations` contract. See [docs](protocol.md#registration) for more info.
+5. Register an attestation mapping between the obfuscated identifier and an account address in the `FederatedAttestations` contract. This attestation is associated under the issuer. See [docs](protocol.md#registration) for more info.
 
    ```typescript
    const federatedAttestationsContract = await kit.contracts.getFederatedAttestations();
@@ -83,7 +116,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
       .send();
    ```
 
-4. Look up the accounts addresses owned by an identifier by querying the `FederatedAttestations` contract. See [docs](protocol.md#lookups) for more info.
+6. Look up the account addresses owned by an identifier, as attested by the issuers that you trust (in this example only your own issuer), by querying the `FederatedAttestations` contract. See [docs](protocol.md#lookups) for more info.
 
     ```ts
     const attestations = await federatedAttestationsContract.lookupAttestations(

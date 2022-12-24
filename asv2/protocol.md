@@ -2,10 +2,9 @@
 
 The goals of this attestation protocol are to increase adoption of identity mappings, and encourage network effects of shared cross-application identity attestations. To this end, we have made it possible for anyone to permissionlessly become an issuer of attestations.
 
-Issuers have the freedom to decide how to verify that the user actually owns their identifier. After verification, issuers register the mapping as an attestation to the [on-chain smart contract registry](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/FederatedAttestations.sol). Attestations are stored under the issuer that registered them. When looking up attestations, we then have to decide which issuers are trusted.
-
 ## Table of contents
 
+  - [Verification](#verification)
   - [User Flows](#user-flows)
     - [Register phone number](#register-phone-number)
     - [Look up phone number](#look-up-phone-number)
@@ -19,6 +18,10 @@ Issuers have the freedom to decide how to verify that the user actually owns the
   - [Smart Contract Addresses](#smart-contract-addresses)
     - [Mainnet](#mainnet)
     - [Alfajores](#alfajores)
+
+## Verification
+
+Issuers have the freedom to decide how to verify that the user actually owns their identifier. After verification, issuers register the mapping as an attestation to the [on-chain smart contract registry](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/FederatedAttestations.sol). Attestations are stored under the issuer that registered them. When looking up attestations, we then have to decide which issuers are trusted.
 
 ## User Flows
 

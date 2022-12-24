@@ -205,7 +205,7 @@ if (remainingQuota < 1) {
 
 ### Authentication
 
-There are two authentication methods for your `AuthSigner` when interacting with ODIS: 
+There are two authentication methods for your `AuthSigner` when interacting with ODIS:
 
 1. **`WalletKeySigner`**:  uses a wallet key by passing in a contractkit instance with the account unlocked:
 

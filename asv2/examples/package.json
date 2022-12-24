@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@celo/base": "^2.3.0",
+    "@celo/base": "^3.0.1",
     "@celo/identity": "^3.0.1",
+    "blind-threshold-bls": "https://github.com/celo-org/blind-threshold-bls-wasm#3d1013a",
     "ethers": "^5.7.2",
     "react-native-blind-threshold-bls": "^1.0.1",
     "web3": "^1.8.0",
