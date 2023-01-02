@@ -224,7 +224,7 @@ There are two authentication methods for your `AuthSigner` when interacting with
     accountsContract.setAccountDataEncryptionKey(DEK_PUBLIC_KEY).send({from: issuerAddress})
     ```
 
-    Any key pair can be used as a DEK, but [this](https://github.com/celo-org/celo-monorepo/blob/0aea63826f8c7e7d2f3fe0c32eb314471e2c2f33/packages/sdk/cryptographic-utils/src/dataEncryptionKey.ts#L36-L54) or [this](https://github.com/celo-org/celo-monorepo/blob/0aea63826f8c7e7d2f3fe0c32eb314471e2c2f33/packages/sdk/cryptographic-utils/src/account.ts#L440-L459) function in [`@celo/cryptographic-utils`](https://www.npmjs.com/package/@celo/cryptographic-utils) can be used to generate the DEK.
+    Any key pair can be used as a DEK, but [this](https://github.com/celo-org/celo-monorepo/blob/0aea63826f8c7e7d2f3fe0c32eb314471e2c2f33/packages/sdk/cryptographic-utils/src/dataEncryptionKey.ts#L36-L54) or [this](https://github.com/celo-org/celo-monorepo/blob/0aea63826f8c7e7d2f3fe0c32eb314471e2c2f33/packages/sdk/cryptographic-utils/src/account.ts#L440-L459) function in [`@celo/cryptographic-utils`](https://www.npmjs.com/package/@celo/cryptographic-utils) can be used to generate the DEK. Or, using a private key, you can get the compressed public key using [ethers Signing Key](https://docs.ethers.org/v5/api/utils/signing-key/).
 
     The `EncryptionKeySigner` authentication method is preferred, since it doesn't require the user to access the wallet key that manages their funds. Also, when using the DEK for authentication, ODIS will also use the DEK as the blinding factor, so that ODIS identifies repeat queries and doesn’t charge additional quota. The tradeoff is that the extra computation when using the DEK can add a tiny bit of latency.
 
@@ -278,6 +278,8 @@ const { obfuscatedIdentifier } = await OdisUtils.PhoneNumberIdentifier.getObfusc
   new ReactNativeBlsBlindingClient(serviceContext.odisPubKey)
 )
 ```
+
+When running react-native on iOS simulator on a Mac M1, if you start seeing errors like `building for iOS Simulator-x86_64 but attempting to link with file built for iOS Simulator-arm64`, run Xcode with Rosetta, or, if running from the command line, run with `arch -x86_64 react-native run-ios`.
 
 #### Web
 

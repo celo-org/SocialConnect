@@ -20,7 +20,7 @@ Here are some active issuers verifying and registering attestations:
 | Issuer Name | Address|
 |-----|-----|
 |Kaala| `0x6549aF2688e07907C1b821cA44d6d65872737f05`
-|Libera|
+|Libera| `0x388612590F8cC6577F19c9b61811475Aa432CB44` (mainnet) `0xe3475047EF9F9231CD6fAe02B3cBc5148E8eB2c8` (alfajores)
 
 
 Off-chain identifiers, originally in plaintext, are obfuscated before they are used in on-chain attestations to ensure user privacy and security. This is done with the help of the [Oblivious Decentralized Identifier Service (**ODIS**)](https://docs.celo.org/protocol/identity/odis). The details of the obfuscation process and how to interact with ODIS are described in the [docs about privacy](privacy.md).
@@ -35,7 +35,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
     npm install @celo/identity
     ```
 
-2. Set up your issuer, which is the account registering attestations. When a user requests for the issuer to register an attestation, the issuer should [verify](protocol.md#verification) somehow that the user owns their identifier (ex. SMS verification for phone number identifiers).
+2. Set up your issuer (read "Authentication" section in [privacy.md](privacy.md#authentication)), which is the account registering attestations. When a user requests for the issuer to register an attestation, the issuer should [verify](protocol.md#verification) somehow that the user owns their identifier (ex. SMS verification for phone number identifiers).
 
     ```ts
     import { newKit } from "@celo/contractkit";
@@ -129,7 +129,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
 
 ## 🚀 Examples
 
-The best place to get started is the [examples](examples) folder, which contains sample scripts that implement registration and lookups, using [ContractKit](https://docs.celo.org/developer/contractkit), [Ethers](https://ethers.org/), and [web3.js](https://web3js.readthedocs.io/en/v1.8.1/).
+The best place to get started is the [examples](examples) folder, which contains sample scripts that implement registration and lookups, using [ContractKit](https://docs.celo.org/developer/contractkit), [Ethers](https://ethers.org/), and [web3.js](https://web3js.readthedocs.io/en/v1.8.1/). See [Runtime Environments](privacy.md#runtime-environments) to find out about BLS to each environment.
 
 You can also check out [emisianto](https://emisianto.vercel.app/), a sample web app that is an implementation of a phone number issuer. The code is hosted [here](https://github.com/isabellewei/emisianto).
 

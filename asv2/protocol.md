@@ -267,6 +267,9 @@ const attestations = await federatedAttestationsInstance
 - [Escrow](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/Escrow.sol):
   - [`0xf4Fa51472Ca8d72AF678975D9F8795A504E7ada5`](https://explorer.celo.org/address/0xf4Fa51472Ca8d72AF678975D9F8795A504E7ada5/transactions) (proxy)
   - [`0xcC4E6caBe88EBb7FCCB40d862bf1C3a89f88e835`](https://explorer.celo.org/address/0xcC4E6caBe88EBb7FCCB40d862bf1C3a89f88e835/transactions) (implementation)
+- [Accounts](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/common/Accounts.sol#L244):
+  - [`0x7d21685C17607338b313a7174bAb6620baD0aaB7`](https://explorer.celo.org/address/0x7d21685C17607338b313a7174bAb6620baD0aaB7/transactions) (proxy)
+  - [`0xc72cf67B173c3d92564EB653d9bF73392825ADCE`](https://explorer.celo.org/address/0xc72cf67B173c3d92564EB653d9bF73392825ADCE/transactions) (implementation)
 
 ### Alfajores
 
@@ -279,3 +282,6 @@ const attestations = await federatedAttestationsInstance
 - [Escrow](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/Escrow.sol):
   - [`0xb07E10c5837c282209c6B9B3DE0eDBeF16319a37`](https://alfajores-blockscout.celo-testnet.org/address/0xb07E10c5837c282209c6B9B3DE0eDBeF16319a37/transactions) (proxy)
   - [`0xa34117B48313dE0093d599720998415bAb5FD61d`](https://alfajores-blockscout.celo-testnet.org/address/0xa34117B48313dE0093d599720998415bAb5FD61d/transactions) (implementation)
+- [Accounts](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/common/Accounts.sol#L244):
+  - [`0xed7f51A34B4e71fbE69B3091FcF879cD14bD73A9`](https://explorer.celo.org/address/0xed7f51A34B4e71fbE69B3091FcF879cD14bD73A9/transactions) (proxy)
+  - [`0x893120B08e86ACF40998BB16880ACB0B8efC25F0`](https://explorer.celo.org/address/0x893120B08e86ACF40998BB16880ACB0B8efC25F0/transactions) (implementation)
