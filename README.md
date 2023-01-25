@@ -197,7 +197,7 @@ If you'd like to see a minimal demo app using [NextJS](https://nextjs.org/), tak
 
 ## 📄 Documentation
 
-Check out the [developer docs](docs.md) for more details on specific implementation questions you might have.
+Check out the [developer docs](protocol.md) for more details on specific implementation questions you might have.
 
 ## 📣 Feedback
 
