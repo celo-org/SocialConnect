@@ -40,7 +40,7 @@ Follow these steps to **register** and **look up** identifiers:
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
-See example NodeJS implementation for more details: [examples/registerAttestation-ethers.ts](examples/registerAttestation-ethers.ts)
+See example NodeJS implementation for more details: [examples/ethers.ts](examples/ethers.ts)
 
 ```typescript
 import { OdisUtils } from '@celo/identity'
@@ -107,7 +107,7 @@ const attestations =
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
-See example NodeJS implementation for more details: [examples/registerAttestation-web3.ts](examples/registerAttestation-web3.ts)
+See example NodeJS implementation for more details: [examples/web3.ts](examples/web3.ts)
 
 ```typescript
 import { OdisUtils } from '@celo/identity'
@@ -151,7 +151,7 @@ console.log(attestations.accounts)
 
 Install the `@celo/contractkit` package, using version `>=2.3.0`
 
-See example NodeJS implementation for more details:  [examples/registerAttestation-contractKit.ts](examples/registerAttestation-contractKit.ts)
+See example NodeJS implementation for more details:  [examples/contractKit.ts](examples/contractKit.ts)
 
 ```typescript
 import { OdisUtils } from '@celo/identity'
