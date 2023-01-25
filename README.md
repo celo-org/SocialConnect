@@ -40,7 +40,7 @@ Follow these steps to **register** and **look up** identifiers:
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
-See example NodeJS implementation for more details: [example-scripts/registerAttestation-ethers.ts](example-scripts/registerAttestation-ethers.ts)
+See example NodeJS implementation for more details: [examples/registerAttestation-ethers.ts](examples/registerAttestation-ethers.ts)
 
 ```typescript
 import { OdisUtils } from '@celo/identity'
@@ -107,7 +107,7 @@ const attestations =
 
 You will need to have created a data encryption key (DEK) and [registered](https://docs.celo.org/developer/contractkit/data-encryption-key) it to your issuer account.
 
-See example NodeJS implementation for more details: [example-scripts/registerAttestation-web3.ts](example-scripts/registerAttestation-web3.ts)
+See example NodeJS implementation for more details: [examples/registerAttestation-web3.ts](examples/registerAttestation-web3.ts)
 
 ```typescript
 import { OdisUtils } from '@celo/identity'
@@ -151,7 +151,7 @@ console.log(attestations.accounts)
 
 Install the `@celo/contractkit` package, using version `>=2.3.0`
 
-See example NodeJS implementation for more details:  [example-scripts/registerAttestation-contractKit.ts](example-scripts/registerAttestation-contractKit.ts)
+See example NodeJS implementation for more details:  [examples/registerAttestation-contractKit.ts](examples/registerAttestation-contractKit.ts)
 
 ```typescript
 import { OdisUtils } from '@celo/identity'
@@ -189,7 +189,7 @@ console.log(attestations.accounts)
 
 ### Longer examples
 
-If you are interested in a working [NodeJS](https://nodejs.org/en/) example take a look at the scripts in the [example-scripts](example-scripts/) folder.
+If you are interested in a working [NodeJS](https://nodejs.org/en/) example take a look at the scripts in the [examples](examples/) folder.
 
 If you'd like to see a minimal demo app using [NextJS](https://nextjs.org/), take a look at the implementation in the [emisianto](https://github.com/isabellewei/emisianto) repository, which is currently hosted at [emisianto.vercel.app](https://emisianto.vercel.app/).
 
