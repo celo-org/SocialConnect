@@ -68,7 +68,7 @@ sequenceDiagram
     actor user2
     participant wallet2
     participant ODIS
-    participant ASv2 as FederatedAttestations.sol
+    participant SocialConnect as FederatedAttestations.sol
 
     rect rgb(230,200,240, .3)
     note right of user1: publish attestation 
@@ -76,7 +76,7 @@ sequenceDiagram
     wallet1 -->> user1: 
     wallet1 -->> ODIS: get obfuscated identifier of phone number
     ODIS -->> wallet1: 
-    wallet1 -->> ASv2: publish attestation with obfuscated idnetifier
+    wallet1 -->> SocialConnect: publish attestation with obfuscated idnetifier
     end
 
     rect rgb(230,240,290, .3)
@@ -85,8 +85,8 @@ sequenceDiagram
     user2 -->> wallet2: request to send money to user1's phone number
     wallet2 -->> ODIS: get obfuscated identifier of phone number
     ODIS -->> wallet2: 
-    wallet2 -->> ASv2: lookup address mapped to obfuscated identifier, with wallet1 as a trusted issuer
-    ASv2 -->> wallet2: 
+    wallet2 -->> SocialConnect: lookup address mapped to obfuscated identifier, with wallet1 as a trusted issuer
+    SocialConnect -->> wallet2: 
     wallet2 -->> user1: send money to user1's account
 end
 ```
