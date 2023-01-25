@@ -1,5 +1,5 @@
 
-# SocialConnect Beta
+# SocialConnect (Beta)
 
 > **Note**
 > This page is a draft 🙌 We continually push updates and would love to hear feedback and questions!
