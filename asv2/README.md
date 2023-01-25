@@ -51,7 +51,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
 
     // information provided by user, issuer should confirm they do own the identifier
     const userPlaintextIdentifier = '+12345678910'
-    const userAccountAddress = '0x000000000000000000000000000000000000user'
+    const userAccountAddress = '0x000000000000000000000000000000000000dead'
     
     // time at which issuer verified the user owns their identifier
     const attestationVerifiedTime = Date.now()
