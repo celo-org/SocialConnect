@@ -193,12 +193,12 @@ You can increase the quota on your account by making a payment to the [`OdisPaym
 if (remainingQuota < 1) {
   const stableTokenContract = await kit.contracts.getStableToken();
   const odisPaymentsContract = await kit.contracts.getOdisPayments();
-  const ONE_CENT_CUSD_WEI = 10000000000000000
+  const ONE_MILL_CUSD_WEI = 10000000000000000
   await stableTokenContract
-    .increaseAllowance(odisPaymentsContract.address, ONE_CENT_CUSD_WEI)
+    .increaseAllowance(odisPaymentsContract.address, ONE_MILL_CUSD_WEI)
     .sendAndWaitForReceipt();
   const odisPayment = await odisPaymentsContract
-    .payInCUSD(this.issuer.address, ONE_CENT_CUSD_WEI)
+    .payInCUSD(this.issuer.address, ONE_MILL_CUSD_WEI)
     .sendAndWaitForReceipt();
 }
 ```
