@@ -143,7 +143,7 @@ class ASv2 {
       }
 
       // increase quota
-      if (!enoughAllowance) {
+      if (enoughAllowance) {
         const odisPayment = await this.odisPaymentsContract
           .payInCUSD(this.issuer.address, ONE_CENT_CUSD_WEI)
           .sendAndWaitForReceipt();
@@ -160,6 +160,7 @@ class ASv2 {
   const asv2 = new ASv2();
   try {
     await asv2.registerAttestation(USER_PHONE_NUMBER, USER_ACCOUNT);
+    console.log("attestation registered")
   } catch (err) {
     // mostly likely reason registering would fail is if this issuer has already
     // registered a mapping between this number and account
