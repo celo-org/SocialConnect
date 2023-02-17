@@ -4,6 +4,8 @@ The goals of this attestation protocol are to increase adoption of identity mapp
 
 ## Table of contents
 
+- [Attestations Protocol](#attestations-protocol)
+  - [Table of contents](#table-of-contents)
   - [Verification](#verification)
   - [User Flows](#user-flows)
     - [Register phone number](#register-phone-number)
@@ -275,13 +277,13 @@ const attestations = await federatedAttestationsInstance
 
 - [FederatedAttestations](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/FederatedAttestations.sol):
   - [`0x70F9314aF173c246669cFb0EEe79F9Cfd9C34ee3`](https://alfajores-blockscout.celo-testnet.org/address/0x70F9314aF173c246669cFb0EEe79F9Cfd9C34ee3/transactions) (proxy)
-  - [`0x926E88a280902Bfff5047693B9CeAfdb9F4d5095`](https://alfajores-blockscout.celo-testnet.org/address/0x926E88a280902Bfff5047693B9CeAfdb9F4d5095/transactions) (implementation)
+  - [`0x926E88a280902Bfff5047693B9CeAfdb9F4d5095`](https://explorer.celo.org/alfajores/address/0x926E88a280902Bfff5047693B9CeAfdb9F4d5095/transactions) (implementation)
 - [OdisPayments](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/OdisPayments.sol):
-  - [`0x645170cdB6B5c1bc80847bb728dBa56C50a20a49`](https://alfajores-blockscout.celo-testnet.org/address/0x645170cdB6B5c1bc80847bb728dBa56C50a20a49/transactions) (proxy)
-  - [`0x72eAC1F0518213Ad405560eFd3fB647FbDAdb703`](https://alfajores-blockscout.celo-testnet.org/address/0x72eAC1F0518213Ad405560eFd3fB647FbDAdb703/transactions) (implementation)
+  - [`0x645170cdB6B5c1bc80847bb728dBa56C50a20a49`](https://explorer.celo.org/alfajores/address/0x645170cdB6B5c1bc80847bb728dBa56C50a20a49/transactions) (proxy)
+  - [`0x72eAC1F0518213Ad405560eFd3fB647FbDAdb703`](https://explorer.celo.org/alfajores/address/0x72eAC1F0518213Ad405560eFd3fB647FbDAdb703/transactions) (implementation)
 - [Escrow](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/Escrow.sol):
   - [`0xb07E10c5837c282209c6B9B3DE0eDBeF16319a37`](https://alfajores-blockscout.celo-testnet.org/address/0xb07E10c5837c282209c6B9B3DE0eDBeF16319a37/transactions) (proxy)
-  - [`0xa34117B48313dE0093d599720998415bAb5FD61d`](https://alfajores-blockscout.celo-testnet.org/address/0xa34117B48313dE0093d599720998415bAb5FD61d/transactions) (implementation)
+  - [`0xa34117B48313dE0093d599720998415bAb5FD61d`](https://explorer.celo.org/alfajores/address/0xa34117B48313dE0093d599720998415bAb5FD61d/transactions) (implementation)
 - [Accounts](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/common/Accounts.sol#L244):
-  - [`0xed7f51A34B4e71fbE69B3091FcF879cD14bD73A9`](https://explorer.celo.org/address/0xed7f51A34B4e71fbE69B3091FcF879cD14bD73A9/transactions) (proxy)
-  - [`0x893120B08e86ACF40998BB16880ACB0B8efC25F0`](https://explorer.celo.org/address/0x893120B08e86ACF40998BB16880ACB0B8efC25F0/transactions) (implementation)
+  - [`0xed7f51A34B4e71fbE69B3091FcF879cD14bD73A9`](https://explorer.celo.org/alfajores/address/0xed7f51A34B4e71fbE69B3091FcF879cD14bD73A9/transactions) (proxy)
+  - [`0x893120B08e86ACF40998BB16880ACB0B8efC25F0`](https://explorer.celo.org/alfajores/address/0x893120B08e86ACF40998BB16880ACB0B8efC25F0/transactions) (implementation)
