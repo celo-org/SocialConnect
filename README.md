@@ -1,10 +1,12 @@
-# SocialConnect Beta
+<h1 align="center">✨ SocialConnect (Beta)</h1>
 
-SocialConnect is an open source protocol that maps off-chain personal **identifiers** (such as phone numbers, twitter handles, etc.) to on-chain account **addresses**. This enables a convenient and interoperable user experience for use cases such as:
+<h4 align="center">Open source protocol to map personal identifiers (like phone numbers, twitter handles, etc.) to EVM addresses on-chain. </h4>
+
+SocialConnect enables convenient and interoperable user experiences for use cases such as:
 
 * payments - send money directly to your friend's phone number!
 * social discovery - find someone's account based on their twitter!
-* any other identity applications!
+* many other identity applications!
 
 Here is a short demo of a payment from a [Kaala](https://kaala.app/) wallet user to a [Libera](https://medium.com/impactmarket/ready-to-unlock-your-potential-meet-libera-your-new-crypto-wallet-d1053f917b95) wallet user, with only a phone number:
 
@@ -14,12 +16,13 @@ Here is a short demo of a payment from a [Kaala](https://kaala.app/) wallet user
 
 SocialConnect uses a federated model, meaning that anyone has the power to be an **issuer** of attestation mappings. Issuers have the freedom to decide how to verify that the user actually has ownership of their identifier. After verification, issuers register the mapping as an attestation to the [on-chain smart contract registry](https://github.com/celo-org/celo-monorepo/blob/master/packages/protocol/contracts/identity/FederatedAttestations.sol). Attestations are stored under the issuer that registered them. When looking up attestations, we then have to decide which issuers are trusted.
 
-Here are some active issuers verifying and registering attestations:
+Here are some issuers that verify and register attestations:
 
-| Issuer Name | Address|
+| Name | Address |
 |-----|-----|
-|Kaala| `0x6549aF2688e07907C1b821cA44d6d65872737f05`
-|Libera| `0x388612590F8cC6577F19c9b61811475Aa432CB44` (mainnet) `0xe3475047EF9F9231CD6fAe02B3cBc5148E8eB2c8` (alfajores)
+| [Kaala Pay](https://kaala.app/) | `0x6549aF2688e07907C1b821cA44d6d65872737f05` (Celo mainnet) |
+| [Node Finance](https://www.nodefinance.org/) | `0xCD943EE26221AC3e6e7f3e38598F2b08BAEA87DD` (Celo mainnet) |
+| [Libera wallet](https://www.impactmarket.com/libera) | `0x388612590F8cC6577F19c9b61811475Aa432CB44` (Celo mainnet) `0xe3475047EF9F9231CD6fAe02B3cBc5148E8eB2c8` (alfajores testnet) |
 
 
 Off-chain identifiers, originally in plaintext, are obfuscated before they are used in on-chain attestations to ensure user privacy and security. This is done with the help of the [Oblivious Decentralized Identifier Service (**ODIS**)](https://docs.celo.org/protocol/identity/odis). The details of the obfuscation process and how to interact with ODIS are described in the [docs about privacy](privacy.md).
@@ -128,21 +131,36 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
 
 ## 🚀 Examples
 
+### Web3 client libraries
+
 The [`examples/`](examples) folder contains sample scripts that implement **registrations** and **lookups**, using:
 
 - [@celo/contractkit](https://docs.celo.org/developer/contractkit) (see [`examples/contractKit.ts`](examples/contractKit.ts)), 
 - [ethers.js](https://ethers.org/) (see [`examples/ethers.ts`](examples/ethers.ts)), and 
 - [web3.js](https://web3js.readthedocs.io/en/v1.8.1/) (see [`examples/web3.ts`](examples/web3.ts)). 
 
+
+### Runtime environments
+
+#### NodeJS (backend)
+
 The [Runtime Environments section](privacy.md#runtime-environments) shows instructions for using SocialConnect with:
 
 - [NodeJS](https://nodejs.org) (see [Runtime Environments > Node](privacy.md#node)),
-- [React Native](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiK9paNjYH9AhUIesAKHQZ1CvYQFnoECA0QAQ&url=https%3A%2F%2Freactnative.dev%2F&usg=AOvVaw3N725EvNXK2_crezzoIs9d) (see [Runtime Environments > React Native](privacy.md#react-native)), and
+
+#### React (web)
+
 - Web (see [Runtime Environments > Web](privacy.md#web))
 
 The [emisianto web app](https://emisianto.vercel.app/) is a sample implementation of a phone number issuer. The code is hosted at [celo-org/emisianto](https://github.com/celo-org/emisianto).
 
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/46296830/205343775-60e429ea-f5e5-42b2-9474-8ca7dfe842cc.png">
+
+
+#### React Native (mobile)
+
+- [React Native](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiK9paNjYH9AhUIesAKHQZ1CvYQFnoECA0QAQ&url=https%3A%2F%2Freactnative.dev%2F&usg=AOvVaw3N725EvNXK2_crezzoIs9d) (see [Runtime Environments > React Native](privacy.md#react-native)), and
+
 
 ## 📄 Documentation
 
