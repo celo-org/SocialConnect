@@ -19,4 +19,4 @@ body:
     - type: markdown
       attributes:
           value: |
-              In order to add support for the requested identifier, you can add support for the identifier [here](https://github.com/celo-org/celo-monorepo/blob/75c223a1b5296ac0fecdb54fb29c52432cf3fece/packages/sdk/identity/src/odis/identifier.ts#L44) and open a PR.
+              In order to add support for the requested identifier, you can add support for the identifier [here](https://github.com/celo-org/celo-monorepo/blob/3c026a6a5d09e3ee5e2518547deba0fe77b40d53/packages/sdk/base/src/identifier.ts#L31) and open a PR.
