@@ -18,7 +18,7 @@ Here are some active issuers verifying and registering attestations:
 
 | Issuer Name | Address                                                                                                         |
 | ----------- | --------------------------------------------------------------------------------------------------------------- |
-| Kaala       | `0x6549aF2688e07907C1b821cA44d6d65872737f05`                                                                    |
+| Kaala       | `0x6549aF2688e07907C1b821cA44d6d65872737f05` (mainnet)                                                          |
 | Libera      | `0x388612590F8cC6577F19c9b61811475Aa432CB44` (mainnet) `0xe3475047EF9F9231CD6fAe02B3cBc5148E8eB2c8` (alfajores) |
 
 Off-chain identifiers, originally in plaintext, are obfuscated before they are used in on-chain attestations to ensure user privacy and security. This is done with the help of the [Oblivious Decentralized Identifier Service (**ODIS**)](https://docs.celo.org/protocol/identity/odis). The details of the obfuscation process and how to interact with ODIS are described in the [docs about privacy](privacy.md).
