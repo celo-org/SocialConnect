@@ -185,7 +185,9 @@ Issuer is an entity that is willing to take the overhead of verifying a user's o
 <details>
   <summary>Does Issuer need to pay for gas?</summary>
 
-Yes, Issuer pays for gas every time it wants to attest a new user.
+For lookup there is no requirement for gas, assuming that the `obfuscatedIdentifier` to be used for lookup is available.
+
+For registering attestations it is optional, once the `obfuscatedIdentifier` is obtained issuer can decide whether to just sign the attestation and provide it back to the user which will then **use its own funds for gas for registering itself** or the `issuer` can perform the transaction which will require the issuer to pay for gas.
 
 </details>
 
