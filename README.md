@@ -217,9 +217,9 @@ You might want to do this if you don't want to create a registry of your own and
 </details>
 
 <details>
-<summary>What are some security & trust assumptions differences between the Asv1 vs. Social Connect?</summary>
+<summary>What are some security & trust assumptions differences between the ASV1 vs. Social Connect?</summary>
 
-| Asv1                                                    | SocialConnect                                                                                                                    |
+| ASV1                                                    | SocialConnect                                                                                                                    |
 | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | Phone number verified by 3 randomly selected validators | Phone number verified by issuer (no guarantee about authenticity or quality of verification), app developers choose who to trust |
 | Single root of trust = Collective of Validators         | Many roots of trust = Respective attestation issuer that verified phone number                                                   |
