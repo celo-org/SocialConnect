@@ -167,11 +167,50 @@ Interested in Integrating SocialConnect, get in touch by filling this [form](htt
 ## FAQ
 
 <details>
-  <summary>What is an Identifier?</summary>
+  <summary>What is a "plainTextIdentifier"?</summary>
 
-Identifier is any string of text that a user can use to identify other user.
+`plainTextIdentifier` is any string of text that a user can use to identify other user.
 
-For example, Phone number, Twitter handle, GitHub username etc...
+Phone number, Twitter handle, GitHub username anything that makes it easier to represent an evm based address.
+
+For example:- Alice's phone number: `+12345678901`
+
+</details>
+
+<details>
+  <summary>What is an "obfuscatedIdentifier"?</summary>
+
+Identifier that is used on-chain, to which the account address is mapped and used by dApps to lookup. It preserve the privacy of the user by not revealing the underlying `plainTextIdentifier`. Used for on-chain attestations, obtained by hashing the plaintext identifier, identifier prefix, and pepper using this schema: `sha3(sha3({prefix}://{plaintextIdentifier})__{pepper})`.
+
+</details>
+
+<details>
+  <summary>What is an "identifier prefix"?</summary>
+
+Identifier Prefix is used to differentiate users having same plainTextIdentifier for different purposes and composability.
+
+For example:- Consider Alice having same username on both Twitter and Github, `alicecodes`.
+
+How do we differentiate between Alice verified using Twitter and Github? <br>
+This where `prefix` comes into play, the `plainTextIdentifier alicecodes` can be represented as `twitter://alicecodes` and `github://alicecodes` this helps differentiate whether Alice was verified using Twitter or Github.
+
+Moreover, it also helps in composability if dApps follow a standard and use prefix then the corresponding `obsfuscatedIdentifier` will be the same thus making it easier for dApps to lookup identifier verified by other issuers.
+
+You can keep an eye on prefixes suggested by us [here](https://github.com/celo-org/celo-monorepo/blob/8505d060fef3db3b0ce0cadf2bb879512bb20534/packages/sdk/base/src/identifier.ts#L31).
+
+</details>
+
+<details>
+  <summary>What is a "pepper"?</summary>
+
+`pepper` is a unique secret, obtained by taking the first 13 characters of the `sha256` hash of the `unblinded signature`
+
+</details>
+
+<details>
+  <summary>What is a "unblinded signature"?</summary>
+
+Obtained by unblinding the signature returned by ODIS which is the combined output, comprised of signature by ODIS signers.
 
 </details>
 
@@ -225,5 +264,38 @@ You might want to do this if you don't want to create a registry of your own and
 | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | Phone number verified by 3 randomly selected validators | Phone number verified by issuer (no guarantee about authenticity or quality of verification), app developers choose who to trust |
 | Single root of trust = Collective of Validators         | Many roots of trust = Respective attestation issuer that verified phone number                                                   |
+
+</details>
+
+<details>
+
+<summary>What's the best way to map an address returned by lookupAttestations to the issuer? </summary>
+
+```sol
+function lookupAttestations(bytes32 identifier, address[] calldata trustedIssuers)
+    external
+    view
+    returns (
+      uint256[] memory countsPerIssuer,
+      address[] memory accounts,
+      address[] memory signers,
+      uint64[] memory issuedOns,
+      uint64[] memory publishedOns
+    )
+```
+
+`lookupAttestations` returns 4 arrays, depending on the order `trustedIssuers` was provided respectively the return values are returned.
+
+For example:-
+
+if trustedIssuers = [I1, I2, ...]
+then countsPerIssuer = [CI1, CI2, ...] where CIx = number of accounts attested under the Xth issuer
+
+</details>
+
+<details>
+<summary>Is there a convention for phone number format?</summary>
+
+Yes, the SDK function `getObfuscatedIdentifier` will only accept E164 formatted phone numbers.
 
 </details>
