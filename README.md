@@ -136,8 +136,6 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
 
 ## 🚀 Examples
 
-The [`examples/`](examples) folder contains sample scripts that implement **registrations** and **lookups**, using:
-
 |                                             Type                                              |
 | :-------------------------------------------------------------------------------------------: |
 |                            [ContractKit](examples/contractKit.ts)                             |
