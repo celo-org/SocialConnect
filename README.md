@@ -138,17 +138,27 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
 
 The [`examples/`](examples) folder contains sample scripts that implement **registrations** and **lookups**, using:
 
--   [@celo/contractkit](https://docs.celo.org/developer/contractkit) (see [`examples/contractKit.ts`](examples/contractKit.ts)),
+|                                             Type                                              |
+| :-------------------------------------------------------------------------------------------: |
+|                            [ContractKit](examples/contractKit.ts)                             |
+|                              [EthersJS (v5)](examples/ethers.ts)                              |
+|                                  [web3.js](examples/web3.ts)                                  |
+|         [NextJS based web app (Phone Number)](https://github.com/celo-org/emisianto)          |
+| [React Native App (Phone Number)](https://github.com/celo-org/SocialConnect-ReactNative-Demo) |
+|      [NextJS based web app (Twitter)](https://github.com/celo-org/SocialConnect-Twitter)      |
+| [Server side NextJS (Twitter)](https://github.com/celo-org/SocialConnect-Twitter-Server-Side) |
+
+<!-- -   [@celo/contractkit](https://docs.celo.org/developer/contractkit) (see [`examples/contractKit.ts`](examples/contractKit.ts)),
 -   [ethers.js](https://ethers.org/) (see [`examples/ethers.ts`](examples/ethers.ts)), and
--   [web3.js](https://web3js.readthedocs.io/en/v1.8.1/) (see [`examples/web3.ts`](examples/web3.ts)).
+-   [web3.js](https://web3js.readthedocs.io/en/v1.8.1/) (see [`examples/web3.ts`](examples/web3.ts)). -->
 
 The [Runtime Environments section](privacy.md#runtime-environments) shows instructions for using SocialConnect with:
 
 -   [NodeJS](https://nodejs.org) (see [Runtime Environments > Node](privacy.md#node)),
 -   [React Native](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiK9paNjYH9AhUIesAKHQZ1CvYQFnoECA0QAQ&url=https%3A%2F%2Freactnative.dev%2F&usg=AOvVaw3N725EvNXK2_crezzoIs9d) (see [Runtime Environments > React Native](privacy.md#react-native)), and
 -   Web (see [Runtime Environments > Web](privacy.md#web))
-
-The [emisianto web app](https://emisianto.vercel.app/) is a sample implementation of a phone number issuer. The code is hosted at [celo-org/emisianto](https://github.com/celo-org/emisianto).
+<!--
+The [emisianto web app](https://emisianto.vercel.app/) is a sample implementation of a phone number issuer. The code is hosted at [celo-org/emisianto](https://github.com/celo-org/emisianto). -->
 
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/46296830/205343775-60e429ea-f5e5-42b2-9474-8ca7dfe842cc.png">
 
