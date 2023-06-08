@@ -99,7 +99,7 @@ The following steps use the Celo [ContractKit](https://docs.celo.org/developer/c
     // get obfuscated identifier from plaintext identifier by querying ODIS
     const { obfuscatedIdentifier } =
         await OdisUtils.Identifier.getObfuscatedIdentifier(
-            plaintextIdentifier,
+            userPlaintextIdentifier,
             OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
             issuerAddress,
             authSigner,
