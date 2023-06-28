@@ -1,4 +1,4 @@
-# SocialConnect Beta
+# SocialConnect
 
 SocialConnect is an open source protocol that maps off-chain personal **identifiers** (such as phone numbers, twitter handles, etc.) to on-chain account **addresses**. This enables a convenient and interoperable user experience for use cases such as:
 
@@ -22,6 +22,14 @@ Here are some active issuers verifying and registering attestations:
 | Libera      | `0x388612590F8cC6577F19c9b61811475Aa432CB44` (mainnet) `0xe3475047EF9F9231CD6fAe02B3cBc5148E8eB2c8` (alfajores) |
 
 Off-chain identifiers, originally in plaintext, are obfuscated before they are used in on-chain attestations to ensure user privacy and security. This is done with the help of the [Oblivious Decentralized Identifier Service (**ODIS**)](https://docs.celo.org/protocol/identity/odis). The details of the obfuscation process and how to interact with ODIS are described in the [docs about privacy](privacy.md).
+
+### Want a more profound understanding?
+
+We've made a mini-series to explain you:
+
+- [Celo Spark: SocialConnect Mini-Series (1/3) — What Is It?](https://www.youtube.com/watch?v=bzZbfoPLYM4&list=PLsQbsop73cfErtQwacE4WgqQwoVcLvLZS&index=1)
+- [Celo Spark: SocialConnect Mini-Series (2/3) — How Does It Works?](https://www.youtube.com/watch?v=bzZbfoPLYM4&list=PLsQbsop73cfErtQwacE4WgqQwoVcLvLZS&index=2)
+- [Celo Spark: SocialConnect Mini-Series (3/3) — Coding Session](https://www.youtube.com/watch?v=bzZbfoPLYM4&list=PLsQbsop73cfErtQwacE4WgqQwoVcLvLZS&index=3)
 
 ## 🧑‍💻 Quickstart
 
@@ -162,7 +170,7 @@ The [emisianto web app](https://emisianto.vercel.app/) is a sample implementatio
 
 ## 📄 Documentation
 
-For a deeper dive under the hood and specific implementation details, check out the documentation of the [protocol](protocol.md) for details on how to interact with the on-chain registry, and [privacy](privacy.md) for how identifiers are obfuscated.
+For a deeper dive under the hood and specific implementation details, check out the documentation of the [protocol](protocol.md) for details on how to interact with the on-chain registry, [privacy](privacy.md) for how identifiers are obfuscated, and [key-setup](key-setup.md) to setup your role keys to interact with the protocol.
 
 ## 🤝 Get In Touch
 
