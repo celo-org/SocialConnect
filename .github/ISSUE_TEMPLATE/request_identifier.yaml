@@ -1,0 +1,22 @@
+name: Request Identifier
+description: File a request to add a new identifier type to SocialConnect
+title: "[Identifier Request]: "
+body:
+    - type: input
+      id: identifier
+      attributes:
+          label: Identifier Name
+          description: "Which identifier would you like to add?"
+          placeholder: "Example: Twitter, Discord, Instagram, Telegram, etc..."
+      validations:
+          required: true
+    - type: input
+      id: prefix
+      attributes:
+          label: Preferred Prefix
+          description: "What would be a preferred prefix for the same?"
+          placeholder: "Example: twit, discord, github, phone, mail, tel, etc..."
+    - type: markdown
+      attributes:
+          value: |
+              In order to add support for the requested identifier, you can add support for the identifier [here](https://github.com/celo-org/celo-monorepo/blob/3c026a6a5d09e3ee5e2518547deba0fe77b40d53/packages/sdk/base/src/identifier.ts#L31) and open a PR.
