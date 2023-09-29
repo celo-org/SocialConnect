@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> Moved to https://github.com/celo-org/Social-Connect
+
 # SocialConnect
 
 SocialConnect is an open source protocol that maps off-chain personal **identifiers** (such as phone numbers, twitter handles, etc.) to on-chain account **addresses**. This enables a convenient and interoperable user experience for use cases such as:
