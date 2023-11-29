@@ -182,3 +182,139 @@ Interested in Integrating SocialConnect, get in touch by filling this [form](htt
 ## 📣 Feedback
 
 **SocialConnect is in beta**! Help us improve by sharing feedback on your experience in the Github Discussion section. You can also open an issue or a PR directly on this repo.
+
+## FAQ
+
+<details>
+  <summary>What is a "plainTextIdentifier"?</summary>
+
+`plainTextIdentifier` is any string of text that a user can use to identify other user.
+
+Phone number, Twitter handle, GitHub username anything that makes it easier to represent an evm based address.
+
+For example:- Alice's phone number: `+12345678901`
+
+</details>
+
+<details>
+  <summary>What is an "obfuscatedIdentifier"?</summary>
+
+Identifier that is used on-chain, to which the account address is mapped and used by dApps to lookup. It preserve the privacy of the user by not revealing the underlying `plainTextIdentifier`. Used for on-chain attestations, obtained by hashing the plaintext identifier, identifier prefix, and pepper using this schema: `sha3(sha3({prefix}://{plaintextIdentifier})__{pepper})`.
+
+</details>
+
+<details>
+  <summary>What is an "identifier prefix"?</summary>
+
+Identifier Prefix is used to differentiate users having same plainTextIdentifier for different purposes and composability.
+
+For example:- Consider Alice having same username on both Twitter and Github, `alicecodes`.
+
+How do we differentiate between Alice verified using Twitter and Github? <br>
+This where `prefix` comes into play, the `plainTextIdentifier alicecodes` can be represented as `twitter://alicecodes` and `github://alicecodes` this helps differentiate whether Alice was verified using Twitter or Github.
+
+Moreover, it also helps in composability if dApps follow a standard and use prefix then the corresponding `obsfuscatedIdentifier` will be the same thus making it easier for dApps to lookup identifier verified by other issuers.
+
+You can keep an eye on prefixes suggested by us [here](https://github.com/celo-org/celo-monorepo/blob/8505d060fef3db3b0ce0cadf2bb879512bb20534/packages/sdk/base/src/identifier.ts#L31).
+
+</details>
+
+<details>
+  <summary>What is a "pepper"?</summary>
+
+`pepper` is a unique secret, obtained by taking the first 13 characters of the `sha256` hash of the `unblinded signature`
+
+</details>
+
+<details>
+  <summary>What is a "unblinded signature"?</summary>
+
+Obtained by unblinding the signature returned by ODIS which is the combined output, comprised of signature by ODIS signers.
+
+</details>
+
+<details>
+  <summary>What is an Issuer?</summary>
+
+Issuer is an entity that is willing to take the overhead of verifying a user's ownership of an identifier.
+
+</details>
+
+<details>
+  <summary>Does Issuer need to pay for gas?</summary>
+
+For lookup there is no requirement for gas, assuming that the `obfuscatedIdentifier` to be used for lookup is available.
+
+For registering attestations it is optional, once the `obfuscatedIdentifier` is obtained issuer can decide whether to just sign the attestation and provide it back to the user which will then **use its own funds for gas for registering itself** or the `issuer` can perform the transaction which will require the issuer to pay for gas.
+
+</details>
+
+<details>
+  <summary>Does Issuer need to have ODIS quota?</summary>
+
+Yes, Issuer needs to have ODIS Quota to register and lookup users.
+
+</details>
+
+<details>
+  <summary>What is cost to register a user?</summary>
+  With 10 cUSD worth of ODIS quota you can attest 10,000 users!
+
+</details>
+
+<details>
+  <summary>Can I just lookup users and not register them?</summary>
+  Yes, you can lookup users under other Issuers. By doing this, you trusting that the Issuer took care about verifying that the identifier does actually belong to the user.
+
+You might want to do this if you don't want to create a registry of your own and use an already existing registry created by other Issuers.
+
+</details>
+
+<details>
+  <summary>Can anyone become an Issuer?</summary>
+  Yes, SocialConnect is open for all. Anyone can become an Issuer
+
+</details>
+
+<details>
+<summary>What are some security & trust assumptions differences between the ASv1 vs. Social Connect?</summary>
+
+| ASv1                                                    | SocialConnect                                                                                                                    |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Phone number verified by 3 randomly selected validators | Phone number verified by issuer (no guarantee about authenticity or quality of verification), app developers choose who to trust |
+| Single root of trust = Collective of Validators         | Many roots of trust = Respective attestation issuer that verified phone number                                                   |
+
+</details>
+
+<details>
+
+<summary>What's the best way to map an address returned by lookupAttestations to the issuer? </summary>
+
+```sol
+function lookupAttestations(bytes32 identifier, address[] calldata trustedIssuers)
+    external
+    view
+    returns (
+      uint256[] memory countsPerIssuer,
+      address[] memory accounts,
+      address[] memory signers,
+      uint64[] memory issuedOns,
+      uint64[] memory publishedOns
+    )
+```
+
+`lookupAttestations` returns 4 arrays, depending on the order `trustedIssuers` was provided respectively the return values are returned.
+
+For example:-
+
+if trustedIssuers = [I1, I2, ...]
+then countsPerIssuer = [CI1, CI2, ...] where CIx = number of accounts attested under the Xth issuer
+
+</details>
+
+<details>
+<summary>Is there a convention for phone number format?</summary>
+
+Yes, the SDK function `getObfuscatedIdentifier` will only accept E164 formatted phone numbers.
+
+</details>
